@@ -1,9 +1,231 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Главная страница</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TravelGuide</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css}" />
+
+
 </head>
 <body>
-<h1>Добро пожаловать в приложение!</h1>
+<!-- Шапка сайта -->
+<header>
+  <div class="logo">
+    <h1>TravelGuide</h1>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="/">Главная</a></li>
+      <li><a href="/about">О нас</a></li>
+      <li><a href="#">Горящие туры</a></li>
+      <li><a href="/countries">Страны</a></li>
+      <li><a href="#">Авиабилеты</a></li>
+      <li><a href="#">Контакты</a></li>
+      <li><a href="#">Личный кабинет</a></li>
+    </ul>
+  </nav>
+
+</header>
+
+<!-- Основной контент -->
+<section class="banner">
+  <div class="overlay"></div>
+  <img src="/images/2photo.jpg" alt="Туристический пейзаж">
+  <div class="banner-text">
+    <h2>Ваш идеальный отпуск начинается здесь!</h2>
+    <a href="/login" class="btn">Войти</a>
+    <a href="/register" class="btn">Регистрация</a>
+  </div>
+</section>
+
+
+<section class="card-container">
+  <h2>Путешествие по странам</h2>
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide card">
+        <img src="/images/4photo.jpg" alt="Китай">
+        <h2>Китай</h2>
+        <p>Уникальная культура и история, удивительная природа.</p>
+        <a href="#" class="btn">Узнать больше</a>
+      </div>
+      <div class="swiper-slide card">
+        <img src="/images/5photo.jpg" alt="Дубай">
+        <h2>Дубай</h2>
+        <p>Современная архитектура и роскошные курорты.</p>
+        <a href="#" class="btn">Узнать больше</a>
+      </div>
+      <div class="swiper-slide card">
+        <img src="/images/6photo.jpg" alt="Египет">
+        <h2>Египет</h2>
+        <p>Cтрана в Северной Африке, известная пирамидами, древними храмами.</p>
+        <a href="#" class="btn">Узнать больше</a>
+      </div>
+      <div class="swiper-slide card">
+        <img src="/images/7photo.jpg" alt="Италия">
+        <h2>Италия</h2>
+        <p>Cтрана знаменитая искусством, архитектурой и кухней.</p>
+        <a href="#" class="btn">Узнать больше</a>
+      </div>
+      <div class="swiper-slide card">
+        <img src="/images/medium_nightlife-2162772_1280.jpg" alt="Корея">
+        <h2>Корея</h2>
+        <p>Страна с богатой историей, современными городами и пейзажами.</p>
+        <a href="#" class="btn">Узнать больше</a>
+      </div>
+      <div class="swiper-slide card">
+        <img src="/images/13photo.jpg" alt="Испания">
+        <h2>Испания</h2>
+        <p>Очарование средиземноморского побережья и богатая культура.</p>
+        <a href="#" class="btn">Узнать больше</a>
+      </div>
+      <div class="swiper-slide card">
+        <img src="/images/14photo.jpg" alt="Франция">
+        <h2>Франция</h2>
+        <p>Романтика Парижа и изысканная кухня ждут вас.</p>
+        <a href="#" class="btn">Узнать больше</a>
+      </div>
+      <div class="swiper-slide card">
+        <img src="/images/otdyh-vo-vetname.jpg" alt="Вьетнам">
+        <h2>Вьетнам</h2>
+        <p>Cтрана с живописными ландшафтами и древними храмами.</p>
+        <a href="#" class="btn">Узнать больше</a>
+      </div>
+      <div class="swiper-slide card">
+        <img src="/images/16photo.jpg" alt="Турция">
+        <h2>Турция</h2>
+        <p>Страна известная культурным наследием, мечетями и пляжами.</p>
+        <a href="#" class="btn">Узнать больше</a>
+      </div>
+      <div class="swiper-slide card">
+        <img src="/images/tailand-strana.jpg" alt="Тайланд">
+        <h2>Тайланд</h2>
+        <p>Cтрана известная своими пляжами, храмами и богатой культурой.</p>
+        <a href="#" class="btn">Узнать больше</a>
+      </div>
+    </div>
+    <!-- Добавьте кнопки навигации, если необходимо -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+</section>
+
+<section class="filter-section">
+  <h2>Поиск туров</h2>
+  <form th:action="@{/tours}" method="get">
+    <label for="country">Страна:</label>
+    <select id="country" name="country">
+      <option value="">Выберите страну</option>
+      <option th:each="country : ${countries}" th:value="${country}" th:text="${country}"></option>
+    </select>
+
+    <label for="tourType">Тип тура:</label>
+    <select id="tourType" name="type">
+      <option value="">Выберите тип тура</option>
+      <option th:each="type : ${tourTypes}" th:value="${type}" th:text="${type}"></option>
+    </select>
+
+    <label for="duration">Длительность (дней):</label>
+    <input type="number" id="duration" name="duration" placeholder="Количество дней">
+
+    <label for="price">Цена:</label>
+    <input type="number" id="price" name="price" placeholder="Максимальная цена">
+
+    <button type="submit" class="btn">Найти туры</button>
+
+  </form>
+</section>
+
+
+<section id="filtered-tours" class="card-container" th:if="${filteredTours != null}">
+  <h2>Отфильтрованные туры</h2>
+  <div class="card-wrapper" th:each="tour : ${filteredTours}">
+    <div class="card">
+      <h2 th:text="${tour.country}"></h2>
+      <p th:text="${tour.type}"></p>
+      <p>Цена: <span th:text="${tour.price}"></span> руб.</p>
+      <p>Длительность: <span th:text="${tour.duration}"></span> дней</p>
+      <a th:href="@{/tours/{id}(id=${tour.id})}" class="btn">Узнать больше</a>
+    </div>
+  </div>
+  <p th:if="${#lists.isEmpty(filteredTours)}">Туры не найдены.</p>
+</section>
+
+
+<!-- Слайдер -->
+<section class="slider">
+  <h2>Наши предложения</h2>
+  <div class="slides">
+    <div class="slide active">
+      <img src="/images/1-thailand-900x602_2_w900_h600.jpg" alt="Предложение 1">
+
+    </div>
+    <div class="slide">
+      <img src="/images/03_view.jpeg" alt="Предложение 2">
+
+    </div>
+    <div class="slide">
+      <img src="/images/3-1-1024x621.jpg" alt="Предложение 3">
+
+    </div>
+    <div class="slide">
+      <img src="/images/otdyh-vo-vetname.jpg" alt="Предложение 4">
+
+    </div>
+    <div class="slide">
+      <img src="/images/shutterstock_429620146.jpg" alt="Предложение 5">
+
+    </div>
+  </div>
+  <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+  <button class="next" onclick="changeSlide(1)">&#10095;</button>
+</section>
+
+<section class="services-section">
+  <h2>Наши услуги</h2>
+  <div class="services-container">
+    <div class="service-card">
+      <img src="/images/turism1.jpg" alt="Услуга 1">
+      <h3>Корпоративный туризм</h3>
+      <p>Организуем корпоративные туры под ключ, учитывая все ваши пожелания. Профессиональные тренинги, тимбилдинги и отдых для сотрудников — всё это с учётом вашего графика и бюджета.</p>
+    </div>
+    <div class="service-card">
+      <img src="/images/turism2.jpg" alt="Услуга 2">
+      <h3>Авиабилеты на все направления</h3>
+      <p>Забронируйте авиабилеты в любую точку мира с нашей помощью. Мы предлагаем выгодные тарифы, гибкие условия бронирования и помогаем подобрать оптимальные маршруты для комфортного путешествия.</p>
+    </div>
+    <div class="service-card">
+      <img src="/images/виза.jpg" alt="Услуга 3">
+      <h3>Оформление визы</h3>
+      <p>Путешествуйте без забот! Мы поможем вам быстро и просто оформить визу в любую страну. Наши специалисты окажут полное сопровождение на каждом этапе, от подготовки документов до получения визы.</p>
+    </div>
+    <div class="service-card">
+      <img src="/images/viptour.jpg" alt="Услуга 4">
+      <h3>Интересные туры</h3>
+      <p>Откройте для себя новые горизонты с нашими захватывающими турами! Мы предлагаем уникальные маршруты для тех, кто любит приключения и яркие впечатления.</p>
+    </div>
+  </div>
+</section>
+
+
+<script src="/js/scripts.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+<script>
+  const swiper = new Swiper('.swiper-container', {
+    slidesPerView: 4, // Количество карточек на экране
+    spaceBetween: 30, // Расстояние между карточками
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+  });
+</script>
 </body>
 </html>
+

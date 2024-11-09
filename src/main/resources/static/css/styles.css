@@ -1,0 +1,340 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #b4dad8;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px; /* Увеличиваем отступы */
+    display: flex;
+    justify-content: space-between; /* Размещаем логотип и меню по краям */
+    align-items: center; /* Центрируем по вертикали */
+    position: fixed; /* Фиксируем позицию заголовка */
+    top: 0; /* Устанавливаем заголовок в верхнюю часть страницы */
+    left: 0; /* Устанавливаем его в левом верхнем углу */
+    right: 0; /* Расширяем заголовок на всю ширину */
+    z-index: 1000; /* Делаем его выше остальных элементов */
+}
+
+header .logo h1 {
+    margin: 0; /* Убираем все отступы для логотипа */
+    font-size: 24px; /* Размер шрифта логотипа */
+    line-height: 1; /* Устанавливаем высоту строки для лучшего выравнивания */
+    padding: 5px 0; /* Увеличиваем отступы по вертикали, чтобы надпись была лучше видна */
+}
+
+nav {
+    margin: 0; /* Убираем отступы у навигации */
+    padding: 0; /* Убираем внутренние отступы */
+    background-color: #333; /* Цвет фона меню */
+    display: flex; /* Делаем навигацию гибкой */
+    justify-content: center; /* Центрируем меню */
+    width: 100%; /* Ширина навигации */
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0; /* Убираем отступы */
+    padding: 0; /* Убираем внутренние отступы */
+    flex-wrap: nowrap; /* Запрещаем перенос строк */
+}
+
+nav ul li {
+    margin: 0 10px; /* Уменьшаем отступы между элементами */
+}
+
+nav ul li a {
+    color: white; /* Цвет текста */
+    text-decoration: none; /* Убираем подчеркивание */
+    padding: 10px; /* Внутренний отступ для увеличения области нажатия */
+    display: block; /* Чтобы ссылки были как блоки */
+    font-size: 16px; /* Размер шрифта */
+    white-space: nowrap; /* Запрещаем перенос текста на новую строку */
+}
+
+
+/* Баннер с меняющимся фоном */
+.banner {
+    position: relative;
+    height: 700px;
+    overflow: hidden;
+}
+
+.banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(30%) brightness(80%); /* Фильтрация изображения */
+    transition: opacity 5s ease-in-out;
+}
+
+.banner .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Темная тень */
+    z-index: 1;
+}
+
+.banner-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    z-index: 2;
+}
+
+.banner-text h2 {
+    font-size: 3em;
+    font-weight: bold;
+}
+
+.btn {
+    display: inline-block;
+    margin: 20px 0 20px; /* 20px сверху, 0px по бокам, 20px снизу */
+    padding: 10px 15px;
+    background-color: #187c85;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn + .btn {
+    margin-bottom: 45px;
+}
+
+.btn:hover {
+    background-color: #155b5f;
+}
+
+.filter-section {
+    padding: 20px;
+    background-color: #ffffff ;
+    border-radius: 10px;
+    margin-top: 50px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    height: 200px;
+    width: 100%; /* Устанавливаем ширину на 80% от родителя */
+    max-width: 1300px; /* Задаем максимальную ширину */
+    margin: 0 auto; /* Центрируем секцию по горизонтали */
+
+}
+
+.filter-section form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.filter-section label {
+    margin-right: 10px;
+    align-self: center;
+}
+
+.filter-section select,
+.filter-section input {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.filter-section .btn {
+    padding: 8px 16px;
+    margin-top: 60px;
+    align-self: center; /* Центрируем кнопку по вертикали */
+    display: block; /* Можно добавить для ширины */
+}
+
+.filter-section label,
+.filter-section select,
+.filter-section input,
+.filter-section .btn {
+    margin-bottom: 10px;
+}
+
+
+.swiper-button-next,
+.swiper-button-prev {
+    color: #ffffff; /* Цвет стрелок */
+    margin-top: 20px; /* Увеличьте отступ сверху для стрелок */
+    z-index: 10; /* Обеспечьте, чтобы стрелки находились выше других элементов */
+}
+
+.swiper-container {
+    margin-top: 20px; /* Отступ сверху для слайдера */
+}
+
+
+/* Карточки */
+.card-container {
+    padding: 25px;
+    text-align: center;
+    margin: 20px;
+}
+
+.card-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 27%; /* Или любое другое значение, измените по желанию */
+    height: 350px; /* Установите фиксированную высоту для карточек */
+    margin: 10px 0;
+    text-align: center;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    padding: 20px;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card img {
+    width: 100%;
+    height: 200px; /* Фиксированная высота для изображений */
+    object-fit: cover; /* Обеспечивает правильное обрезание изображения */
+    border-radius: 10px;
+}
+
+.card h2 {
+    margin: 10px 0;
+}
+
+.card p {
+    padding: 0 10px;
+    margin: 10px 0;
+}
+
+
+/* Слайдер */
+.slider {
+    position: relative;
+    max-width: 600px;
+    margin: 20px auto;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.slides {
+    display: flex;
+    transition: transform 0.5s ease;
+    /* Убедитесь, что ширина установлена */
+    width: 100%;
+}
+
+.slide {
+    min-width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.slider h2 {
+    text-align: center; /* Центрирует заголовок */
+    margin: 20px 0; /* Отступы сверху и снизу, можно изменять */
+    font-size: 24px; /* Размер шрифта, измените по желанию */
+    color: #090909; /* Цвет текста, измените по желанию */
+}
+
+.slide img {
+    width: 100%; /* Ширина 100% для слайда */
+    height: 400px; /* Фиксированная высота, измените по желанию */
+    object-fit: cover; /* Обеспечивает правильное обрезание изображения */
+    border-radius: 8px;
+}
+
+/* Уберите .slide.active */
+button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+/* Секция с услугами */
+.services-section {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #b4dad8;
+}
+
+.services-section h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.services-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.service-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s;
+    margin: 15px;
+}
+
+.service-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.service-card h3 {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+.service-card p {
+    padding: 0 15px 20px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+}

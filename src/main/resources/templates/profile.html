@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Личный кабинет</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<h2>Личный кабинет</h2>
+<p>Добро пожаловать, <span th:text="${user.getUsername()}">Имя пользователя</span>!</p>
+<p>Ваш адрес электронной почты: <span th:text="${user.getEmail()}">Электронная почта</span></p>
+<a href="/logout">Выйти</a>
+</body>
+</html>
