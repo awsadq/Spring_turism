@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поиск туров</title>
+</head>
+<body>
+<form action="/search" method="get" class="search-form">
+    <input type="text" name="query" placeholder="Поиск по туризму" required>
+    <button type="submit" class="btn">Поиск</button>
+</form>
+
+<h2>Результаты поиска:</h2>
+<div>
+    <ul>
+        <th:block th:if="${tours}">
+            <li th:each="tour : ${tours}">
+                <p>Страна: <span th:text="${tour.country}"></span></p>
+                <p>Тип: <span th:text="${tour.type}"></span></p>
+                <p>Описание: <span th:text="${tour.description}"></span></p>
+            </li>
+        </th:block>
+        <th:block th:if="${#lists.isEmpty(tours)}">
+            <p>Нет результатов по вашему запросу.</p>
+        </th:block>
+    </ul>
+</div>
+</body>
+</html>
