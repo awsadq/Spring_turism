@@ -19,15 +19,24 @@
     <ul>
       <li><a href="/">Главная</a></li>
       <li><a href="/about">О нас</a></li>
-      <li><a href="#">Горящие туры</a></li>
+      <li><a href="/tours/search">Tуры</a></li>
       <li><a href="/countries">Страны</a></li>
       <li><a href="#">Авиабилеты</a></li>
       <li><a href="#">Контакты</a></li>
       <li><a href="#">Личный кабинет</a></li>
     </ul>
-    <form action="/search" method="get" class="search-form">
-      <input type="text" name="query" placeholder="Поиск по туризму" required>
-      <button type="submit" class="btn">Поиск</button>
+    <form action="/tour-details" method="get" style="margin-bottom: 20px;">
+      <input type="text" name="query" placeholder="Поиск по местам..." style="padding: 10px; width: 200px; border-radius: 5px;">
+
+      <select name="region" style="padding: 10px; border-radius: 5px;">
+        <option value="Все">Все туры</option>
+        <option value="Турция">Турция</option>
+        <option value="Тайланд">Тайланд</option>
+        <option value="Вьентнам">Вьентнам</option>
+        <option value="Испания">Испания</option>
+      </select>
+
+      <button type="submit" style="padding: 10px 20px; border-radius: 5px; background-color: #f5ba13; color: #1a1a1a;">Найти</button>
     </form>
   </nav>
 

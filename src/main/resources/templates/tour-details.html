@@ -3,18 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Поиск туров</title>
+    <title>Детали тура</title>
 </head>
 <body>
-<!-- Форма для поиска -->
-<form action="/search" method="get" class="search-form">
-    <input type="text" name="query" placeholder="Поиск по туризму" required>
-    <button type="submit" class="btn">Поиск</button>
-</form>
-
-<h2>Результаты поиска:</h2>
-
-<!-- Проверка, если туры найдены -->
+<h1>Информация о туре</h1>
 <div>
     <ul>
         <th:block th:if="${tours}">

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Tour Search</title>
+</head>
+<body>
+<h1>Search Tours</h1>
+<form th:action="@{/tours/search}" method="get">
+  <label for="country">Country:</label>
+  <input type="text" id="country" name="country" th:value="${filter.country}" /><br />
+
+  <label for="type">Type:</label>
+  <input type="text" id="type" name="type" th:value="${filter.type}" /><br />
+
+  <label for="durationMin">Duration Min:</label>
+  <input type="number" id="durationMin" name="durationMin" th:value="${filter.durationMin}" /><br />
+
+  <label for="durationMax">Duration Max:</label>
+  <input type="number" id="durationMax" name="durationMax" th:value="${filter.durationMax}" /><br />
+
+  <label for="priceMin">Price Min:</label>
+  <input type="number" step="0.01" id="priceMin" name="priceMin" th:value="${filter.priceMin}" /><br />
+
+  <label for="priceMax">Price Max:</label>
+  <input type="number" step="0.01" id="priceMax" name="priceMax" th:value="${filter.priceMax}" /><br />
+
+  <label for="is_hot">Hot Tour:</label>
+  <select id="is_hot" name="is_hot">
+    <option value="" th:selected="${filter.is_hot == null}">Any</option>
+    <option value="true" th:selected="${filter.is_hot == true}">Yes</option>
+    <option value="false" th:selected="${filter.is_hot == false}">No</option>
+  </select><br />
+
+  <button type="submit">Search</button>
+</form>
+
+<h2>Available Tours</h2>
+<table>
+  <thead>
+  <tr>
+    <th>Country</th>
+    <th>Type</th>
+    <th>Duration (days)</th>
+    <th>Price ($)</th>
+    <th>Description</th>
+    <th>Hot Tour</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="tour : ${tours}">
+    <td th:text="${tour.country}"></td>
+    <td th:text="${tour.type}"></td>
+    <td th:text="${tour.duration}"></td>
+    <td th:text="${tour.price}"></td>
+    <td th:text="${tour.description}"></td>
+    <td th:text="${tour.is_hot ? 'Yes' : 'No'}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
