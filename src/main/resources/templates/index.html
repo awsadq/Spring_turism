@@ -4,13 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TravelGuide</title>
-  <link rel="stylesheet" th:href="@{/css/styles.css}" />
   <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css}" />
-
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css}">
+  <link th:href="@{https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap}" rel="stylesheet">
 
 </head>
 <body>
-<!-- Шапка сайта -->
+
 <header>
   <div class="logo">
     <h1>TravelGuide</h1>
@@ -21,24 +22,52 @@
       <li><a href="/about">О нас</a></li>
       <li><a href="#">Горящие туры</a></li>
       <li><a href="/countries">Страны</a></li>
-      <li><a href="#">Авиабилеты</a></li>
-      <li><a href="#">Контакты</a></li>
-      <li><a href="#">Личный кабинет</a></li>
+      <li><a href="/tickets">Авиабилеты</a></li>
+      <li><a href="/contact">Контакты</a></li>
+      <li><a href="/profile">Личный кабинет</a></li>
     </ul>
   </nav>
 
 </header>
 
-<!-- Основной контент -->
-<section class="banner">
-  <div class="overlay"></div>
-  <img src="/images/2photo.jpg" alt="Туристический пейзаж">
-  <div class="banner-text">
-    <h2>Ваш идеальный отпуск начинается здесь!</h2>
-    <a href="/login" class="btn">Войти</a>
-    <a href="/register" class="btn">Регистрация</a>
-  </div>
-</section>
+<main>
+  <section class="main-content">
+    <div class="text-content">
+      <h1>Discover the Best <span>Destinations</span></h1>
+      <p>Explore the world's most beautiful places. Whether you love mountains, oceans, or cities, we have the perfect destination for you. Start your journey now!</p>
+      <div class="auth-buttons">
+        <a href="/login" class="btn auth-btn">Войти</a>
+        <a href="/register" class="btn auth-btn">Регистрация</a>
+      </div>
+    </div>
+
+    <div class="interactive-world">
+      <div class="background-elements">
+        <div class="ring"></div>
+        <div class="stars"></div>
+        <div class="orbiting-rings"></div> <!-- Вращающиеся кольца -->
+      </div>
+      <img src="/images/world.png" alt="World Map" class="world-map">
+
+      <!-- Контейнер с флагами -->
+      <div class="flag-orbit">
+        <div class="flag flag-1" title="USA"></div>
+        <div class="flag flag-2" title="France"></div>
+        <div class="flag flag-3" title="Japan"></div>
+        <div class="flag flag-4" title="India"></div>
+        <div class="flag flag-5" title="Brazil"></div>
+      </div>
+    </div>
+
+    <div class="meteor-rain">
+      <div class="meteor"></div>
+      <div class="meteor"></div>
+      <div class="meteor"></div>
+      <div class="meteor"></div> <!-- Метеоритный дождь -->
+    </div>
+
+  </section>
+</main>
 
 
 <section class="card-container">
@@ -46,115 +75,167 @@
   <div class="swiper-container">
     <div class="swiper-wrapper">
       <div class="swiper-slide card">
-        <img src="/images/4photo.jpg" alt="Китай">
-        <h2>Китай</h2>
-        <p>Уникальная культура и история, удивительная природа.</p>
-        <a href="#" class="btn">Узнать больше</a>
+        <div class="card-image">
+          <img src="/images/819ce0f480d60462f4e7477204f2ec64.jpg" alt="Китай">
+        </div>
+        <div class="card-content">
+          <h2>Китай</h2>
+          <p>Уникальная культура и история, удивительная природа.</p>
+          <a th:href="@{/china}" class="btn">Узнать больше</a>
+        </div>
       </div>
       <div class="swiper-slide card">
-        <img src="/images/5photo.jpg" alt="Дубай">
-        <h2>Дубай</h2>
-        <p>Современная архитектура и роскошные курорты.</p>
-        <a href="#" class="btn">Узнать больше</a>
+        <div class="card-image">
+          <img src="/images/7c0b21d87940281cc097b5378b6a4078.jpg" alt="Дубай">
+        </div>
+        <div class="card-content">
+          <h2>Дубай</h2>
+          <p>Современная архитектура и роскошные курорты.</p>
+          <a th:href="@{/dubai}" class="btn">Узнать больше</a>
+        </div>
       </div>
       <div class="swiper-slide card">
-        <img src="/images/6photo.jpg" alt="Египет">
-        <h2>Египет</h2>
-        <p>Cтрана в Северной Африке, известная пирамидами, древними храмами.</p>
-        <a href="#" class="btn">Узнать больше</a>
+        <div class="card-image">
+          <img src="/images/127f99842a7cb77ce752f44645ec2d47.jpg" alt="Египет">
+        </div>
+        <div class="card-content">
+          <h2>Египет</h2>
+          <p>Cтрана в Северной Африке, известная пирамидами, древними храмами.</p>
+          <a th:href="@{/egypt}" class="btn">Узнать больше</a>
+        </div>
       </div>
       <div class="swiper-slide card">
-        <img src="/images/7photo.jpg" alt="Италия">
-        <h2>Италия</h2>
-        <p>Cтрана знаменитая искусством, архитектурой и кухней.</p>
-        <a href="#" class="btn">Узнать больше</a>
+        <div class="card-image">
+          <img src="/images/d95191f8d314e02a752e6e835e78dd3e.jpg" alt="Италия">
+        </div>
+        <div class="card-content">
+          <h2>Италия</h2>
+          <p>Cтрана знаменитая искусством, архитектурой и кухней.</p>
+          <a th:href="@{/italy}" class="btn">Узнать больше</a>
+        </div>
       </div>
       <div class="swiper-slide card">
-        <img src="/images/medium_nightlife-2162772_1280.jpg" alt="Корея">
-        <h2>Корея</h2>
-        <p>Страна с богатой историей, современными городами и пейзажами.</p>
-        <a href="#" class="btn">Узнать больше</a>
+        <div class="card-image">
+          <img src="/images/ko_rea.jpg" alt="Корея">
+        </div>
+        <div class="card-content">
+          <h2>Корея</h2>
+          <p>Страна с богатой историей, современными городами и пейзажами.</p>
+          <a th:href="@{/korea}" class="btn">Узнать больше</a>
+        </div>
       </div>
       <div class="swiper-slide card">
-        <img src="/images/13photo.jpg" alt="Испания">
-        <h2>Испания</h2>
-        <p>Очарование средиземноморского побережья и богатая культура.</p>
-        <a href="#" class="btn">Узнать больше</a>
+        <div class="card-image">
+          <img src="/images/spain.jpg" alt="Испания">
+        </div>
+        <div class="card-content">
+          <h2>Испания</h2>
+          <p>Очарование средиземноморского побережья и богатая культура.</p>
+          <a th:href="@{/spain}" class="btn">Узнать больше</a>
+        </div>
       </div>
       <div class="swiper-slide card">
-        <img src="/images/14photo.jpg" alt="Франция">
-        <h2>Франция</h2>
-        <p>Романтика Парижа и изысканная кухня ждут вас.</p>
-        <a href="#" class="btn">Узнать больше</a>
+        <div class="card-image">
+          <img src="/images/paris.jpg" alt="Франция">
+        </div>
+        <div class="card-content">
+          <h2>Франция</h2>
+          <p>Романтика Парижа и изысканная кухня ждут вас.</p>
+          <a th:href="@{/france}" class="btn">Узнать больше</a>
+        </div>
       </div>
       <div class="swiper-slide card">
-        <img src="/images/otdyh-vo-vetname.jpg" alt="Вьетнам">
-        <h2>Вьетнам</h2>
-        <p>Cтрана с живописными ландшафтами и древними храмами.</p>
-        <a href="#" class="btn">Узнать больше</a>
+        <div class="card-image">
+          <img src="/images/vietnam.jpg" alt="Вьетнам">
+        </div>
+        <div class="card-content">
+          <h2>Вьетнам</h2>
+          <p>Cтрана с живописными ландшафтами и древними храмами.</p>
+          <a th:href="@{/vietnam}" class="btn">Узнать больше</a>
+        </div>
       </div>
       <div class="swiper-slide card">
-        <img src="/images/16photo.jpg" alt="Турция">
-        <h2>Турция</h2>
-        <p>Страна известная культурным наследием, мечетями и пляжами.</p>
-        <a href="#" class="btn">Узнать больше</a>
+        <div class="card-image">
+          <img src="/images/turkiy.jpg" alt="Турция">
+        </div>
+        <div class="card-content">
+          <h2>Турция</h2>
+          <p>Страна известная культурным наследием, мечетями и пляжами.</p>
+          <a th:href="@{/turkey}" class="btn">Узнать больше</a>
+        </div>
       </div>
       <div class="swiper-slide card">
-        <img src="/images/tailand-strana.jpg" alt="Тайланд">
-        <h2>Тайланд</h2>
-        <p>Cтрана известная своими пляжами, храмами и богатой культурой.</p>
-        <a href="#" class="btn">Узнать больше</a>
+        <div class="card-image">
+          <img src="/images/tailand.jpg" alt="Тайланд">
+        </div>
+        <div class="card-content">
+          <h2>Тайланд</h2>
+          <p>Cтрана известная своими пляжами, храмами и богатой культурой.</p>
+          <a th:href="@{/thailand}" class="btn">Узнать больше</a>
+        </div>
       </div>
     </div>
-    <!-- Добавьте кнопки навигации, если необходимо -->
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
+
+    <div class="swiper-button-container">
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+
+
   </div>
 </section>
 
+
 <section class="filter-section">
   <h2>Поиск туров</h2>
-  <form th:action="@{/tours}" method="get">
-    <label for="country">Страна:</label>
-    <select id="country" name="country">
-      <option value="">Выберите страну</option>
-      <option th:each="country : ${countries}" th:value="${country}" th:text="${country}"></option>
-    </select>
+  <form th:action="@{/}" method="get">
+    <div class="form-group">
+      <label for="country">Страна:</label>
+      <select id="country" name="country">
+        <option value="">Выберите страну</option>
+        <option th:each="country : ${countries}" th:value="${country}" th:text="${country}"></option>
+      </select>
+    </div>
 
-    <label for="tourType">Тип тура:</label>
-    <select id="tourType" name="type">
-      <option value="">Выберите тип тура</option>
-      <option th:each="type : ${tourTypes}" th:value="${type}" th:text="${type}"></option>
-    </select>
+    <div class="form-group">
+      <label for="tourType">Тип тура:</label>
+      <select id="tourType" name="type">
+        <option value="">Выберите тип тура</option>
+        <option th:each="type : ${tourTypes}" th:value="${type}" th:text="${type}"></option>
+      </select>
+    </div>
 
-    <label for="duration">Длительность (дней):</label>
-    <input type="number" id="duration" name="duration" placeholder="Количество дней">
+    <div class="form-group">
+      <label for="duration">Длительность (дней):</label>
+      <input type="number" id="duration" name="duration" placeholder="Количество дней">
+    </div>
 
-    <label for="price">Цена:</label>
-    <input type="number" id="price" name="price" placeholder="Максимальная цена">
+    <div class="form-group">
+      <label for="price">Цена:</label>
+      <input type="number" id="price" name="price" placeholder="Максимальная цена">
+    </div>
 
     <button type="submit" class="btn">Найти туры</button>
-
   </form>
 </section>
 
 
-<section id="filtered-tours" class="card-container" th:if="${filteredTours != null}">
+<section id="filtered-tours" class="filtered-section">
   <h2>Отфильтрованные туры</h2>
-  <div class="card-wrapper" th:each="tour : ${filteredTours}">
+  <div class="card-wrapper" th:if="${filteredTours != null and not #lists.isEmpty(filteredTours)}" th:each="tour : ${filteredTours}">
     <div class="card">
       <h2 th:text="${tour.country}"></h2>
       <p th:text="${tour.type}"></p>
-      <p>Цена: <span th:text="${tour.price}"></span> руб.</p>
+      <p>Цена: <span th:text="${tour.price}"></span> долларов.</p>
       <p>Длительность: <span th:text="${tour.duration}"></span> дней</p>
       <a th:href="@{/tours/{id}(id=${tour.id})}" class="btn">Узнать больше</a>
     </div>
   </div>
-  <p th:if="${#lists.isEmpty(filteredTours)}">Туры не найдены.</p>
+  <p th:if="${filteredTours != null and #lists.isEmpty(filteredTours)}">Туры не найдены.</p>
 </section>
 
 
-<!-- Слайдер -->
+
 <section class="slider">
   <h2>Наши предложения</h2>
   <div class="slides">
@@ -183,6 +264,22 @@
   <button class="next" onclick="changeSlide(1)">&#10095;</button>
 </section>
 
+<div id="chat-box">
+  <div id="chat-header">
+    <span>Чат с менеджером</span>
+    <!-- Кнопка закрытия чата (крестик) -->
+    <button id="chat-close-btn">&times;</button>
+  </div>
+  <div id="chat-messages"></div>
+  <form id="chat-form">
+    <input type="text" id="chat-input" placeholder="Напишите сообщение..." required />
+    <button type="submit" id="chat-submit-btn">Отправить</button>
+  </form>
+</div>
+<!-- Кнопка для открытия/закрытия чата -->
+<button id="chat-open-btn">💬</button>
+
+
 <section class="services-section">
   <h2>Наши услуги</h2>
   <div class="services-container">
@@ -210,6 +307,65 @@
 </section>
 
 
+<footer>
+  <div class="footer-container">
+    <div class="footer-section about">
+      <h3>TravelGuide</h3>
+      <p>TravelGuide помогает вам находить и бронировать лучшие предложения для путешествий. Откройте для себя мир вместе с нами!</p>
+      <p>&copy; 2024 TravelGuide | Все права защищены</p>
+    </div>
+
+    <div class="footer-section links">
+      <h4>Ссылки</h4>
+      <ul>
+        <li><a href="/">Главная</a></li>
+        <li><a href="/about">О нас</a></li>
+        <li><a href="#">Горящие туры</a></li>
+        <li><a href="/countries">Страны</a></li>
+        <li><a href="/tickets">Авиабилеты</a></li>
+        <li><a href="/contact">Контакты</a></li>
+        <li><a href="/profile">Личный кабинет</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section contact">
+      <h4>Контакты</h4>
+      <p>Телефон: +996 504 09 99 00</p>
+      <p>Email: travelguide@gmail.com</p>
+      <p>Адрес: Бишкек, ул. Уметалиева, 120</p>
+    </div>
+
+    <div class="footer-section social">
+      <h4>Мы в соцсетях</h4>
+      <div class="social-icons">
+        <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="youtube"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+  <hr class="footer-line">
+  <div class="footer-rights">
+    <p>&copy; Все права защищены. Информация сайта защищена законом об авторских правах.</p>
+  </div>
+</footer>
+
+
+<script>
+  const flagImage = document.getElementById('flagImage');
+  const flags = ['/images/italy_png.png', '/images/egypt_png.png', '/images/spain_png.png']; // Пути к изображениям флагов
+  let currentFlag = 0;
+
+  function changeFlag() {
+    currentFlag = (currentFlag + 1) % flags.length;
+    flagImage.src = flags[currentFlag];
+  }
+
+  setInterval(changeFlag, 5000); // Смена флага каждые 5 секунд
+
+</script>
+
 <script src="/js/scripts.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 <script>
@@ -217,15 +373,82 @@
     slidesPerView: 4, // Количество карточек на экране
     spaceBetween: 30, // Расстояние между карточками
     navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
+      nextEl: '.swiper-button-prev', // Стрелка "вперед" (смотрит вправо)
+      prevEl: '.swiper-button-next', // Стрелка "назад" (смотрит влево)
     },
     pagination: {
       el: '.swiper-pagination',
       clickable: true,
     },
   });
+
 </script>
+
+<script>
+
+  // Получаем элементы
+  const chatBox = document.getElementById('chat-box');
+  const chatOpenBtn = document.getElementById('chat-open-btn');
+  const chatCloseBtn = document.getElementById('chat-close-btn');
+  const chatForm = document.getElementById('chat-form');
+  const chatInput = document.getElementById('chat-input');
+  const chatMessages = document.getElementById('chat-messages');
+
+  // Открытие/закрытие чата при нажатии на иконку
+  chatOpenBtn.addEventListener('click', () => {
+    if (chatBox.style.display === 'none' || chatBox.style.display === '') {
+      chatBox.style.display = 'flex'; // Показываем чат
+    } else {
+      chatBox.style.display = 'none'; // Скрываем чат
+    }
+  });
+
+  // Закрытие чата при нажатии на крестик
+  chatCloseBtn.addEventListener('click', () => {
+    chatBox.style.display = 'none'; // Скрываем чат
+  });
+
+  // Отправка сообщения и ответ менеджера
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault(); // Предотвращаем отправку формы
+    const message = chatInput.value;
+
+    if (message) {
+      // Добавляем сообщение от пользователя
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('user-message'); // Класс для сообщений пользователя
+      messageDiv.textContent = message;
+      chatMessages.appendChild(messageDiv);
+
+      // Логика ответа менеджера
+      let managerMessage = '';
+
+      // Ответы менеджера в зависимости от сообщения пользователя
+      if (message.toLowerCase() === 'мне нужна помощь') {
+        managerMessage = 'Чем могу вам помочь?';
+      } else if (message.toLowerCase() === 'я ищу тур') {
+        managerMessage = 'Да, конечно, вы можете просмотреть туры на странице "Горящие туры".';
+      } else if (message.toLowerCase() === 'спасибо за помощь!') {
+        managerMessage = 'Спасибо за обращение!';
+      } else {
+        managerMessage = 'Спасибо за сообщение!';
+      }
+
+      // Ответ менеджера через 1 секунду
+      setTimeout(() => {
+        const managerMessageDiv = document.createElement('div');
+        managerMessageDiv.classList.add('manager-message'); // Класс для сообщений менеджера
+        managerMessageDiv.textContent = managerMessage; // Ответ менеджера
+        chatMessages.appendChild(managerMessageDiv);
+      }, 1000); // Задержка в 1 секунду для имитации ответа менеджера
+    }
+
+    // Очищаем поле ввода
+    chatInput.value = ''; // Не скрываем чат автоматически
+  });
+
+</script>
+
 </body>
 </html>
 

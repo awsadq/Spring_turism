@@ -4,11 +4,506 @@
   <meta charset="UTF-8">
   <title>Личный кабинет</title>
   <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+
+    header {
+      background-color: #0f1a23;
+      color: #fff;
+      padding: 10px 20px; /* Увеличиваем отступы */
+      display: flex;
+      justify-content: space-between; /* Размещаем логотип и меню по краям */
+      align-items: center; /* Центрируем по вертикали */
+      position: fixed; /* Фиксируем позицию заголовка */
+      top: 0; /* Устанавливаем заголовок в верхнюю часть страницы */
+      left: 0; /* Устанавливаем его в левом верхнем углу */
+      right: 0; /* Расширяем заголовок на всю ширину */
+      z-index: 1000; /* Делаем его выше остальных элементов */
+    }
+
+    header .logo h1 {
+      margin: 0; /* Убираем все отступы для логотипа */
+      font-size: 24px; /* Размер шрифта логотипа */
+      line-height: 1; /* Устанавливаем высоту строки для лучшего выравнивания */
+      padding: 5px 0; /* Увеличиваем отступы по вертикали, чтобы надпись была лучше видна */
+    }
+
+    nav {
+      margin: 0; /* Убираем отступы у навигации */
+      padding: 0; /* Убираем внутренние отступы */
+      background-color: #0f1a23; /* Цвет фона меню */
+      display: flex; /* Делаем навигацию гибкой */
+      justify-content: center; /* Центрируем меню */
+      width: 100%; /* Ширина навигации */
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      margin: 0; /* Убираем отступы */
+      padding: 0; /* Убираем внутренние отступы */
+      flex-wrap: nowrap; /* Запрещаем перенос строк */
+    }
+
+    nav ul li {
+      margin: 0 10px; /* Уменьшаем отступы между элементами */
+    }
+
+    nav ul li a {
+      color: white; /* Цвет текста */
+      text-decoration: none; /* Убираем подчеркивание */
+      padding: 10px; /* Внутренний отступ для увеличения области нажатия */
+      display: block; /* Чтобы ссылки были как блоки */
+      font-size: 16px; /* Размер шрифта */
+      white-space: nowrap; /* Запрещаем перенос текста на новую строку */
+    }
+
+    body {
+      padding-top: 70px; /* Устанавливаем отступ равный высоте меню */
+      font-family: Arial, sans-serif;
+      background-color: #bddaf3;
+      color: #333;
+    }
+
+    @keyframes bgGradient {
+      0% { background: #b6c8d1; }
+      50% { background: #a4b8bf; }
+      100% { background: #b6c8d1; }
+    }
+
+
+    .profile-box {
+      margin: 20px auto;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      animation: pulse 2s infinite;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      50% {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+      100% {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      color: #37474f;
+      margin: 20px 0;
+      animation: fadeIn 1.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    p {
+      font-size: 1.5rem;
+      margin: 20px auto;
+      animation: fadeIn 1.8s ease;
+    }
+
+    a[href="/logout"] {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #ffffff;
+      background: linear-gradient(135deg, #26719f, #0f3655);
+      text-decoration: none;
+      border-radius: 25px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
+    }
+
+    a[href="/logout"]:hover {
+      background: linear-gradient(135deg, #26719f, #0f3655);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    a[href="/logout"]:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .trip-table {
+      max-width: 90%; /* Увеличена ширина */
+      margin: 20px auto;
+      border-collapse: collapse;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Увеличена тень */
+      overflow: hidden;
+      animation: fadeIn 1s ease-in-out; /* Анимация появления */
+      margin-top: 60px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .trip-table th, .trip-table td {
+      padding: 12px; /* Увеличены отступы */
+      font-size: 16px; /* Увеличен шрифт */
+      text-align: left;
+    }
+
+    .trip-table th {
+      background-color: #254b75;
+      color: white;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .trip-table td {
+      background-color: #ffffff;
+      color: #333;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .trip-table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .trip-table tr:hover {
+      background-color: #e6f7ff; /* Добавлен более заметный эффект при наведении */
+      transform: scale(1.01); /* Легкое увеличение строки */
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+      .trip-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+    }
+
+    .table-title {
+      font-size: 24px; /* Увеличен размер заголовка */
+      text-align: center;
+      margin-bottom: 5px;
+      color: #254b75;
+      animation: slideIn 1.2s ease-out; /* Добавлена анимация появления заголовка */
+      margin-top: 60px;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+
+    .achievements {
+      max-width: 400px; /* Ограничение ширины */
+      margin: 20px auto; /* Центрирование блока */
+      background: #ffffff; /* Цвет фона */
+      padding: 15px;
+      border-radius: 10px; /* Закругленные углы */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Тень для объема */
+      cursor: pointer;
+      text-align: center; /* Центрирование текста */
+      margin-top: 50px;
+    }
+
+    .achievements h3 {
+      font-size: 1.2rem;
+      margin: 0;
+    }
+
+    .achievements ul {
+      padding: 10px 0 0 20px;
+      list-style: none;
+      margin: 0;
+    }
+
+    .achievements ul li {
+      margin: 5px 0;
+      text-align: left; /* Выравнивание текста по левому краю */
+    }
+
+    footer {
+      background: linear-gradient(135deg, #0f1a23, #1a3348);
+      color: #ddd;
+      padding: 4px 4px;
+      font-size: 16px;
+      position: relative;
+      text-align: center;
+      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+      margin-top: 170px;
+    }
+
+    .footer-container {
+      display: flex;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+
+    .footer-section {
+      flex: 1 1 250px;
+      margin: 20px 0;
+      padding: 15px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px); /* Современный эффект размытия */
+      transition: transform 0.3s ease, background 0.3s ease;
+      text-align: left;
+    }
+
+    .footer-section:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-10px);
+    }
+
+    .footer-section h3, .footer-section h4 {
+      color: #5f97bd;
+      margin-bottom: 15px;
+      font-size: 22px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .footer-section p, .footer-section ul li a {
+      color: white;
+      line-height: 1.8;
+      margin: 5px 0;
+      transition: color 0.3s ease;
+      font-size: 1rem;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 10px;
+      color:white;
+    }
+
+    .footer-section ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .footer-section ul li a:hover {
+      color: #5f97bd;
+      text-decoration: underline;
+    }
+
+    .footer-section .social-icons {
+      display: flex;
+      justify-content: flex-start;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .footer-section .social-icons a {
+      font-size: 20px;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3c5468, #5bc4cc);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .footer-section .social-icons a:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+    }
+
+    .footer-line {
+      margin: 20px 0;
+      border: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .footer-rights {
+      text-align: center;
+      color: #ddd;
+      font-size: 10px;
+      margin-top: 10px;
+    }
+    .footer-rights p{
+      font-size: 15px;
+    }
+
+
+    /* Адаптация для мобильных устройств */
+    @media (max-width: 768px) {
+      .footer-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .footer-section {
+        text-align: center;
+      }
+
+      .footer-section .social-icons {
+        justify-content: center;
+      }
+    }
+
+  </style>
+
 </head>
 <body>
-<h2>Личный кабинет</h2>
-<p>Добро пожаловать, <span th:text="${user.getUsername()}">Имя пользователя</span>!</p>
-<p>Ваш адрес электронной почты: <span th:text="${user.getEmail()}">Электронная почта</span></p>
-<a href="/logout">Выйти</a>
+
+<header>
+  <div class="logo">
+    <h1>TravelGuide</h1>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="/">Главная</a></li>
+      <li><a href="/about">О нас</a></li>
+      <li><a href="#">Горящие туры</a></li>
+      <li><a href="/countries">Страны</a></li>
+      <li><a href="/tickets">Авиабилеты</a></li>
+      <li><a href="/contact">Контакты</a></li>
+      <li><a href="/profile">Личный кабинет</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="profile-box">
+  <h2>Личный кабинет</h2>
+  <p>Добро пожаловать, <span th:text="${user.getUsername()}">Имя пользователя</span>!</p>
+  <p>Ваш адрес электронной почты: <span th:text="${user.getEmail()}">Электронная почта</span></p>
+  <a href="/logout">Выйти</a>
+</div>
+
+<h3 class="table-title">Запланированные поездки</h3>
+<table class="trip-table">
+  <thead>
+  <tr>
+    <th>Дата вылета</th>
+    <th>Количество дней</th>
+    <th>Места</th>
+    <th>Дополнительные заметки</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="trip : ${tripPlans}">
+    <td th:text="${trip.startDate}"></td>
+    <td th:text="${trip.days}"></td>
+    <td th:text="${trip.placesSelected}"></td>
+    <td th:text="${trip.additionalNotes}"></td>
+  </tr>
+  </tbody>
+</table>
+
+
+<div class="achievements">
+  <h3>Ваши достижения</h3>
+  <ul>
+    <li>Посетили 10 стран 🌍</li>
+    <li>5 лет с нами 🎉</li>
+    <li>Забронировали 20 туров ✈️</li>
+  </ul>
+</div>
+
+<footer>
+  <div class="footer-container">
+    <div class="footer-section about">
+      <h3>TravelGuide</h3>
+      <p>TravelGuide помогает вам находить и бронировать лучшие предложения для путешествий. Откройте для себя мир вместе с нами!</p>
+      <p>&copy; 2024 TravelGuide | Все права защищены</p>
+    </div>
+
+    <div class="footer-section links">
+      <h4>Ссылки</h4>
+      <ul>
+        <li><a href="/">Главная</a></li>
+        <li><a href="/about">О нас</a></li>
+        <li><a href="#">Горящие туры</a></li>
+        <li><a href="/countries">Страны</a></li>
+        <li><a href="/tickets">Авиабилеты</a></li>
+        <li><a href="/contact">Контакты</a></li>
+        <li><a href="/profile">Личный кабинет</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section contact">
+      <h4>Контакты</h4>
+      <p>Телефон: +996 504 09 99 00</p>
+      <p>Email: travelguide@gmail.com</p>
+      <p>Адрес: Бишкек, ул. Уметалиева, 120</p>
+    </div>
+
+    <div class="footer-section social">
+      <h4>Мы в соцсетях</h4>
+      <div class="social-icons">
+        <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="youtube"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+  <hr class="footer-line">
+  <div class="footer-rights">
+    <p>&copy; Все права защищены. Информация сайта защищена законом об авторских правах.</p>
+  </div>
+</footer>
+
+
+<script>
+  const achievementsEl = document.querySelector('.achievements ul');
+  achievementsEl.style.maxHeight = '0';
+  achievementsEl.style.overflow = 'hidden';
+  achievementsEl.style.transition = 'max-height 0.5s ease';
+
+  document.querySelector('.achievements h3').addEventListener('click', () => {
+    if (achievementsEl.style.maxHeight === '0px') {
+      achievementsEl.style.maxHeight = achievementsEl.scrollHeight + 'px';
+    } else {
+      achievementsEl.style.maxHeight = '0';
+    }
+  });
+</script>
+
 </body>
 </html>
+

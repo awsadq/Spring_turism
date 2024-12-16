@@ -3,19 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <title>Авторизация</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #b6c8d1;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #ffffff;
+            max-width: 400px;
+            width: 90%;
+            margin: auto;
+            padding: 30px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #243c53;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #0d2139;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .error {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .register-link a {
+            color: #243c53;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
 </head>
 <body>
-<h2>Авторизация</h2>
-<form action="/login" method="post">
-    <label for="username">Имя пользователя:</label>
-    <input type="text" id="username" name="username" required>
+<div class="container">
+    <h2>Авторизация</h2>
 
-    <label for="password">Пароль:</label>
-    <input type="password" id="password" name="password" required>
+    <div th:if="${param.error}" class="error">
+        Неправильное имя пользователя или пароль. Повторите еще раз.
+    </div>
 
-    <button type="submit">Войти</button>
-</form>
-<p>Нет аккаунта? <a href="/register">Зарегистрироваться</a></p>
+    <form th:action="@{/login}" method="post">
+        <div class="form-group">
+            <label for="username">Имя пользователя:</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        </div>
+
+        <button type="submit">Войти</button>
+    </form>
+
+    <div class="register-link">
+        Нету аккаунта? <a th:href="@{/register}">Зарегистрироваться</a>
+    </div>
+</div>
 </body>
 </html>

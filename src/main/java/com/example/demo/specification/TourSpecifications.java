@@ -25,3 +25,4 @@ public class TourSpecifications {
                 (price == null) ? null : criteriaBuilder.lessThanOrEqualTo(root.get("price"), price);
     }
 }
+

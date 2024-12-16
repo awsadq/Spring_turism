@@ -24,13 +24,14 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeRequests(authorize -> authorize
-                        .requestMatchers("/register", "/login", "/").permitAll()  // Открытый доступ для всех на /public
-                        .anyRequest().authenticated()              // Требуется аутентификация для всех остальных запросов
+                        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll() // Разрешаем доступ к этим страницам
+                        .requestMatchers("/register", "/login", "/").permitAll()  // Открытый доступ для всех на /register и /login
+                        .anyRequest().authenticated() // Требуется аутентификация для всех остальных запросов
                 )
                 .formLogin(form -> form
-                        .loginPage("/login")                     // Кастомная страница входа (добавьте её в проект)
+                        .loginPage("/login") // Страница входа (добавьте её в проект)
                         .permitAll()
-                        .defaultSuccessUrl("/profile", true)
+                        .defaultSuccessUrl("/index", true) // Перенаправление на главную страницу после успешной авторизации
                         .loginProcessingUrl("/login")
                 );
 //                .logout(logout -> logout
@@ -52,6 +53,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+
         return new BCryptPasswordEncoder();
     }
 }

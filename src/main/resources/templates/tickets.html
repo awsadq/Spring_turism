@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Авиабилеты</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #bddaf3;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #0f1a23;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    header .logo h1 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1;
+      color: white;
+    }
+
+    nav {
+      display: flex;
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    nav ul li {
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    .flight-table {
+      max-width: 800px;
+      margin: 100px auto 20px auto;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 1s forwards;
+    }
+
+    .flight-table h3 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #37474f;
+      margin-top: 30px;
+    }
+
+    .flight-table table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .flight-table th, .flight-table td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      font-size: 1rem;
+    }
+
+    .flight-table th {
+      background-color: #0f3655;
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    .flight-table tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .flight-table tbody tr:hover {
+      background-color: #f1f1f1;
+      transition: background-color 0.3s ease-in-out, transform 0.3s ease;
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    footer {
+      background: linear-gradient(135deg, #0f1a23, #1a3348);
+      color: #ddd;
+      padding: 4px 4px;
+      font-size: 16px;
+      position: relative;
+      text-align: center;
+      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+      margin-top: 230px;
+    }
+
+    .footer-container {
+      display: flex;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      gap: 40px;
+
+    }
+
+    .footer-section {
+      flex: 1 1 250px;
+      margin: 20px 0;
+      padding: 15px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px); /* Современный эффект размытия */
+      transition: transform 0.3s ease, background 0.3s ease;
+      text-align: left;
+    }
+
+    .footer-section:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-10px);
+    }
+
+    .footer-section h3, .footer-section h4 {
+      color: #5f97bd;
+      margin-bottom: 15px;
+      font-size: 22px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .footer-section p, .footer-section ul li a {
+      color: white;
+      line-height: 1.8;
+      margin: 5px 0;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 10px;
+      color:white;
+    }
+
+    .footer-section ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .footer-section ul li a:hover {
+      color: #5f97bd;
+      text-decoration: underline;
+    }
+
+    .footer-section .social-icons {
+      display: flex;
+      justify-content: flex-start;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .footer-section .social-icons a {
+      font-size: 20px;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3c5468, #5bc4cc);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .footer-section .social-icons a:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+    }
+
+    .footer-line {
+      margin: 20px 0;
+      border: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .footer-rights {
+      text-align: center;
+      color: #ddd;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+
+    /* Адаптация для мобильных устройств */
+    @media (max-width: 768px) {
+      .footer-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .footer-section {
+        text-align: center;
+      }
+
+      .footer-section .social-icons {
+        justify-content: center;
+      }
+    }
+
+
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <h1>TravelGuide</h1>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="/">Главная</a></li>
+      <li><a href="/about">О нас</a></li>
+      <li><a href="#">Горящие туры</a></li>
+      <li><a href="/countries">Страны</a></li>
+      <li><a href="/tickets">Авиабилеты</a></li>
+      <li><a href="/contact">Контакты</a></li>
+      <li><a href="/profile">Личный кабинет</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="flight-table">
+  <h3>Авиабилеты</h3>
+  <table>
+    <thead>
+    <tr>
+      <th>Страна вылета</th>
+      <th>Страна прилета</th>
+      <th>Цена (USD)</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>Бишкек</td>
+      <td>Китай</td>
+      <td>500</td>
+    </tr>
+
+    <tr>
+      <td>Бишкек</td>
+      <td>Дубай</td>
+      <td>400</td>
+    </tr>
+    <tr>
+      <td>Бишкек</td>
+      <td>Египет</td>
+      <td>600</td>
+    </tr>
+    <tr>
+      <td>Бишкек</td>
+      <td>Италия</td>
+      <td>700</td>
+    </tr>
+    <tr>
+      <td>Бишкек</td>
+      <td>Корея</td>
+      <td>550</td>
+    </tr>
+    <tr>
+      <td>Бишкек</td>
+      <td>Испания</td>
+      <td>750</td>
+    </tr>
+    <tr>
+      <td>Бишкек</td>
+      <td>Франция</td>
+      <td>800</td>
+    </tr>
+    <tr>
+      <td>Бишкек</td>
+      <td>Вьетнам</td>
+      <td>650</td>
+    </tr>
+    <tr>
+      <td>Бишкек</td>
+      <td>Турция</td>
+      <td>450</td>
+    </tr>
+    <tr>
+      <td>Бишкек</td>
+      <td>Тайланд</td>
+      <td>700</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<footer>
+  <div class="footer-container">
+    <div class="footer-section about">
+      <h3>TravelGuide</h3>
+      <p>TravelGuide помогает вам находить и бронировать лучшие предложения для путешествий. Откройте для себя мир вместе с нами!</p>
+      <p>&copy; 2024 TravelGuide | Все права защищены</p>
+    </div>
+
+    <div class="footer-section links">
+      <h4>Ссылки</h4>
+      <ul>
+        <li><a href="/">Главная</a></li>
+        <li><a href="/about">О нас</a></li>
+        <li><a href="#">Горящие туры</a></li>
+        <li><a href="/countries">Страны</a></li>
+        <li><a href="/tickets">Авиабилеты</a></li>
+        <li><a href="/contact">Контакты</a></li>
+        <li><a href="/profile">Личный кабинет</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section contact">
+      <h4>Контакты</h4>
+      <p>Телефон: +996 504 09 99 00</p>
+      <p>Email: travelguide@gmail.com</p>
+      <p>Адрес: Бишкек, ул. Уметалиева, 120</p>
+    </div>
+
+    <div class="footer-section social">
+      <h4>Мы в соцсетях</h4>
+      <div class="social-icons">
+        <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="youtube"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+  <hr class="footer-line">
+  <div class="footer-rights">
+    <p>&copy; Все права защищены. Информация сайта защищена законом об авторских правах.</p>
+  </div>
+</footer>
+
+
+</body>
+</html>
