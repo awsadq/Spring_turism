@@ -2,13 +2,13 @@ package com.example.demo.service;
 
 import com.example.demo.model.Tour;
 import com.example.demo.repository.TourRepository;
-import com.example.demo.specification.TourSpecifications;
+import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TourService {
@@ -65,6 +65,45 @@ public class TourService {
         return List.of("Отдых", "Экскурсия", "Шопинг", "Гастрономический тур"); // Пример типов туров
     }
 
+    public Tour saveTour(Tour tour) {
+        return tourRepository.save(tour);
+    }
 
+    public Tour getTourById(Long id) {
+        return tourRepository.findById(id).orElse(null);
+    }
 
+    public Tour updateTour(Long id, Tour tourDetails) {
+        return tourRepository.findById(id).map(existingTour -> {
+            existingTour.setCountry(tourDetails.getCountry());
+            existingTour.setType(tourDetails.getType());
+            existingTour.setDuration(tourDetails.getDuration());
+            existingTour.setPrice(tourDetails.getPrice());
+            existingTour.setDescription(tourDetails.getDescription());
+            existingTour.setIs_hot(tourDetails.getIs_hot());
+            return tourRepository.save(existingTour);
+        }).orElse(null);
+    }
+
+    public boolean deleteTour(Long id) {
+        return tourRepository.findById(id).map(tour -> {
+            tourRepository.delete(tour);
+            return true;
+        }).orElse(false);
+    }
+
+    private final LevenshteinDistance levenshtein = new LevenshteinDistance();
+
+    public List<Tour> searchByCountryWithTolerance(String country) {
+        if (country == null || country.isBlank()) {
+            return tourRepository.findAll();
+        }
+
+        List<Tour> allTours = tourRepository.findAll();
+
+        // Фильтрация по расстоянию Левенштейна (порог - 2 символа)
+        return allTours.stream()
+                .filter(tour -> levenshtein.apply(tour.getCountry().toLowerCase(), country.toLowerCase()) <= 2)
+                .collect(Collectors.toList());
+    }
 }

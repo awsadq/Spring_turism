@@ -25,19 +25,12 @@
       <li><a href="#">Контакты</a></li>
       <li><a href="#">Личный кабинет</a></li>
     </ul>
-    <form action="/tour-details" method="get" style="margin-bottom: 20px;">
-      <input type="text" name="query" placeholder="Поиск по местам..." style="padding: 10px; width: 200px; border-radius: 5px;">
-
-      <select name="region" style="padding: 10px; border-radius: 5px;">
-        <option value="Все">Все туры</option>
-        <option value="Турция">Турция</option>
-        <option value="Тайланд">Тайланд</option>
-        <option value="Вьентнам">Вьентнам</option>
-        <option value="Испания">Испания</option>
-      </select>
-
-      <button type="submit" style="padding: 10px 20px; border-radius: 5px; background-color: #f5ba13; color: #1a1a1a;">Найти</button>
-    </form>
+    <div th:if="${#authentication.name != 'anonymousUser'}">
+      <form action="/tours/search-leva" method="get" style="margin-bottom: 20px;">
+        <input type="text" name="country" placeholder="Поиск по местам..." style="padding: 10px; width: 200px; border-radius: 5px;" th:value="${searchQuery}">
+        <button type="submit" style="padding: 10px 20px; border-radius: 5px; background-color: #f5ba13; color: #1a1a1a;">Найти</button>
+      </form>
+    </div>
   </nav>
 
 </header>
@@ -46,7 +39,7 @@
 <section class="banner">
   <div class="overlay"></div>
   <img src="/images/2photo.jpg" alt="Туристический пейзаж">
-  <div class="banner-text">
+  <div class="banner-text" th:if="${#authentication.name == 'anonymousUser'}">
     <h2>Ваш идеальный отпуск начинается здесь!</h2>
     <a href="/login" class="btn">Войти</a>
     <a href="/register" class="btn">Регистрация</a>
@@ -62,61 +55,61 @@
         <img src="/images/4photo.jpg" alt="Китай">
         <h2>Китай</h2>
         <p>Уникальная культура и история, удивительная природа.</p>
-        <a href="#" class="btn">Узнать больше</a>
+        <a href="http://localhost:8080/countries?country=china" class="btn-details">Узнать больше</a>
       </div>
       <div class="swiper-slide card">
         <img src="/images/5photo.jpg" alt="Дубай">
         <h2>Дубай</h2>
         <p>Современная архитектура и роскошные курорты.</p>
-        <a href="#" class="btn">Узнать больше</a>
+        <a href="http://localhost:8080/countries?country=dubai" class="btn-details">Узнать больше</a>
       </div>
       <div class="swiper-slide card">
         <img src="/images/6photo.jpg" alt="Египет">
         <h2>Египет</h2>
         <p>Cтрана в Северной Африке, известная пирамидами, древними храмами.</p>
-        <a href="#" class="btn">Узнать больше</a>
+        <a href="http://localhost:8080/countries?country=egypt" class="btn-details">Узнать больше</a>
       </div>
       <div class="swiper-slide card">
         <img src="/images/7photo.jpg" alt="Италия">
         <h2>Италия</h2>
         <p>Cтрана знаменитая искусством, архитектурой и кухней.</p>
-        <a href="#" class="btn">Узнать больше</a>
+        <a href="http://localhost:8080/countries?country=italy" class="btn-details">Узнать больше</a>
       </div>
       <div class="swiper-slide card">
         <img src="/images/medium_nightlife-2162772_1280.jpg" alt="Корея">
         <h2>Корея</h2>
         <p>Страна с богатой историей, современными городами и пейзажами.</p>
-        <a href="#" class="btn">Узнать больше</a>
+        <a href="http://localhost:8080/countries?country=korea" class="btn-details">Узнать больше</a>
       </div>
       <div class="swiper-slide card">
         <img src="/images/13photo.jpg" alt="Испания">
         <h2>Испания</h2>
         <p>Очарование средиземноморского побережья и богатая культура.</p>
-        <a href="#" class="btn">Узнать больше</a>
+        <a href="http://localhost:8080/countries?country=spain" class="btn-details">Узнать больше</a>
       </div>
       <div class="swiper-slide card">
         <img src="/images/14photo.jpg" alt="Франция">
         <h2>Франция</h2>
         <p>Романтика Парижа и изысканная кухня ждут вас.</p>
-        <a href="#" class="btn">Узнать больше</a>
+        <a href="http://localhost:8080/countries?country=france" class="btn-details">Узнать больше</a>
       </div>
       <div class="swiper-slide card">
         <img src="/images/otdyh-vo-vetname.jpg" alt="Вьетнам">
         <h2>Вьетнам</h2>
         <p>Cтрана с живописными ландшафтами и древними храмами.</p>
-        <a href="#" class="btn">Узнать больше</a>
+        <a href="http://localhost:8080/countries?country=vietnam" class="btn-details">Узнать больше</a>
       </div>
       <div class="swiper-slide card">
         <img src="/images/16photo.jpg" alt="Турция">
         <h2>Турция</h2>
         <p>Страна известная культурным наследием, мечетями и пляжами.</p>
-        <a href="#" class="btn">Узнать больше</a>
+        <a href="http://localhost:8080/countries?country=turkey" class="btn-details">Узнать больше</a>
       </div>
       <div class="swiper-slide card">
         <img src="/images/tailand-strana.jpg" alt="Тайланд">
         <h2>Тайланд</h2>
         <p>Cтрана известная своими пляжами, храмами и богатой культурой.</p>
-        <a href="#" class="btn">Узнать больше</a>
+        <a href="http://localhost:8080/countries?country=thailand" class="btn-details">Узнать больше</a>
       </div>
     </div>
     <!-- Добавьте кнопки навигации, если необходимо -->
@@ -125,46 +118,23 @@
   </div>
 </section>
 
-<section class="filter-section">
-  <h2>Поиск туров</h2>
-  <form th:action="@{/tours}" method="get">
-    <label for="country">Страна:</label>
-    <select id="country" name="country">
-      <option value="">Выберите страну</option>
-      <option th:each="country : ${countries}" th:value="${country}" th:text="${country}"></option>
-    </select>
-
-    <label for="tourType">Тип тура:</label>
-    <select id="tourType" name="type">
-      <option value="">Выберите тип тура</option>
-      <option th:each="type : ${tourTypes}" th:value="${type}" th:text="${type}"></option>
-    </select>
-
-    <label for="duration">Длительность (дней):</label>
-    <input type="number" id="duration" name="duration" placeholder="Количество дней">
-
-    <label for="price">Цена:</label>
-    <input type="number" id="price" name="price" placeholder="Максимальная цена">
-
-    <button type="submit" class="btn">Найти туры</button>
-
-  </form>
-</section>
-
-
-<section id="filtered-tours" class="card-container" th:if="${filteredTours != null}">
-  <h2>Отфильтрованные туры</h2>
-  <div class="card-wrapper" th:each="tour : ${filteredTours}">
-    <div class="card">
-      <h2 th:text="${tour.country}"></h2>
-      <p th:text="${tour.type}"></p>
-      <p>Цена: <span th:text="${tour.price}"></span> руб.</p>
-      <p>Длительность: <span th:text="${tour.duration}"></span> дней</p>
-      <a th:href="@{/tours/{id}(id=${tour.id})}" class="btn">Узнать больше</a>
+<section id="filtered-tours" class="card-container" th:if="${#authentication.name != 'anonymousUser'} and ${tours != null}">
+  <h2 class="section-title">Отфильтрованные туры</h2>
+  <div class="card-wrapper">
+    <div class="card" th:each="tour : ${tours}">
+      <div class="card-content">
+        <h3 class="tour-title" th:text="${tour.country}">Страна</h3>
+        <p class="tour-type">Тип тура: <span th:text="${tour.type}"></span></p>
+        <p class="tour-price">Цена: <span th:text="${tour.price}"></span> руб.</p>
+        <p class="tour-duration">Длительность: <span th:text="${tour.duration}"></span> дней</p>
+      </div>
+      <div class="card-footer">
+        <a th:href="@{/tours/{id}(id=${tour.id})}" class="btn-details">Узнать больше</a>
+      </div>
     </div>
   </div>
-  <p th:if="${#lists.isEmpty(filteredTours)}">Туры не найдены.</p>
 </section>
+
 
 
 <!-- Слайдер -->
@@ -225,6 +195,8 @@
 
 <script src="/js/scripts.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+
 <script>
   const swiper = new Swiper('.swiper-container', {
     slidesPerView: 4, // Количество карточек на экране
@@ -236,6 +208,10 @@
     pagination: {
       el: '.swiper-pagination',
       clickable: true,
+    },
+    autoplay: {
+      delay: 3000, // Задержка между прокрутками в миллисекундах
+      disableOnInteraction: true, // Автопрокрутка не останавливается при взаимодействии
     },
   });
 </script>

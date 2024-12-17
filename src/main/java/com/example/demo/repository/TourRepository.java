@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TourRepository extends JpaRepository<Tour, Long>, JpaSpecificationExecutor<Tour> {
@@ -26,4 +27,6 @@ public interface TourRepository extends JpaRepository<Tour, Long>, JpaSpecificat
     List<Tour> findAll();
 
     List<Tour> findByCountryAndTypeAndDurationAndPrice(String country, String type, Integer duration, Double price);
+
+    Optional<Tour> findById(Long id);
 }

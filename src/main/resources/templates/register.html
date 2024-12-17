@@ -1,85 +1,77 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
-    <title>Registration</title>
+    <title>Регистрация</title>
     <meta charset="UTF-8">
-    <style>
-        .error {
-            color: red;
-            font-size: 0.9em;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .container {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        input {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0;
-            box-sizing: border-box;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .success {
-            color: green;
-            margin-bottom: 10px;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/register.css}" />
+
 </head>
 <body>
 <div class="container">
-    <h2>Registration</h2>
+    <div class="magic-circle"></div> <!-- Волшебный круг -->
+    <h2 class="page-title">Создайте учетную запись</h2>
+    <p class="subtitle">Заполните данные ниже, чтобы начать своё путешествие!</p>
 
     <!-- Сообщение об успешной регистрации -->
     <div th:if="${message}" class="success" th:text="${message}"></div>
 
     <!-- Сообщение об ошибке -->
     <div th:if="${param.error}" class="error">
-        Registration failed. Please try again.
+        Не удалось зарегистрироваться. Попробуйте снова.
     </div>
 
-    <form th:action="@{/register}" th:object="${user}" method="post">
+    <form th:action="@{/register}" th:object="${user}" method="post" class="auth-form">
         <div class="form-group">
-            <label for="username">Username:</label>
+            <label for="username">Имя пользователя:</label>
             <input type="text" id="username" th:field="*{username}" required>
             <div class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
         </div>
 
         <div class="form-group">
-            <label for="password">Password:</label>
+            <label for="password">Пароль:</label>
             <input type="password" id="password" th:field="*{password}" required>
             <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
         </div>
 
         <div class="form-group">
-            <label for="email">Email:</label>
+            <label for="email">Электронная почта:</label>
             <input type="email" id="email" th:field="*{email}" required>
             <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
         </div>
-        <button type="submit">Register</button>
+
+        <button type="submit" class="btn">Зарегистрироваться</button>
     </form>
 
-    <div style="margin-top: 15px; text-align: center;">
-        Already have an account? <a th:href="@{/login}">Login here</a>
-    </div>
+    <p class="register-text">Уже есть аккаунт? <a th:href="@{/login}">Войти здесь</a></p>
 </div>
+<script>
+    // Плавный эффект появления страницы
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.querySelector('.container');
+        container.style.opacity = '0';
+        container.style.transform = 'translateY(-50px)';
+        setTimeout(() => {
+            container.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            container.style.opacity = '1';
+            container.style.transform = 'translateY(0)';
+        }, 100);
+    });
+
+    // Анимация кнопки
+    document.querySelector('.btn').addEventListener('mouseenter', (event) => {
+        const btn = event.target;
+        btn.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
+        btn.style.transform = 'translateY(-5px)';
+        btn.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.3)';
+    });
+
+    document.querySelector('.btn').addEventListener('mouseleave', (event) => {
+        const btn = event.target;
+        btn.style.transform = 'translateY(0)';
+        btn.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.2)';
+    });
+
+</script>
 </body>
 </html>

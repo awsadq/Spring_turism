@@ -1,14 +1,77 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Личный кабинет</title>
-  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <link rel="stylesheet" th:href="@{/css/profile.css}" />
 </head>
 <body>
-<h2>Личный кабинет</h2>
-<p>Добро пожаловать, <span th:text="${user.getUsername()}">Имя пользователя</span>!</p>
-<p>Ваш адрес электронной почты: <span th:text="${user.getEmail()}">Электронная почта</span></p>
-<a href="/logout">Выйти</a>
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Личный кабинет</h1>
+    <p class="welcome-message">Добро пожаловать, <span th:text="${user.getUsername()}">Имя пользователя</span>!</p>
+    <p class="email-info">Ваш адрес электронной почты: <span th:text="${user.getEmail()}">Электронная почта</span></p>
+    <a href="/logout" class="btn-logout">Выйти</a>
+  </div>
+
+  <div class="dashboard-content">
+    <!-- Карточка смены пароля -->
+    <div class="card">
+      <h3>Смена пароля</h3>
+      <form th:action="@{/change-password}" method="post" class="form">
+        <label for="current-password">Текущий пароль:</label>
+        <input type="password" id="current-password" name="currentPassword" required>
+
+        <label for="new-password">Новый пароль:</label>
+        <input type="password" id="new-password" name="newPassword" required>
+
+        <label for="confirm-password">Подтвердите новый пароль:</label>
+        <input type="password" id="confirm-password" name="confirmPassword" required>
+
+        <button type="submit" class="btn">Сменить пароль</button>
+      </form>
+    </div>
+
+    <!-- Карточка обновления профиля -->
+    <div class="card">
+      <h3>Обновление данных</h3>
+      <form th:action="@{/update-profile}" method="post" class="form">
+        <label for="username">Имя пользователя:</label>
+        <input type="text" id="username" name="username" th:value="${user.getUsername()}" required>
+
+        <label for="email">Электронная почта:</label>
+        <input type="email" id="email" name="email" th:value="${user.getEmail()}" required>
+
+        <button type="submit" class="btn">Обновить данные</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.querySelector('.dashboard-container');
+    container.style.opacity = '0';
+    container.style.transform = 'translateY(-50px)';
+    setTimeout(() => {
+      container.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+      container.style.opacity = '1';
+      container.style.transform = 'translateY(0)';
+    }, 100);
+  });
+
+  // Подсказка при несоответствии паролей
+  document.querySelector('.form').addEventListener('submit', (event) => {
+    const newPassword = document.getElementById('new-password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+
+    if (newPassword && confirmPassword && newPassword !== confirmPassword) {
+      event.preventDefault();
+      alert('Пароли не совпадают. Пожалуйста, проверьте ввод.');
+    }
+  });
+
+</script>
 </body>
 </html>

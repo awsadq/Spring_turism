@@ -14,11 +14,16 @@
       @Id
       @GeneratedValue(strategy = GenerationType.IDENTITY)
       private Integer id; // Уникальный идентификатор тура
-
       private String country; // Страна
-      private String type; // Тип тура (пляжный, культурный и т.д.)
+      @Enumerated(EnumType.STRING)
+      private TourType type; // Тип тура (пляжный, культурный и т.д.)
       private Integer duration; // Продолжительность тура (в днях)
       private Double price; // Цена
+      @Lob
       private String description; // Описание тура
       private Boolean is_hot;
+
+      public enum TourType {
+          ОТДЫХ, ЭКСКУРСИЯ, ШОПИНГ, ГАСТРОНОМИЧЕСКИЙ_ТУР
+      }
   }

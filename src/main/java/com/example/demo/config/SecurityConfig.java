@@ -4,16 +4,11 @@ import com.example.demo.service.PersonDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.web.PasswordManagementDsl;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.User;
 
 @Configuration
 @EnableWebSecurity
@@ -22,25 +17,25 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
+                .csrf(csrf -> csrf.disable()) // Отключаем CSRF для упрощения
                 .authorizeRequests(authorize -> authorize
-                        .requestMatchers("/register", "/login", "/").permitAll()  // Открытый доступ для всех на /public
-                        .anyRequest().authenticated()              // Требуется аутентификация для всех остальных запросов
+                        .requestMatchers("/register", "/login", "/").permitAll() // Открываем доступ к этим путям
+                        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll() // Доступ к статическим ресурсам
+                        .anyRequest().authenticated() // Все остальные запросы требуют аутентификации
                 )
                 .formLogin(form -> form
-                        .loginPage("/login")                     // Кастомная страница входа (добавьте её в проект)
-                        .permitAll()
-                        .defaultSuccessUrl("/profile", true)
+                        .loginPage("/login") // Кастомная страница входа
+                        .permitAll() // Разрешаем доступ ко всем пользователям
+                        .defaultSuccessUrl("/profile", true) // После успешного входа перенаправляем на /profile
                         .loginProcessingUrl("/login")
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/logout") // URL для выхода
+                        .logoutSuccessUrl("/login?logout") // Перенаправление после выхода
+                        .permitAll()
                 );
-//                .logout(logout -> logout
-//                        .logoutUrl("/logout")                    // URL для выхода из системы
-//                        .logoutSuccessUrl("/login?logout")       // Перенаправление после выхода
-//                        .permitAll()
-//                );
         return http.build();
     }
-
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider(PersonDetailsService personDetailsService) {
