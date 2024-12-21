@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поиск туров</title>
+</head>
+<body>
+<!-- Форма для поиска -->
+<form action="/search" method="get" class="search-form">
+    <input type="text" name="query" placeholder="Поиск по туризму" required>
+    <button type="submit" class="btn">Поиск</button>
+</form>
+
+<h2>Результаты поиска:</h2>
+
+<!-- Проверка, если туры найдены -->
+<div>
+    <ul>
+        <th:block th:if="${tours}">
+            <!-- Отображаем каждую карточку для найденных туров -->
+            <li th:each="tour : ${tours}">
+                <div class="tour-card">
+                    <h3 th:text="${tour.name}">Название тура</h3>
+                    <p>Страна: <span th:text="${tour.country}"></span></p>
+                    <p>Тип: <span th:text="${tour.type}"></span></p>
+                    <p>Описание: <span th:text="${tour.description}"></span></p>
+                    <p>Цена: <span th:text="${tour.price}">Цена</span> рублей</p>
+                    <p>Продолжительность: <span th:text="${tour.duration}">Длительность</span> дней</p>
+                    <!-- Ссылка на детальную страницу тура -->
+                    <a th:href="@{/tour/{id}(id=${tour.id})}">Подробнее</a>
+                </div>
+            </li>
+        </th:block>
+
+        <!-- Если туров не найдено -->
+        <th:block th:if="${#lists.isEmpty(tours)}">
+            <p>Нет результатов по вашему запросу.</p>
+        </th:block>
+    </ul>
+    <script>
+        document.querySelector('.search-form input').addEventListener('input', function () {
+            let query = this.value;
+            if (query.length > 0) {
+                window.location.href = "/search?query=" + query;  // Перенаправление на страницу с результатами
+            }
+        });
+    </script>
+</div>
+</body>
+</html>

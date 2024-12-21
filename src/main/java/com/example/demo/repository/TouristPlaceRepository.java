@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface TouristPlaceRepository extends JpaRepository<TouristPlace, Long> {
     List<TouristPlace> findAll();
+    List<TouristPlace> findAllByCountry(String country);
+
 }

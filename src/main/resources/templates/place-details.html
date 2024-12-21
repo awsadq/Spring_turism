@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Details of ' + ${place.name}">Place Details</title>
+</head>
+<body>
+
+<h1 th:text="'Details of ' + ${place.name}">Place Details</h1>
+
+<!-- Отображение информации о месте -->
+<li th:each="tour : ${tours}">
+    <div class="tour-card">
+        <h3 th:text="${tour.name}">Название тура</h3>
+        <p>Страна: <span th:text="${tour.country}"></span></p>
+        <p>Тип: <span th:text="${tour.type}"></span></p>
+        <p>Описание: <span th:text="${tour.description}"></span></p>
+        <p>Цена: <span th:text="${tour.price}">Цена</span> рублей</p>
+        <p>Продолжительность: <span th:text="${tour.duration}">Длительность</span> дней</p>
+        <!-- Ссылка на детальную страницу тура -->
+        <a th:href="@{/tour/{id}(id=${tour.id})}">Подробнее</a>
+    </div>
+</li>
+
+<!-- Кнопка возврата на главную страницу -->
+<a href="/" th:href="@{/}">Back to Home</a>
+
+</body>
+</html>

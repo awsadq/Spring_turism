@@ -13,19 +13,14 @@ import java.util.List;
 public class WebController {
 
     @Autowired
-    private TouristPlaceRepository touristPlaceRepository; // Внедряем репозиторий
+    private TouristPlaceRepository touristPlaceRepository;
 
     @GetMapping("/about")
     public String about() {
         return "company";
     }
 
-    @GetMapping("/countries")
-    public String countries(Model model) {
-        List<TouristPlace> places = touristPlaceRepository.findAll(); // Используем экземпляр репозитория для вызова метода
-        model.addAttribute("countries", places); // Передаем данные в модель
-        return "countries"; // Возвращаем имя шаблона
-    }
+
 
     @GetMapping("/tickets")
     public String tickets() {

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Туры</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f9;
+            color: #0f1a23;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: #0f1a23;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header .logo h1 {
+            margin: 0;
+            font-size: 24px;
+            line-height: 1;
+            padding: 5px 0;
+        }
+
+        .tour-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 50px 20px;
+        }
+
+        .tour-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .tour-card:hover {
+            transform: scale(1.05);
+        }
+
+        .tour-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .tour-card .info {
+            padding: 15px;
+        }
+
+        .tour-card h3 {
+            font-size: 1.5rem;
+            margin: 0;
+            color: #333;
+        }
+
+        .tour-card p {
+            font-size: 1rem;
+            color: #777;
+            margin: 10px 0;
+        }
+
+        .tour-card .price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ff6f61;
+        }
+
+        .tour-card .btn {
+            display: block;
+            background-color: #ff6f61;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .tour-card .btn:hover {
+            background-color: #e55a47;
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <h1>Туры по миру</h1>
+    </div>
+</header>
+<form action="/tour-details" method="get" style="margin-bottom: 20px;">
+    <input type="text" name="query" placeholder="Поиск по местам..." style="padding: 10px; width: 200px; border-radius: 5px;">
+
+    <select name="region" style="padding: 10px; border-radius: 5px;">
+        <option value="Все">Все туры</option>
+        <option value="Турция">Турция</option>
+        <option value="Тайланд">Тайланд</option>
+        <option value="Вьентнам">Вьентнам</option>
+        <option value="Испания">Испания</option>
+    </select>
+
+    <button type="submit" style="padding: 10px 20px; border-radius: 5px; background-color: #f5ba13; color: #1a1a1a;">Найти</button>
+</form>
+<div class="tour-card">
+    <div th:each="tour : ${tours}">
+        <h3 th:text="${tour.country}">Название тура</h3>
+        <p th:text="'Тип: ' + ${tour.type}">Тип</p>
+        <p th:text="'Описание: ' + ${tour.description}">Описание</p>
+        <p th:text="'Цена: ' + ${tour.price} + ' руб.'">Цена</p>
+        <p th:text="'Длительность: ' + ${tour.duration} + ' дней'">Длительность</p>
+        <a th:href="@{/tour/{id}(id=${tour.id})}">Подробнее</a>
+    </div>
+</div>
+
+<!--<section class="tour-cards">-->
+<!--    <div class="tour-card">-->
+<!--        <img src="/images/turkey_antalyia.jpg" alt="Турция Анталия">-->
+<!--        <div class="info">-->
+<!--            <h3>Турция Тур в Анталию</h3>-->
+<!--            <p><strong>Тип:</strong> Пляжный</p>-->
+<!--            <p><strong>Описание:</strong> Отдых на солнечных пляжах Турции с комфортом.</p>-->
+<!--            <p class="price">600₽</p>-->
+<!--            <a href="" class="btn">Подробнее</a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="tour-card">-->
+<!--        <img src="/images/turkey_stambul.jpg" alt="Турция Стамбул">-->
+<!--        <div class="info">-->
+<!--            <h3>Турция Тур в Стамбул</h3>-->
+<!--            <p><strong>Тип:</strong> Экскурсионный</p>-->
+<!--            <p><strong>Описание:</strong> Откройте для себя культуру и архитектуру Стамбула.</p>-->
+<!--            <p class="price">700₽</p>-->
+<!--            <a href="#" class="btn">Подробнее</a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="tour-card">-->
+<!--        <img src="/images/turkey_capadocia.jpg" alt="Турция Каппадокия">-->
+<!--        <div class="info">-->
+<!--            <h3>Турция Тур в Каппадокию</h3>-->
+<!--            <p><strong>Тип:</strong> Приключенческий</p>-->
+<!--            <p><strong>Описание:</strong> Наслаждайтесь удивительными пейзажами Каппадокии.</p>-->
+<!--            <p class="price">750₽</p>-->
+<!--            <a href="#" class="btn">Подробнее</a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="tour-card">-->
+<!--        <img src="/images/turkey_bodrum.jpg" alt="Турция Бодрум">-->
+<!--        <div class="info">-->
+<!--            <h3>Турция Тур в Бодрум</h3>-->
+<!--            <p><strong>Тип:</strong> Пляжный</p>-->
+<!--            <p><strong>Описание:</strong> Идеальный отдых в Бодруме на красивых пляжах.</p>-->
+<!--            <p class="price">800₽</p>-->
+<!--            <a href="#" class="btn">Подробнее</a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="tour-card">-->
+<!--        <img src="/images/thailand_phuket.jpg" alt="Таиланд Пхукет">-->
+<!--        <div class="info">-->
+<!--            <h3>Таиланд Тур в Пхукет</h3>-->
+<!--            <p><strong>Тип:</strong> Пляжный</p>-->
+<!--            <p><strong>Описание:</strong> Наслаждайтесь отдыхом на пляжах Пхукета.</p>-->
+<!--            <p class="price">650₽</p>-->
+<!--            <a href="#" class="btn">Подробнее</a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="tour-card">-->
+<!--        <img src="/images/thailand_bangkok.jpg" alt="Таиланд Бангкок">-->
+<!--        <div class="info">-->
+<!--            <h3>Таиланд Тур в Бангкок</h3>-->
+<!--            <p><strong>Тип:</strong> Культурный</p>-->
+<!--            <p><strong>Описание:</strong> Погружение в культуру Тайланда.</p>-->
+<!--            <p class="price">700₽</p>-->
+<!--            <a href="#" class="btn">Подробнее</a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="tour-card">-->
+<!--        <img src="/images/thailand_krabi.jpg" alt="Таиланд Краби">-->
+<!--        <div class="info">-->
+<!--            <h3>Таиланд Тур в Краби</h3>-->
+<!--            <p><strong>Тип:</strong> Приключенческий</p>-->
+<!--            <p><strong>Описание:</strong> Откройте для себя природу Краби.</p>-->
+<!--            <p class="price">720₽</p>-->
+<!--            <a href="#" class="btn">Подробнее</a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="tour-card">-->
+<!--        <img src="/images/thailand_samui.jpg" alt="Таиланд Самуи">-->
+<!--        <div class="info">-->
+<!--            <h3>Таиланд Тур в Самуи</h3>-->
+<!--            <p><strong>Тип:</strong> Пляжный</p>-->
+<!--            <p><strong>Описание:</strong> Отдых на острове Самуи с незабываемыми видами.</p>-->
+<!--            <p class="price">750₽</p>-->
+<!--            <a href="#" class="btn">Подробнее</a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="tour-card">-->
+<!--        <img src="/images/vietnam_hanoi.jpg" alt="Вьетнам Ханой">-->
+<!--        <div class="info">-->
+<!--            <h3>Вьетнам Тур в Ханой</h3>-->
+<!--            <p><strong>Тип:</strong> Культурный</p>-->
+<!--            <p><strong>Описание:</strong> Исследуйте столицу Вьетнама с её древней историей.</p>-->
+<!--            <p class="price">680₽</p>-->
+<!--            <a href="#" class="btn">Подробнее</a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="tour-card">-->
+<!--        <img src="/images/vietnam_ho_shi_min.jpg" alt="Вьетнам Хошимин">-->
+<!--        <div class="info">-->
+<!--            <h3>Вьетнам Тур в Хошимин</h3>-->
+<!--            <p><strong>Тип:</strong> Культурный</p>-->
+<!--            <p><strong>Описание:</strong> Откройте для себя динамичный Хошимин.</p>-->
+<!--            <p class="price">700₽</p>-->
+<!--            <a href="#" class="btn">Подробнее</a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="tour-card">-->
+<!--        <img src="/images/vietnam_phu_quoc.jpg" alt="Вьетнам Фукуок">-->
+<!--        <div class="info">-->
+<!--            <h3>Вьетнам Тур на Фукуок</h3>-->
+<!--            <p><strong>Тип:</strong> Пляжный</p>-->
+<!--            <p><strong>Описание:</strong> Тихий отдых на прекрасных пляжах Фукуока.</p>-->
+<!--            <p class="price">750₽</p>-->
+<!--            <a href="#" class="btn">Подробнее</a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="tour-card">-->
+<!--        <img src="/images/malaysia_kuala_lumpur.jpg" alt="Малайзия Куала-Лумпур">-->
+<!--        <div class="info">-->
+<!--            <h3>Малайзия Тур в Куала-Лумпур</h3>-->
+<!--            <p><strong>Тип:</strong> Культурный</p>-->
+<!--            <p><strong>Описание:</strong> Откройте для себя разнообразную культуру Малайзии.</p>-->
+<!--            <p class="price">800₽</p>-->
+<!--            <a href="#" class="btn">Подробнее</a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="tour-card">-->
+<!--        <img src="/images/malaysia_langkawi.jpg" alt="Малайзия Лангкави">-->
+<!--        <div class="info">-->
+<!--            <h3>Малайзия Тур на Лангкави</h3>-->
+<!--            <p><strong>Тип:</strong> Пляжный</p>-->
+<!--            <p><strong>Описание:</strong> Расслабляющий отдых на острове Лангкави.</p>-->
+<!--            <p class="price">820₽</p>-->
+<!--            <a href="#" class="btn">Подробнее</a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--        <div class="tour-card">-->
+<!--            <img src="/images/china_beijing.jpg" alt="Китай Пекин">-->
+<!--            <div class="info">-->
+<!--                <h3>Китай Тур в Пекин</h3>-->
+<!--                <p><strong>Тип:</strong> Культурный</p>-->
+<!--                <p><strong>Описание:</strong> Откройте для себя Великую китайскую стену, исследуйте Запретный город, Храм Неба и насладитесь национальной кухней.</p>-->
+<!--                <p class="price">800₽</p>-->
+<!--                <a href="#" class="btn">Подробнее</a>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="tour-card">-->
+<!--            <img src="/images/china_shanghai.jpg" alt="Китай Шанхай">-->
+<!--            <div class="info">-->
+<!--                <h3>Китай Тур в Шанхай</h3>-->
+<!--                <p><strong>Тип:</strong> Культурный</p>-->
+<!--                <p><strong>Описание:</strong> Познакомьтесь с современным и историческим Шанхаем: посетите Набережную Вайтань, Сад Юйюань и насладитесь видом на город с телебашни Восточная жемчужина.</p>-->
+<!--                <p class="price">850₽</p>-->
+<!--                <a href="#" class="btn">Подробнее</a>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="tour-card">-->
+<!--            <img src="/images/china_xian.jpg" alt="Китай Сиань">-->
+<!--            <div class="info">-->
+<!--                <h3>Китай Тур в Сиань</h3>-->
+<!--                <p><strong>Тип:</strong> Исторический</p>-->
+<!--                <p><strong>Описание:</strong> Исследуйте уникальные памятники Сианя, включая Терракотовую армию и старинные городские стены, окунитесь в богатую историю Китая.</p>-->
+<!--                <p class="price">750₽</p>-->
+<!--                <a href="#" class="btn">Подробнее</a>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="tour-card">-->
+<!--            <img src="/images/china_guilin.jpg" alt="Китай Гуйлинь">-->
+<!--            <div class="info">-->
+<!--                <h3>Китай Тур в Гуйлинь</h3>-->
+<!--                <p><strong>Тип:</strong> Природный</p>-->
+<!--                <p><strong>Описание:</strong> Насладитесь потрясающими пейзажами реки Лицзян, карстовыми горами и посетите живописные деревни, чтобы почувствовать гармонию с природой.</p>-->
+<!--                <p class="price">900₽</p>-->
+<!--                <a href="#" class="btn">Подробнее</a>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="tour-card">-->
+<!--            <img src="/images/china_hainan.jpg" alt="Китай о. Хайнань">-->
+<!--            <div class="info">-->
+<!--                <h3>Китай Тур на о. Хайнань</h3>-->
+<!--                <p><strong>Тип:</strong> Пляжный</p>-->
+<!--                <p><strong>Описание:</strong> Отдохните на тропических пляжах острова Хайнань, насладитесь теплыми водами Южно-Китайского моря и традиционными СПА-процедурами.</p>-->
+<!--                <p class="price">950₽</p>-->
+<!--                <a href="#" class="btn">Подробнее</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    <div class="tour-card">-->
+<!--        <img src="/images/dubai_city.jpg" alt="Дубай">-->
+<!--        <div class="info">-->
+<!--            <h3>Дубай Тур в город мечты</h3>-->
+<!--            <p><strong>Тип:</strong> Роскошный</p>-->
+<!--            <p><strong>Описание:</strong> Насладитесь современными небоскрёбами, уникальными магазинами и пляжным отдыхом в самом сердце ОАЭ.</p>-->
+<!--            <p class="price">1200₽</p>-->
+<!--            <a href="#" class="btn">Подробнее</a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="tour-card">-->
+<!--        <img src="/images/dubai_desert.jpg" alt="Дубай пустыня">-->
+<!--        <div class="info">-->
+<!--            <h3>Дубай Тур в пустыню</h3>-->
+<!--            <p><strong>Тип:</strong> Приключенческий</p>-->
+<!--            <p><strong>Описание:</strong> Откройте для себя песчаные дюны и насладитесь сафари на джипах в пустыне Дубая.</p>-->
+<!--            <p class="price">1100₽</p>-->
+<!--            <a href="#" class="btn">Подробнее</a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="tour-card">-->
+<!--        <img src="/images/dubai_marina.jpg" alt="Дубай Марина">-->
+<!--        <div class="info">-->
+<!--            <h3>Дубай Тур в Марину</h3>-->
+<!--            <p><strong>Тип:</strong> Экскурсионный</p>-->
+<!--            <p><strong>Описание:</strong> Посетите элитный район Дубая с прекрасными видами на яхты и современную архитектуру.</p>-->
+<!--            <p class="price">1150₽</p>-->
+<!--            <a href="#" class="btn">Подробнее</a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="tour-card">-->
+<!--        <img src="/images/egypt_cairo.jpg" alt="Египет Каир">-->
+<!--        <div class="info">-->
+<!--            <h3>Египет Тур в Каир</h3>-->
+<!--            <p><strong>Тип:</strong> Исторический</p>-->
+<!--            <p><strong>Описание:</strong> Посетите пирамиды Гизы, Сфинкса и египетский музей с древними артефактами.</p>-->
+<!--            <p class="price">700₽</p>-->
+<!--            <a href="#" class="btn">Подробнее</a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="tour-card">-->
+<!--        <img src="/images/egypt_luxor.jpg" alt="Египет Луксор">-->
+<!--        <div class="info">-->
+<!--            <h3>Египет Тур в Луксор</h3>-->
+<!--            <p><strong>Тип:</strong> Культурный</p>-->
+<!--            <p><strong>Описание:</strong> Откройте Долину царей, Карнакский храм и другие исторические памятники.</p>-->
+<!--            <p class="price">800₽</p>-->
+<!--            <a href="#" class="btn">Подробнее</a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="tour-card">-->
+<!--        <img src="/images/egypt_sharm.jpg" alt="Египет Шарм-эль-Шейх">-->
+<!--        <div class="info">-->
+<!--            <h3>Египет Тур в Шарм-эль-Шейх</h3>-->
+<!--            <p><strong>Тип:</strong> Пляжный</p>-->
+<!--            <p><strong>Описание:</strong> Наслаждайтесь отдыхом на песчаных пляжах и красотой Красного моря.</p>-->
+<!--            <p class="price">850₽</p>-->
+<!--            <a href="#" class="btn">Подробнее</a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="tour-card">-->
+<!--        <img src="/images/italy_rome.jpg" alt="Италия Рим">-->
+<!--        <div class="info">-->
+<!--            <h3>Италия Тур в Рим</h3>-->
+<!--            <p><strong>Тип:</strong> Культурный</p>-->
+<!--            <p><strong>Описание:</strong> Исследуйте Колизей, Римский форум и Ватикан, погрузитесь в историю Вечного города.</p>-->
+<!--            <p class="price">1000₽</p>-->
+<!--            <a href="#" class="btn">Подробнее</a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="tour-card">-->
+<!--        <img src="/images/italy_venice.jpg" alt="Италия Венеция">-->
+<!--        <div class="info">-->
+<!--            <h3>Италия Тур в Венецию</h3>-->
+<!--            <p><strong>Тип:</strong> Романтический</p>-->
+<!--            <p><strong>Описание:</strong> Насладитесь прогулками на гондолах, площадью Сан-Марко и уникальной атмосферой Венеции.</p>-->
+<!--            <p class="price">1100₽</p>-->
+<!--            <a href="#" class="btn">Подробнее</a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="tour-card">-->
+<!--        <img src="/images/italy_florence.jpg" alt="Италия Флоренция">-->
+<!--        <div class="info">-->
+<!--            <h3>Италия Тур во Флоренцию</h3>-->
+<!--            <p><strong>Тип:</strong> Культурный</p>-->
+<!--            <p><strong>Описание:</strong> Откройте для себя шедевры искусства эпохи Возрождения, включая собор Санта-Мария-дель-Фьоре и галерею Уффици.</p>-->
+<!--            <p class="price">1050₽</p>-->
+<!--            <a href="#" class="btn">Подробнее</a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="tour-card">-->
+<!--        <img src="/images/italy_milan.jpg" alt="Италия Милан">-->
+<!--        <div class="info">-->
+<!--            <h3>Италия Тур в Милан</h3>-->
+<!--            <p><strong>Тип:</strong> Шопинг</p>-->
+<!--            <p><strong>Описание:</strong> Исследуйте столицу моды с её изысканными магазинами, Дуомо и театром Ла Скала.</p>-->
+<!--            <p class="price">1150₽</p>-->
+<!--            <a href="#" class="btn">Подробнее</a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--</section>-->
+<script>
+    // Функция для фильтрации туров
+    function filterTours() {
+        const query = document.getElementById('search-input').value.toLowerCase();
+        const region = document.getElementById('region-select').value;
+        const tourCards = document.querySelectorAll('.tour-card');
+
+        // Разбиваем строку запроса на отдельные слова
+        const keywords = query.split(' ').filter(word => word.length > 0);
+
+        tourCards.forEach(card => {
+            const tourTitle = card.querySelector('h3').innerText.toLowerCase();
+            const tourDescription = card.querySelector('p').innerText.toLowerCase();
+            const tourRegion = card.getAttribute('data-region');
+
+            // Проверяем, содержит ли название или описание хотя бы одно из ключевых слов
+            const matchesKeyword = keywords.some(keyword =>
+                tourTitle.includes(keyword) || tourDescription.includes(keyword)
+            );
+
+            // Показываем карточку, если хотя бы одно ключевое слово совпадает и регион соответствует
+            if ((matchesKeyword || keywords.length === 0) && (tourRegion === region || region === 'Все')) {
+                card.style.display = 'block'; // Показываем карточку
+            } else {
+                card.style.display = 'none'; // Скрываем карточку
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login") // Страница входа (добавьте её в проект)
                         .permitAll()
-                        .defaultSuccessUrl("/index", true) // Перенаправление на главную страницу после успешной авторизации
+                        .defaultSuccessUrl("/", true) // Перенаправление на главную страницу после успешной авторизации
                         .loginProcessingUrl("/login")
                 );
 //                .logout(logout -> logout

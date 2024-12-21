@@ -1,12 +1,15 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.List;
 
+@Data
 @Entity
 @Table(name = "trip_plans")
 public class TripPlan {
@@ -22,7 +25,7 @@ public class TripPlan {
     private Integer days;
 
     @Setter
-    private String placesSelected;  // Список мест, выбранных пользователем
+    private String placesSelected;
 
     @Setter
     private String additionalNotes;
@@ -30,36 +33,11 @@ public class TripPlan {
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @ManyToOne // Связь с пользователем
-    @JoinColumn(name = "user_id") // Поле в таблице trip_plans, которое будет хранить id пользователя
-    private Person user;
-
-    // Геттеры
-    public Long getId() {
-        return id;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public Integer getDays() {
-        return days;
-    }
-
-    public String getPlacesSelected() {
-        return placesSelected;
-    }
-
-    public String getAdditionalNotes() {
-        return additionalNotes;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public Person getUser() {
-        return user;
-    }
+    @ManyToMany
+    @JoinTable(
+            name = "personTripPlan",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "trip_plan_id")
+    )
+    private List<Person> users;
 }

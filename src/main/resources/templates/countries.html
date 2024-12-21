@@ -1,566 +1,83 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Страны - TravelGuide</title>
-    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css}">
+    <title>Countries</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 
     <style>
-
         body {
-            font-family: Arial, sans-serif;
-            background-color: #bddaf3;
+            background-color: #b4dad8;
         }
 
-        header {
-            background-color: #0f1a23;
-            color: #fff;
-            padding: 10px 20px; /* Увеличиваем отступы */
+        .container-countries {
             display: flex;
-            justify-content: space-between; /* Размещаем логотип и меню по краям */
-            align-items: center; /* Центрируем по вертикали */
-            position: fixed; /* Фиксируем позицию заголовка */
-            top: 0; /* Устанавливаем заголовок в верхнюю часть страницы */
-            left: 0; /* Устанавливаем его в левом верхнем углу */
-            right: 0; /* Расширяем заголовок на всю ширину */
-            z-index: 1000; /* Делаем его выше остальных элементов */
+            flex-wrap: wrap;
+            margin: -10px; /* чтобы компенсировать отступы, если понадобятся */
         }
 
-        header .logo h1 {
-            margin: 0; /* Убираем все отступы для логотипа */
-            font-size: 24px; /* Размер шрифта логотипа */
-            line-height: 1; /* Устанавливаем высоту строки для лучшего выравнивания */
-            padding: 5px 0; /* Увеличиваем отступы по вертикали, чтобы надпись была лучше видна */
+        .country-card {
+            background: #ffffffee;
+            border-radius: 1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            padding: 1rem;
         }
 
-        nav {
-            margin: 0; /* Убираем отступы у навигации */
-            padding: 0; /* Убираем внутренние отступы */
-            background-color: #0f1a23; /* Цвет фона меню */
-            display: flex; /* Делаем навигацию гибкой */
-            justify-content: center; /* Центрируем меню */
-            width: 100%; /* Ширина навигации */
+        .country-card h2 {
+            font-weight: 700;
+            margin: 0 0 1rem;
         }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            margin: 0; /* Убираем отступы */
-            padding: 0; /* Убираем внутренние отступы */
-            flex-wrap: nowrap; /* Запрещаем перенос строк */
-        }
-
-        nav ul li {
-            margin: 0 10px; /* Уменьшаем отступы между элементами */
-        }
-
-        nav ul li a {
-            color: white; /* Цвет текста */
-            text-decoration: none; /* Убираем подчеркивание */
-            padding: 10px; /* Внутренний отступ для увеличения области нажатия */
-            display: block; /* Чтобы ссылки были как блоки */
-            font-size: 16px; /* Размер шрифта */
-            white-space: nowrap; /* Запрещаем перенос текста на новую строку */
-        }
-
-        /* Общий контейнер с заголовком и карточками */
-        .card-container {
-            padding: 20px;
-            max-width: 1200px; /* Ограничение ширины контейнера */
-            margin: 0 auto; /* Центрируем контейнер */
-        }
-
-        /* Заголовок */
-        .header-container h2 {
-            text-align: center;  /* Центрируем заголовок */
-            font-size: 30px;      /* Устанавливаем размер шрифта */
-            color: #333;          /* Цвет текста */
-            margin-bottom: 40px;  /* Отступ снизу */
-            text-transform: uppercase; /* Приводим текст к верхнему регистру */
-            letter-spacing: 2px;
-            margin-top: 70px/* Интервал между буквами */
-        }
-
-        /* Контейнер для карточек */
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4 карточки в ряд */
-            gap: 20px; /* Отступы между карточками */
-        }
-
-        /* Стили для карточки */
-        .card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Мягкая тень */
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        .card img {
+        .carousel-item img {
             width: 100%;
             height: 200px;
-            object-fit: cover; /* Обрезка изображения */
-            transition: transform 0.3s ease;
+            object-fit: cover;
         }
 
-        .card:hover img {
-            transform: scale(1.05);
+        шш8гт
+        .container-countries > .country-card:nth-child(5n+1),
+        .container-countries > .country-card:nth-child(5n+2) {
+            width: calc(50% - 20px);
         }
 
-        .card h3 {
-            font-size: 20px;
-            margin: 10px 0;
-            text-align: center;
-            color: #333;
-            font-weight: bold;
+        .container-countries > .country-card:nth-child(5n+3),
+        .container-countries > .country-card:nth-child(5n+4),
+        .container-countries > .country-card:nth-child(5n+5) {
+            width: calc(33.333% - 20px);
         }
-
-        .card .btn {
-            display: block;
-            text-align: center;
-            background: linear-gradient(90deg, #ff7e5f, #feb47b);
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: bold;
-            padding: 10px 15px;
-            margin: 15px auto;
-            width: 80%;
-            border-radius: 25px;
-            transition: background 0.3s ease, transform 0.3s ease;
-        }
-
-        .card .btn:hover {
-            background: linear-gradient(90deg, #feb47b, #ff7e5f);
-            transform: scale(1.05);
-        }
-
-        /* Медиа-запросы для адаптации карточек на разных экранах */
-        @media (max-width: 1024px) {
-            .cards {
-                grid-template-columns: repeat(3, 1fr); /* 3 карточки в ряд */
-            }
-        }
-
-        @media (max-width: 768px) {
-            .cards {
-                grid-template-columns: repeat(2, 1fr); /* 2 карточки в ряд */
-            }
-        }
-
-        @media (max-width: 480px) {
-            .cards {
-                grid-template-columns: 1fr; /* 1 карточка в ряду */
-            }
-        }
-
-
-        .map-container {
-            width: 80%; /* Ограничиваем ширину карты */
-            margin: 0 auto; /* Центрируем контейнер карты */
-            padding-bottom: 30px; /* Отступ снизу */
-        }
-
-        .map-container iframe {
-            width: 100%; /* Устанавливаем ширину iframe в 100% от родительского контейнера */
-            height: 450px; /* Высота карты */
-            border: none; /* Убираем рамку */
-        }
-
-        .map-container h2 {
-            text-align: center; /* Центрируем заголовок */
-            margin-bottom: 20px; /* Отступ между заголовком и картой */
-        }
-
-
-        /* Основной стиль контейнера формы */
-        .trip-planner {
-            background-color: #f9f9f9;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            margin: 50px auto;
-            font-family: 'Arial', sans-serif;
-            text-align: center;
-        }
-
-        /* Заголовок формы */
-        .trip-planner h2 {
-            text-align: center;
-            font-size: 2rem;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        /* Стиль для всех групп формы */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        /* Стиль для меток */
-        .form-group label {
-            display: block;
-            font-size: 1.1rem;
-            color: #555;
-            margin-bottom: 8px;
-        }
-
-        /* Стиль для текстовых полей, даты, чисел и textarea */
-        input[type="date"],
-        input[type="number"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 10px;
-            font-size: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        input[type="date"]:focus,
-        input[type="number"]:focus,
-        select:focus,
-        textarea:focus {
-            border-color: #007BFF;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        }
-
-        /* Стиль для маленького текста под select */
-        small {
-            display: block;
-            font-size: 0.9rem;
-            color: #777;
-            margin-top: 5px;
-        }
-
-        /* Стиль для кнопки */
-        .btn-plan {
-            width: auto;
-            padding: 15px 50px;
-            font-size: 1.2rem;
-            color: white;
-            background-color: #243f5c;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-top: 20px; /* Отступ сверху */
-            margin-left: auto; /* Центрируем */
-            margin-right: auto; /* Центрируем */
-            display: block; /* Преобразуем в блок для выравнивания */
-        }
-
-        .btn-plan:hover {
-            background-color: #0056b3;
-        }
-
-        /* Адаптивность: уменьшение размера полей на маленьких экранах */
-        @media (max-width: 600px) {
-            .trip-planner {
-                padding: 20px;
-            }
-            .trip-planner h2 {
-                font-size: 1.8rem;
-            }
-        }
-
-        footer {
-            background: linear-gradient(135deg, #0f1a23, #1a3348);
-            color: #ddd;
-            padding: 4px 4px;
-            font-size: 16px;
-            position: relative;
-            text-align: center;
-            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
-            margin-top: 150px;
-        }
-
-        .footer-container {
-            display: flex;
-            justify-content: space-between;
-            max-width: 1200px;
-            margin: 0 auto;
-            flex-wrap: wrap;
-            gap: 40px;
-        }
-
-
-        .footer-section {
-            flex: 1 1 250px;
-            margin: 20px 0;
-            padding: 15px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(8px); /* Современный эффект размытия */
-            transition: transform 0.3s ease, background 0.3s ease;
-            text-align: left;
-        }
-
-        .footer-section:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-10px);
-        }
-
-        .footer-section h3, .footer-section h4 {
-            color: #5f97bd;
-            margin-bottom: 15px;
-            font-size: 22px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        .footer-section p, .footer-section ul li a {
-            color: white;
-            line-height: 1.8;
-            margin: 5px 0;
-            transition: color 0.3s ease;
-        }
-
-        .footer-section ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 10px;
-            color:white;
-        }
-
-        .footer-section ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .footer-section ul li a:hover {
-            color: #5f97bd;
-            text-decoration: underline;
-        }
-
-        .footer-section .social-icons {
-            display: flex;
-            justify-content: flex-start;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .footer-section .social-icons a {
-            font-size: 20px;
-            width: 40px;
-            height: 40px;
-            line-height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #3c5468, #5bc4cc);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .footer-section .social-icons a:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
-        }
-
-        .footer-line {
-            margin: 20px 0;
-            border: 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .footer-rights {
-            text-align: center;
-            color: #ddd;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-
-
-        /* Адаптация для мобильных устройств */
-        @media (max-width: 768px) {
-            .footer-container {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-
-            .footer-section {
-                text-align: center;
-            }
-
-            .footer-section .social-icons {
-                justify-content: center;
-            }
-        }
-
-
     </style>
 </head>
 <body>
 
-<header>
-    <div class="logo">
-        <h1>TravelGuide</h1>
-    </div>
-    <nav>
-        <ul>
-            <li><a href="/">Главная</a></li>
-            <li><a href="/about">О нас</a></li>
-            <li><a href="#">Горящие туры</a></li>
-            <li><a href="/countries">Страны</a></li>
-            <li><a href="/tickets">Авиабилеты</a></li>
-            <li><a href="/contact">Контакты</a></li>
-            <li><a href="/profile">Личный кабинет</a></li>
-        </ul>
-    </nav>
-</header>
+<div class="container py-5">
+    <div class="container-countries">
 
-<section class="card-container">
-    <div class="header-container">
-        <h2>Путешествие по странам</h2>
-    </div>
-    <div class="cards">
-        <div class="card">
-            <img src="/images/4photo.jpg" alt="Китай">
-            <h3>Китай</h3>
-            <a th:href="@{/china}" class="btn">Узнать больше</a>
-        </div>
-        <div class="card">
-            <img src="/images/5photo.jpg" alt="Дубай">
-            <h3>Дубай</h3>
-            <a th:href="@{/dubai}" class="btn">Узнать больше</a>
-        </div>
-        <div class="card">
-            <img src="/images/6photo.jpg" alt="Египет">
-            <h3>Египет</h3>
-            <a th:href="@{/egypt}" class="btn">Узнать больше</a>
-        </div>
-        <div class="card">
-            <img src="/images/7photo.jpg" alt="Италия">
-            <h3>Италия</h3>
-            <a th:href="@{/italy}" class="btn">Узнать больше</a>
-        </div>
-        <div class="card">
-            <img src="/images/medium_nightlife-2162772_1280.jpg" alt="Корея">
-            <h3>Корея</h3>
-            <a th:href="@{/korea}" class="btn">Узнать больше</a>
-        </div>
-        <div class="card">
-            <img src="/images/13photo.jpg" alt="Испания">
-            <h3>Испания</h3>
-            <a href="#" class="btn">Узнать больше</a>
-        </div>
-        <div class="card">
-            <img src="/images/14photo.jpg" alt="Франция">
-            <h3>Франция</h3>
-            <a href="#" class="btn">Узнать больше</a>
-        </div>
-        <div class="card">
-            <img src="/images/otdyh-vo-vetname.jpg" alt="Вьетнам">
-            <h3>Вьетнам</h3>
-            <a href="#" class="btn">Узнать больше</a>
-        </div>
-        <div class="card">
-            <img src="/images/16photo.jpg" alt="Турция">
-            <h3>Турция</h3>
-            <a href="#" class="btn">Узнать больше</a>
-        </div>
-        <div class="card">
-            <img src="/images/tailand-strana.jpg" alt="Тайланд">
-            <h3>Тайланд</h3>
-            <a href="#" class="btn">Узнать больше</a>
-        </div>
-    </div>
-</section>
+        <div th:each="countryEntry : ${countries}"
+             th:with="countryName=${countryEntry.key}, countryImages=${countryEntry.value}"
+             class="country-card">
+            <a th:href="@{'/countries/' + ${transliteratedCountries.get(countryName)}}">
+                <h2 th:text="${countryName}">Country</h2>
+                <div th:if="${countryImages.size() > 0}"
+                     class="carousel slide carousel-fade"
+                     data-bs-ride="carousel"
+                     data-bs-interval="3000">
+                    <div class="carousel-inner">
+                        <div th:each="image, imgStat : ${countryImages}"
+                             class="carousel-item"
+                             th:classappend="${imgStat.index == 0} ? ' active' : ''">
+                            <img th:src="${image}" alt="Tour Image">
+                        </div>
+                    </div>
+                </div>
+            </a>
 
-<div class="trip-planner">
-    <h2>Планируй свою поездку</h2>
-    <form action="/trip-planner" method="post"> <!-- Путь должен быть /trip-planner -->
-        <div class="form-group">
-            <label for="start-date">Дата начала:</label>
-            <input type="date" id="start-date" name="start-date" required>
         </div>
-        <div class="form-group">
-            <label for="days">Количество дней:</label>
-            <input type="number" id="days" name="days" min="1" max="30" required>
-        </div>
-        <div class="form-group">
-            <label for="places">Места для посещения:</label>
-            <select id="places" name="places" multiple required>
-                <th:block th:each="place : ${countries}">
-                    <option th:value="${place.id}" th:text="${place.placeName}">Место</option>
-                </th:block>
-            </select>
-            <small>Удерживайте Ctrl (или Cmd на Mac), чтобы выбрать несколько мест</small>
-        </div>
-        <div class="form-group">
-            <label for="notes">Дополнительные пожелания:</label>
-            <textarea id="notes" name="notes" rows="4" placeholder="Например, хочу попробовать местную кухню"></textarea>
-        </div>
-        <button type="submit" class="btn-plan">Запланировать поездку</button>
-    </form>
+
+    </div>
 </div>
 
-<section class="map-container">
-    <h2>Расположение стран</h2>
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27123641.73901356!2d82.82978357183647!3d33.91562031443987!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31508e64e5c642c1%3A0x951daa7c349f366f!2z0JrQuNGC0LDQuQ!5e0!3m2!1sru!2skg!4v1732441989192!5m2!1sru!2skg" width="1800" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-</section>
-
-<footer>
-    <div class="footer-container">
-        <div class="footer-section about">
-            <h3>TravelGuide</h3>
-            <p>TravelGuide помогает вам находить и бронировать лучшие предложения для путешествий. Откройте для себя мир вместе с нами!</p>
-            <p>&copy; 2024 TravelGuide | Все права защищены</p>
-        </div>
-
-        <div class="footer-section links">
-            <h4>Ссылки</h4>
-            <ul>
-                <li><a href="/">Главная</a></li>
-                <li><a href="/about">О нас</a></li>
-                <li><a href="#">Горящие туры</a></li>
-                <li><a href="/countries">Страны</a></li>
-                <li><a href="/tickets">Авиабилеты</a></li>
-                <li><a href="/contact">Контакты</a></li>
-                <li><a href="/profile">Личный кабинет</a></li>
-            </ul>
-        </div>
-
-        <div class="footer-section contact">
-            <h4>Контакты</h4>
-            <p>Телефон: +996 504 09 99 00</p>
-            <p>Email: travelguide@gmail.com</p>
-            <p>Адрес: Бишкек, ул. Уметалиева, 120</p>
-        </div>
-
-        <div class="footer-section social">
-            <h4>Мы в соцсетях</h4>
-            <div class="social-icons">
-                <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="youtube"><i class="fab fa-youtube"></i></a>
-            </div>
-        </div>
-    </div>
-    <hr class="footer-line">
-    <div class="footer-rights">
-        <p>&copy; Все права защищены. Информация сайта защищена законом об авторских правах.</p>
-    </div>
-</footer>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-

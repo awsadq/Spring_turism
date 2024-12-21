@@ -5,6 +5,8 @@ import lombok.Data;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "user")
@@ -25,4 +27,7 @@ public class Person{
      @ManyToOne(fetch = FetchType.EAGER)
      @JoinColumn(name = "role_id", nullable = false)
      private Role role;
+
+     @ManyToMany(mappedBy = "users")
+     private List<TripPlan> plans;
 }

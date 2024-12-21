@@ -694,6 +694,7 @@ button {
     font-size: 24px;
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 10;
 }
 
 /* Окно чата */
@@ -710,6 +711,7 @@ button {
     flex-direction: column;
     overflow: hidden;
     height: 360px;
+    z-index: 10;
 }
 
 /* Шапка чата */

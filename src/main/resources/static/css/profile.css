@@ -1,0 +1,127 @@
+/* Общие стили */
+body {
+    background: linear-gradient(135deg, #b4dad8, #ffffff);
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: auto;
+    color: #333;
+}
+
+/* Контейнер */
+.dashboard-container {
+    max-width: 900px;
+    width: 100%;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+/* Заголовок */
+.dashboard-header {
+    background: #b4dad8;
+    padding: 30px;
+    text-align: center;
+    color: #ffffff;
+}
+
+.dashboard-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    margin: 0;
+}
+
+.welcome-message, .email-info {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.btn-logout {
+    display: inline-block;
+    margin-top: 20px;
+    background-color: #ff6b6b;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-logout:hover {
+    background-color: #e63946;
+}
+
+/* Содержимое */
+.dashboard-content {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Карточки */
+.card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.card h3 {
+    color: #034f84;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+/* Формы */
+.form label {
+    display: block;
+    text-align: left;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #555;
+}
+
+.form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+}
+
+/* Кнопки */
+.btn {
+    background-color: #034f84;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0288d1;
+    transform: translateY(-3px);
+}
