@@ -86,6 +86,7 @@
                 <span th:each="tour : ${place.tours}" th:text="${tour.type} +' '">
 
                 </span>
+                <a th:href="@{'/tours?country=' + ${place.country} + '&place=' + ${place.placeName}}" class="btn btn-primary">Посмотреть туры</a>
             </div>
         </div>
     </div>
