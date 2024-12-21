@@ -33,24 +33,19 @@
 <main>
     <section class="main-content">
         <div class="text-content">
-            <h1>Discover the Best <span>Destinations</span></h1>
-            <p>Explore the world's most beautiful places. Whether you love mountains, oceans, or cities, we have the
-                perfect destination for you. Start your journey now!</p>
+            <h1>Откройте мир с нами <span>лучшие путешествия</span></h1>
+            <p>Ищете незабываемые впечатления? Мы поможем вам найти идеальное место для отдыха — от пляжных курортов до древних городов. Начните свое приключение уже сегодня!</p>
+
             <div class="auth-buttons" th:unless="${#authentication.name != 'anonymousUser'}">
                 <a href="/login" class="btn auth-btn">Войти</a>
                 <a href="/register" class="btn auth-btn">Регистрация</a>
             </div>
 
-            <form th:unless="${#authentication.name == 'anonymousUser'}" action="/" method="post"
-                  style="margin-bottom: 20px;">
-                <input type="text" name="country" placeholder="Поиск по местам..."
-                       style="padding: 10px; width: 200px; border-radius: 5px;" th:value="${searchQuery}">
-                <button type="submit"
-                        style="padding: 10px 20px; border-radius: 5px; background-color: #f5ba13; color: #1a1a1a;">Найти
-                </button>
+            <form class="search-form" th:unless="${#authentication.name == 'anonymousUser'}" action="/" method="post">
+                <input type="text" name="country" placeholder="Поиск по местам..." th:value="${searchQuery}">
+                <button type="submit">Найти</button>
             </form>
         </div>
-
 
         <div class="interactive-world">
             <div class="background-elements">
@@ -192,7 +187,6 @@
 
           <div class="swiper-button-prev"></div>
         </div>
-
 
     </div>
 </section>
@@ -337,19 +331,6 @@
 </footer>
 
 
-<script>
-    const flagImage = document.getElementById('flagImage');
-    const flags = ['/images/italy_png.png', '/images/egypt_png.png', '/images/spain_png.png']; // Пути к изображениям флагов
-    let currentFlag = 0;
-
-    function changeFlag() {
-        currentFlag = (currentFlag + 1) % flags.length;
-        flagImage.src = flags[currentFlag];
-    }
-
-    setInterval(changeFlag, 5000); // Смена флага каждые 5 секунд
-
-</script>
 
 <script src="/js/scripts.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
@@ -402,7 +383,7 @@
             } else if (message.toLowerCase() === 'спасибо за помощь!') {
                 managerMessage = 'Спасибо за обращение!';
             } else {
-                managerMessage = 'дополнить логику чата!';
+                managerMessage = 'Пожалуйста!';
             }
 
             // Ответ менеджера через 1 секунду
@@ -430,8 +411,8 @@
             disableOnInteraction: false, // Автопрокрутка не останавливается при взаимодействии
         },
         navigation: {
-            nextEl: '.swiper-button-next', // Стрелка "вперед" (смотрит вправо)
-            prevEl: '.swiper-button-prev', // Стрелка "назад" (смотрит влево)
+            nextEl: '.swiper-button-prev', // Стрелка "вперед" (смотрит вправо)
+            prevEl: '.swiper-button-next', // Стрелка "назад" (смотрит влево)
         },
         pagination: {
             el: '.swiper-pagination',

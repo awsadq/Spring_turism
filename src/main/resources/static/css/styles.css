@@ -83,10 +83,14 @@ main {
 }
 
 /* Текстовый блок */
+/* Общий стиль текстового контента */
 .text-content {
-    max-width: 500px;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
 }
 
+/* Заголовок */
 .text-content h1 {
     font-size: 48px;
     margin-bottom: 20px;
@@ -98,14 +102,17 @@ main {
 }
 
 .text-content p {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    font-size: 16px;
+    color: #555;
 }
 
 /* Кнопки авторизации */
 .auth-buttons {
     display: flex;
-    gap: 10px;
-    margin-top: 10px;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
 .btn {
@@ -116,6 +123,8 @@ main {
     text-decoration: none;
     border-radius: 25px;
     transition: background 0.3s ease, transform 0.3s ease;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .btn:hover {
@@ -123,9 +132,44 @@ main {
     transform: scale(1.05);
 }
 
-.auth-btn {
+/* Форма поиска */
+.search-form {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+    height: 90px;
+}
+
+.search-form input {
+    padding: 10px;
+    width: 250px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    color: #333;
+}
+
+.search-form button {
+    padding: 12px 25px;
+    margin-left: 375px;
+    border-radius: 50px;
+    border: none;
+    background: linear-gradient(90deg, #174477, #1b326e);
+    color: white;
+    font-size: 16px;
     font-weight: bold;
-    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 110px;
+}
+
+.search-form button:hover {
+    background: linear-gradient(90deg, #28656a, #329498);
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* Карта мира */
