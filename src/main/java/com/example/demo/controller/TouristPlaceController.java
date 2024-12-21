@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
 
@@ -24,42 +25,30 @@ public class TouristPlaceController {
     }
 
     @GetMapping("")
-    public String countries(Model model) {
-        List<TouristPlace> places = touristPlaceService.getAllTouristPlaces();
+    public String countries(@RequestParam(required = false) String country,
+                            Model model) {
+        if (country == null) {
 
-        // Map для хранения страны и списка путей к изображениям
-        Map<String, List<String>> countriesWithImages = new HashMap<>();
-        Map<String, String> transliteratedCountries = new HashMap<>();
-        for (TouristPlace place : places) {
-            String country = place.getCountry(); // Получаем название страны
-            List<String> tourPlaceImages = place.getAllImageUrls();
-            countriesWithImages.putIfAbsent(country, new LinkedList<>());
-            countriesWithImages.get(country).addAll(tourPlaceImages);
-        }
+            List<TouristPlace> places = touristPlaceService.getAllTouristPlaces();
 
-        countriesWithImages.keySet().forEach(key ->
-                transliteratedCountries.put(key, touristPlaceService.transliterate(key).toLowerCase())
-        );
-        model.addAttribute("countries", countriesWithImages);
-        model.addAttribute("transliteratedCountries", transliteratedCountries);
-        return "countries";
-    }
-
-
-    @GetMapping("/{country}")
-    public String countryPage(@PathVariable String country, Model model) {
-        List<TouristPlace> allPlaces = touristPlaceService.getAllTouristPlaces();
-
-        for (TouristPlace place : allPlaces) {
-            String rusCountry = place.getCountry();
-            if (touristPlaceService.transliterate(rusCountry).equals(country)) {
-                List<TouristPlace> places = touristPlaceService.getAllTouristPlacesByCountry(rusCountry);
-                System.out.println(rusCountry);
-                model.addAttribute("country", rusCountry);
-                model.addAttribute("places", places);
-                return "country";
+            // Map для хранения страны и списка путей к изображениям
+            Map<String, List<String>> countriesWithImages = new HashMap<>();
+            for (TouristPlace place : places) {
+                country = place.getCountry(); // Получаем название страны
+                List<String> tourPlaceImages = place.getAllImageUrls();
+                countriesWithImages.putIfAbsent(country, new LinkedList<>());
+                countriesWithImages.get(country).addAll(tourPlaceImages);
             }
+
+            model.addAttribute("countries", countriesWithImages);
+            return "countries";
+        } else {
+            List<TouristPlace> places = touristPlaceService.getAllTouristPlacesByCountry(country);
+            model.addAttribute("country", country);
+            model.addAttribute("places", places);
+            return "country";
         }
-        return "countries";
     }
+
+
 }

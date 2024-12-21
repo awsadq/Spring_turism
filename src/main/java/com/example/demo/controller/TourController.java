@@ -52,6 +52,42 @@ public class TourController {
             @RequestParam(required = false) String type,
             Model model
     ) {
+        if (!(country == null)) {
+            if (country.equals("")) {
+                country = null;
+            }
+        }
+        if (!(place == null)) {
+            if (place.equals("")) {
+                place = null;
+            }
+        }
+        if (!(minPrice == null)) {
+            if (minPrice.equals(0.0)) {
+                minPrice = null;
+            }
+        }
+        if (!(maxPrice == null)) {
+            if (maxPrice.equals(0.0)) {
+                maxPrice = null;
+            }
+        }
+        if (!(minDuration == null)) {
+            if (minDuration.equals(0)) {
+                minDuration = null;
+            }
+        }
+        if (!(maxDuration == null)) {
+            if (maxDuration.equals(0)) {
+                maxDuration = null;
+            }
+        }
+        if (!(type == null)) {
+            if (type.equals("")) {
+                type = null;
+            }
+        }
+
         // Получить все туры из сервиса
         List<Tour> tours = tourService.getFilteredTours(country, place, minPrice, maxPrice, minDuration, maxDuration, type);
 

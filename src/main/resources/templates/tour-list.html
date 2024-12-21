@@ -1,246 +1,255 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TravelGuide</title>
-  <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css}"/>
-  <link rel="stylesheet" th:href="@{/css/styles.css}"/>
-  <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Sidebar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        header .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        header .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .container {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100%;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            transition: transform 0.3s ease-in-out, margin-left 0.3s ease-in-out;
+            z-index: 1000;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .sidebar {
+                position: relative;
+                transform: none;
+            }
+
+            .main-content {
+                margin-left: 250px;
+            }
+        }
+    </style>
 </head>
 <body>
-
 <header>
-  <div class="logo">
-    <h1>TravelGuide</h1>
-  </div>
-  <nav>
-    <ul>
-      <li><a href="/">Главная</a></li>
-      <li><a href="/about">О нас</a></li>
-      <li><a href="tours">Горящие туры</a></li>
-      <li><a href="/countries">Страны</a></li>
-      <li><a href="/tickets">Авиабилеты</a></li>
-      <li><a href="/contact">Контакты</a></li>
-      <li th:if="${#authentication.name != 'anonymousUser'}">
-        <a href="/profile">Личный кабинет</a>
-      </li>
-    </ul>
-  </nav>
+    <div class="logo">
+        <h1>TravelGuide</h1>
+    </div>
+    <nav class="nav-links">
+
+        <a href="/">Главная</a>
+        <a href="/about">О нас</a>
+        <a href="tours">Горящие туры</a>
+        <a href="/countries">Страны</a>
+        <a href="/tickets">Авиабилеты</a>
+        <a href="/contact">Контакты</a>
+        <a th:if="${#authentication.name != 'anonymousUser'}" href="/profile">Личный кабинет</a>
+
+
+    </nav>
 
 </header>
+<div class="container">
+    <button class="menu-toggle" onclick="toggleSidebar()">&#9776;</button>
+
+    <div class="sidebar" id="sidebar">
+        <form method="GET" action="http://localhost:8080/tours">
+            <label for="country">Country</label>
+            <input type="text" id="country" name="country" placeholder="Enter country">
+
+            <label for="place">Place</label>
+            <input type="text" id="place" name="place" placeholder="Enter place">
+
+            <label for="minPrice">Min Price</label>
+            <input type="number" id="minPrice" name="minPrice" placeholder="Min price">
+
+            <label for="maxPrice">Max Price</label>
+            <input type="number" id="maxPrice" name="maxPrice" placeholder="Max price">
+
+            <label for="minDuration">Min Duration</label>
+            <input type="number" id="minDuration" name="minDuration" placeholder="Min duration">
+
+            <label for="maxDuration">Max Duration</label>
+            <input type="number" id="maxDuration" name="maxDuration" placeholder="Max duration">
+
+            <label for="type">Type</label>
+            <select id="type" name="type">
+                <option value="">Any</option>
+                <option value="ОТДЫХ">Отдых</option>
+                <option value="ЭКСКУРСИЯ">Экскурсия</option>
+                <option value="ШОПИНГ">Шопинг</option>
+                <option value="ГАСТРОНОМИЧЕСКИЙ_ТУР">Гастрономический тур</option>
+            </select>
+
+            <button type="submit">Filter</button>
+        </form>
+
+    </div>
+
+    <div class="main-content" id="main-content">
+        <h1>Available Tours</h1>
+        <div id="tour-cards">
+            <!-- Example of a tour card -->
+            <div class="card" th:each="tour : ${tours}">
+                <h3 th:text="${tour.touristPlace.country} + ' - ' + ${tour.touristPlace.placeName}"></h3>
+                <p><strong>Type:</strong> <span th:text="${tour.type}"></span></p>
+                <p><strong>Duration:</strong> <span th:text="${tour.duration}"></span> days</p>
+                <p><strong>Price:</strong> $<span th:text="${tour.price}"></span></p>
+                <p><strong>Description:</strong> <span th:text="${tour.description}"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
 <footer>
-  <div class="footer-container">
-    <div class="footer-section about">
-      <h3>TravelGuide</h3>
-      <p>TravelGuide помогает вам находить и бронировать лучшие предложения для путешествий. Откройте для себя мир
-        вместе с нами!</p>
-      <p>&copy; 2024 TravelGuide | Все права защищены</p>
-    </div>
+    <div class="footer-container">
+        <div class="footer-section about">
+            <h3>TravelGuide</h3>
+            <p>TravelGuide помогает вам находить и бронировать лучшие предложения для путешествий. Откройте для себя мир
+                вместе с нами!</p>
+            <p>&copy; 2024 TravelGuide | Все права защищены</p>
+        </div>
 
-    <div class="footer-section links">
-      <h4>Ссылки</h4>
-      <ul>
-        <li><a href="/">Главная</a></li>
-        <li><a href="/about">О нас</a></li>
-        <li><a href="#">Горящие туры</a></li>
-        <li><a href="/countries">Страны</a></li>
-        <li><a href="/tickets">Авиабилеты</a></li>
-        <li><a href="/contact">Контакты</a></li>
-        <li th:if="${#authentication.name != 'anonymousUser'}">
-          <a href="/profile">Личный кабинет</a>
-        </li>
-      </ul>
-    </div>
+        <div class="footer-section links">
+            <h4>Ссылки</h4>
+            <ul>
+                <li><a href="/">Главная</a></li>
+                <li><a href="/about">О нас</a></li>
+                <li><a href="#">Горящие туры</a></li>
+                <li><a href="/countries">Страны</a></li>
+                <li><a href="/tickets">Авиабилеты</a></li>
+                <li><a href="/contact">Контакты</a></li>
+                <li th:if="${#authentication.name != 'anonymousUser'}">
+                    <a href="/profile">Личный кабинет</a>
+                </li>
+            </ul>
+        </div>
 
-    <div class="footer-section contact">
-      <h4>Контакты</h4>
-      <p>Телефон: +996 504 09 99 00</p>
-      <p>Email: travelguide@gmail.com</p>
-      <p>Адрес: Бишкек, ул. Уметалиева, 120</p>
-    </div>
+        <div class="footer-section contact">
+            <h4>Контакты</h4>
+            <p>Телефон: +996 504 09 99 00</p>
+            <p>Email: travelguide@gmail.com</p>
+            <p>Адрес: Бишкек, ул. Уметалиева, 120</p>
+        </div>
 
-    <div class="footer-section social">
-      <h4>Мы в соцсетях</h4>
-      <div class="social-icons">
-        <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
-        <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
-        <a href="#" class="youtube"><i class="fab fa-youtube"></i></a>
-      </div>
+        <div class="footer-section social">
+            <h4>Мы в соцсетях</h4>
+            <div class="social-icons">
+                <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="youtube"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
     </div>
-  </div>
-  <hr class="footer-line">
-  <div class="footer-rights">
-    <p>&copy; Все права защищены. Информация сайта защищена законом об авторских правах.</p>
-  </div>
+    <hr class="footer-line">
+    <div class="footer-rights">
+        <p>&copy; Все права защищены. Информация сайта защищена законом об авторских правах.</p>
+    </div>
 </footer>
-
-
 <script>
-  const flagImage = document.getElementById('flagImage');
-  const flags = ['/images/italy_png.png', '/images/egypt_png.png', '/images/spain_png.png']; // Пути к изображениям флагов
-  let currentFlag = 0;
+    const sidebar = document.getElementById('sidebar');
 
-  function changeFlag() {
-    currentFlag = (currentFlag + 1) % flags.length;
-    flagImage.src = flags[currentFlag];
-  }
-
-  setInterval(changeFlag, 5000); // Смена флага каждые 5 секунд
-
-</script>
-
-<script src="/js/scripts.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-
-
-<script>
-
-  // Получаем элементы
-  const chatBox = document.getElementById('chat-box');
-  const chatOpenBtn = document.getElementById('chat-open-btn');
-  const chatCloseBtn = document.getElementById('chat-close-btn');
-  const chatForm = document.getElementById('chat-form');
-  const chatInput = document.getElementById('chat-input');
-  const chatMessages = document.getElementById('chat-messages');
-
-  // Открытие/закрытие чата при нажатии на иконку
-  chatOpenBtn.addEventListener('click', () => {
-    if (chatBox.style.display === 'none' || chatBox.style.display === '') {
-      chatBox.style.display = 'flex'; // Показываем чат
-    } else {
-      chatBox.style.display = 'none'; // Скрываем чат
-    }
-  });
-
-  // Закрытие чата при нажатии на крестик
-  chatCloseBtn.addEventListener('click', () => {
-    chatBox.style.display = 'none'; // Скрываем чат
-  });
-
-  // Отправка сообщения и ответ менеджера
-  chatForm.addEventListener('submit', (e) => {
-    e.preventDefault(); // Предотвращаем отправку формы
-    const message = chatInput.value;
-
-    if (message) {
-      // Добавляем сообщение от пользователя
-      const messageDiv = document.createElement('div');
-      messageDiv.classList.add('user-message'); // Класс для сообщений пользователя
-      messageDiv.textContent = message;
-      chatMessages.appendChild(messageDiv);
-
-      // Логика ответа менеджера
-      let managerMessage = '';
-
-      // Ответы менеджера в зависимости от сообщения пользователя
-      if (message.toLowerCase() === 'мне нужна помощь') {
-        managerMessage = 'Чем могу вам помочь?';
-      } else if (message.toLowerCase() === 'я ищу тур') {
-        managerMessage = 'Да, конечно, вы можете просмотреть туры на странице "Горящие туры".';
-      } else if (message.toLowerCase() === 'спасибо за помощь!') {
-        managerMessage = 'Спасибо за обращение!';
-      } else {
-        managerMessage = 'дополнить логику чата!';
-      }
-
-      // Ответ менеджера через 1 секунду
-      setTimeout(() => {
-        const managerMessageDiv = document.createElement('div');
-        managerMessageDiv.classList.add('manager-message'); // Класс для сообщений менеджера
-        managerMessageDiv.textContent = managerMessage; // Ответ менеджера
-        chatMessages.appendChild(managerMessageDiv);
-      }, 1000); // Задержка в 1 секунду для имитации ответа менеджера
+    function toggleSidebar() {
+        sidebar.classList.toggle('open');
     }
 
-    // Очищаем поле ввода
-    chatInput.value = ''; // Не скрываем чат автоматически
-  });
-
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 1200) {
+            sidebar.classList.remove('open');
+        }
+    });
 </script>
-
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    // Инициализация слайдера для длительности
-    const durationSlider = document.getElementById('duration-slider');
-    noUiSlider.create(durationSlider, {
-      start: [0, 60],
-      connect: true,
-      range: {
-        min: 0,
-        max: 60
-      }
-    });
-    const durationMin = document.getElementById('durationMin');
-    const durationMax = document.getElementById('durationMax');
-    const durationMinValue = document.getElementById('durationMinValue');
-    const durationMaxValue = document.getElementById('durationMaxValue');
-
-    durationSlider.noUiSlider.on('update', function (values) {
-      durationMin.value = values[0];
-      durationMax.value = values[1];
-      durationMinValue.textContent = Math.round(values[0]);
-      durationMaxValue.textContent = Math.round(values[1]);
-    });
-
-    // Инициализация слайдера для цены
-    const priceSlider = document.getElementById('price-slider');
-    noUiSlider.create(priceSlider, {
-      start: [0, 5000],
-      connect: true,
-      range: {
-        min: 0,
-        max: 5000
-      },
-      step: 1
-    });
-    const priceMin = document.getElementById('priceMin');
-    const priceMax = document.getElementById('priceMax');
-    const priceMinValue = document.getElementById('priceMinValue');
-    const priceMaxValue = document.getElementById('priceMaxValue');
-
-    priceSlider.noUiSlider.on('update', function (values) {
-      priceMin.value = values[0];
-      priceMax.value = values[1];
-      priceMinValue.textContent = Math.round(values[0]);
-      priceMaxValue.textContent = Math.round(values[1]);
-    });
-  });
-</script>
-
-
-<script>
-  const swiper = new Swiper('.swiper-container', {
-    slidesPerView: 4, // Количество карточек на экране
-    spaceBetween: 30, // Расстояние между карточками
-    loop: true, // Бесконечный цикл
-    autoplay: {
-      delay: 3000, // Задержка между прокрутками (в миллисекундах)
-      disableOnInteraction: false, // Автопрокрутка не останавливается при взаимодействии
-    },
-    navigation: {
-      nextEl: '.swiper-button-next', // Стрелка "вперед" (смотрит вправо)
-      prevEl: '.swiper-button-prev', // Стрелка "назад" (смотрит влево)
-    },
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-    },
-  });
-</script>
-
 </body>
 </html>
-
-
-
-
-
-
-
-

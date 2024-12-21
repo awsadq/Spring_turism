@@ -78,6 +78,15 @@ public class TourService {
     }
 
     public List<Tour> getFilteredTours(String country, String place, Double minPrice, Double maxPrice, Integer minDuration, Integer maxDuration, String type) {
+        System.out.println("country = " + country);
+        System.out.println("place = " + place);
+        System.out.println("minPrice = " + minPrice);
+        System.out.println("maxPrice = " + maxPrice);
+        System.out.println("minDuration = " + minDuration);
+        System.out.println("maxDuration = " + maxDuration);
+        System.out.println("type = " + type);
+
+
         return tourRepository.findFilteredTours(country, place, minPrice, maxPrice, minDuration, maxDuration, type == null ? null : Tour.TourType.valueOf(type.toUpperCase()));
     }
 
