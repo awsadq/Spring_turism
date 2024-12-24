@@ -19,7 +19,6 @@
                     <p>Описание: <span th:text="${tour.description}"></span></p>
                     <p>Цена: <span th:text="${tour.price}">Цена</span> рублей</p>
                     <p>Продолжительность: <span th:text="${tour.duration}">Длительность</span> дней</p>
-                    <!-- Ссылка на детальную страницу тура -->
                     <a th:href="@{/tour/{id}(id=${tour.id})}">Подробнее</a>
                 </div>
             </li>

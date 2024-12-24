@@ -11,57 +11,6 @@
 
   <style>
 
-    header {
-      background-color: #0f1a23;
-      color: #fff;
-      padding: 10px 20px; /* Увеличиваем отступы */
-      display: flex;
-      justify-content: space-between; /* Размещаем логотип и меню по краям */
-      align-items: center; /* Центрируем по вертикали */
-      position: fixed; /* Фиксируем позицию заголовка */
-      top: 0; /* Устанавливаем заголовок в верхнюю часть страницы */
-      left: 0; /* Устанавливаем его в левом верхнем углу */
-      right: 0; /* Расширяем заголовок на всю ширину */
-      z-index: 1000; /* Делаем его выше остальных элементов */
-    }
-
-    header .logo h1 {
-      margin: 0; /* Убираем все отступы для логотипа */
-      font-size: 24px; /* Размер шрифта логотипа */
-      line-height: 1; /* Устанавливаем высоту строки для лучшего выравнивания */
-      padding: 5px 0; /* Увеличиваем отступы по вертикали, чтобы надпись была лучше видна */
-    }
-
-    nav {
-      margin: 0; /* Убираем отступы у навигации */
-      padding: 0; /* Убираем внутренние отступы */
-      background-color: #0f1a23; /* Цвет фона меню */
-      display: flex; /* Делаем навигацию гибкой */
-      justify-content: center; /* Центрируем меню */
-      width: 100%; /* Ширина навигации */
-    }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      margin: 0; /* Убираем отступы */
-      padding: 0; /* Убираем внутренние отступы */
-      flex-wrap: nowrap; /* Запрещаем перенос строк */
-    }
-
-    nav ul li {
-      margin: 0 10px; /* Уменьшаем отступы между элементами */
-    }
-
-    nav ul li a {
-      color: white; /* Цвет текста */
-      text-decoration: none; /* Убираем подчеркивание */
-      padding: 10px; /* Внутренний отступ для увеличения области нажатия */
-      display: block; /* Чтобы ссылки были как блоки */
-      font-size: 16px; /* Размер шрифта */
-      white-space: nowrap; /* Запрещаем перенос текста на новую строку */
-    }
-
     body {
       padding-top: 70px; /* Устанавливаем отступ равный высоте меню */
       font-family: Arial, sans-serif;
@@ -69,12 +18,58 @@
       color: #333;
     }
 
+    header {
+      background-color: #0f1a23;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    header .logo h1 {
+      margin: 0;
+      font-size: 28px;
+      color: white;
+    }
+
+    header nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      margin: 0;
+    }
+
+    header nav ul li {
+      margin: 0 15px;
+    }
+
+    header nav ul li a {
+      text-decoration: none;
+      color: white;
+      transition: color 0.3s ease;
+    }
+
+    header nav ul li a:hover {
+      color: #bddaf3;
+      text-decoration: underline;
+    }
+
+    header nav ul li a.active {
+      color: #bddaf3;
+      font-weight: bold;
+    }
+
     @keyframes bgGradient {
       0% { background: #b6c8d1; }
       50% { background: #a4b8bf; }
       100% { background: #b6c8d1; }
     }
-
 
     .profile-box {
       margin: 20px auto;
@@ -146,86 +141,320 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
-    .trip-table {
-      max-width: 90%; /* Увеличена ширина */
-      margin: 20px auto;
-      border-collapse: collapse;
-      border-radius: 8px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Увеличена тень */
-      overflow: hidden;
-      animation: fadeIn 1s ease-in-out; /* Анимация появления */
-      margin-top: 60px;
+    /* Контейнер с блоками */
+    .profile-section-container {
+      display: flex;
+      justify-content: center;
+      gap: 40px; /* Промежуток между блоками */
+      margin-top: 60px; /* Отступ сверху */
+      flex-wrap: wrap;
+      padding-left: 200px; /* Отступ слева */
+      padding-right: 200px; /* Отступ справа */
+      align-items: center;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
-
-    .trip-table th, .trip-table td {
-      padding: 12px; /* Увеличены отступы */
-      font-size: 16px; /* Увеличен шрифт */
-      text-align: left;
-    }
-
-    .trip-table th {
-      background-color: #254b75;
-      color: white;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
-
-    .trip-table td {
+    /* Блоки внутри контейнера */
+    .update-section, .password-section {
       background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      width: 30%; /* Ширина блоков */
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column; /* Расположим элементы вертикально */
+      justify-content: flex-start; /* Элементы внутри блока выравниваются по верху */
+      gap: 1px; /* Отступы между элементами */
+      min-height: 470px;
+
+    }
+
+    /* Заголовки */
+    .update-section h3, .password-section h3 {
+      font-size: 1.8rem;
+      font-weight: bold;
       color: #333;
-      border-bottom: 1px solid #ddd;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 10px;
     }
 
-    .trip-table tr:nth-child(even) {
-      background-color: #f9f9f9;
+    /* Стили для полей ввода */
+    .form-group {
+      margin-bottom: 20px;
     }
 
-    .trip-table tr:hover {
-      background-color: #e6f7ff; /* Добавлен более заметный эффект при наведении */
-      transform: scale(1.01); /* Легкое увеличение строки */
-      transition: background-color 0.3s ease, transform 0.3s ease;
+    label {
+      font-size: 1.1rem;
+      color: #555;
+      display: block;
+      margin-bottom: 5px;
     }
 
-    @media (max-width: 768px) {
-      .trip-table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
+    input {
+      width: 100%; /* Убираем фиксированную ширину, поле заполняет контейнер */
+      padding: 12px;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #fafafa;
+      transition: border-color 0.3s, background-color 0.3s;
+    }
+
+    input:focus {
+      border-color: #4CAF50;
+      background-color: #fff;
+      outline: none;
+    }
+
+    /* Стили для кнопок */
+    button {
+      padding: 12px 20px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      width: 300px; /* Устанавливаем ширину кнопки на 100% */
+      transition: transform 0.3s;
+    }
+
+    /* Стили для кнопки сохранения */
+    .btn-save {
+      background-color: #2c7730;
+      color: white;
+      margin-top: 300px;
+      align-items: center;
+      text-align: center;
+    }
+
+    .btn-save:hover {
+      background-color: #45a049;
+      transform: scale(1.05);
+    }
+
+    /* Стили для кнопки изменения пароля */
+    .btn-change-password {
+      background-color: #124771;
+      color: white;
+      margin-top: 380px;
+    }
+
+    .btn-change-password:hover {
+      background-color: #1976D2;
+      transform: scale(1.05);
+    }
+
+    /* Стиль для контейнера сообщений */
+    .alert {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 15px 30px;
+      margin: 10px;
+      border-radius: 15px;
+      font-size: 18px;
+      width: 400px; /* Сделаем сообщение немного шире */
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      animation: slideIn 0.5s forwards, fadeOut 0.5s 4.5s forwards; /* Появление + исчезновение через 5 секунд */
+      transition: all 0.5s ease;
+    }
+
+    /* Сообщения об успехе */
+    .alert-success {
+      background: linear-gradient(135deg, #4fb54f, #166026); /* Градиент от светлого зеленого к темному */
+      color: white;
+    }
+
+    .alert-success p {
+      margin: 0;
+    }
+
+    /* Сообщения об ошибке */
+    .alert-danger {
+      background: linear-gradient(135deg, #ff6666, #dc3545); /* Градиент от светлого красного к темному */
+      color: white;
+    }
+
+
+    .alert-danger p {
+      margin: 0;
+    }
+
+    /* Иконки для сообщений */
+    .alert-success::before {
+      content: '\2713'; /* Галочка */
+      font-size: 24px;
+      margin-right: 15px;
+      color: white;
+    }
+
+    .alert-danger::before {
+      content: '\26A0'; /* Восклицательный знак */
+      font-size: 24px;
+      margin-right: 15px;
+      color: white;
+    }
+
+    /* Анимация для появления */
+    @keyframes slideIn {
+      0% {
+        transform: translateX(-50%) translateY(-20px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
       }
     }
 
-    .table-title {
-      font-size: 24px; /* Увеличен размер заголовка */
-      text-align: center;
-      margin-bottom: 5px;
-      color: #254b75;
-      animation: slideIn 1.2s ease-out; /* Добавлена анимация появления заголовка */
+    /* Анимация для исчезновения */
+    @keyframes fadeOut {
+      0% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+      }
+    }
+
+    /* Кнопка закрытия */
+    .alert .close {
+      background: transparent;
+      border: none;
+      font-size: 22px;
+      color: white;
+      cursor: pointer;
+      opacity: 0.7;
+    }
+
+    .alert .close:hover {
+      opacity: 1;
+    }
+
+    /* Для мобильных устройств */
+    @media (max-width: 576px) {
+      .alert {
+        width: 90%;
+        font-size: 16px;
+      }
+
+      .alert .close {
+        font-size: 20px;
+      }
+    }
+
+    /* Стили для контейнера карточек */
+    /* Контейнер для карточек */
+    #tour-cards {
+      display: flex;
+      flex-wrap: wrap; /* Разрешаем перенос карточек на новые строки */
+      justify-content: center; /* Центрируем карточки */
+      gap: 20px; /* Отступ между карточками */
+      padding: 20px;
+      background-color: transparent; /* Прозрачный фон */
+    }
+
+    /* Стили для заголовка */
+    .booked-tours-title {
+      text-align: center; /* Центрирование текста внутри элемента */
+      font-size: 28px;
+      font-weight: bold;
+      color: #0b2360; /* Темно-синий цвет */
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      width: 100%; /* Занимает всю ширину родительского контейнера */
+      margin-left: 0;
+      margin-right: 0;
       margin-top: 60px;
     }
 
-    @keyframes slideIn {
-      from {
-        transform: translateX(-100%);
-        opacity: 0;
+    /* Карточка */
+    .card {
+      background: #ffffff; /* Белый фон */
+      border-radius: 12px; /* Скругленные углы */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Легкая тень */
+      width: 300px; /* Ширина карточки */
+      padding: 20px;
+      text-align: center;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease; /* Плавный эффект */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 2px solid #e0e0e0; /* Светлый контур карточки */
+      background-color: #ffffff; /* Белый фон */
+    }
+
+    /* Эффект при наведении */
+    .card:hover {
+      transform: translateY(-10px); /* Поднимаем карточку при наведении */
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Тень усиливается */
+    }
+
+    /* Заголовок карточки */
+    .card h3 {
+      font-size: 1.8rem;
+      color: #1e88e5; /* Голубой цвет */
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+
+    /* Текст внутри карточки */
+    .card p {
+      margin: 10px 0;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #272b2b; /* Темно-серый для основного текста */
+    }
+
+    /* Стили для выделения текста "Забронированный тур!" */
+    .card p strong {
+      color: #2348a5; /* Голубой для выделения */
+    }
+
+    /* Верхняя полоска для карточки */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(to right, #42a5f5, #66bb6a); /* Плавный градиент */
+      transition: height 0.3s ease;
+    }
+
+    /* Эффект при наведении на карточку */
+    .card:hover::before {
+      height: 100%; /* Увеличиваем полоску до полной высоты */
+      opacity: 0.1;
+    }
+
+    /* Адаптивность для мобильных устройств */
+    @media (max-width: 768px) {
+      #tour-cards {
+        flex-direction: column;
+        align-items: center; /* Центрируем карточки по вертикали */
       }
-      to {
-        transform: translateX(0);
-        opacity: 1;
+
+      .card {
+        width: 90%; /* Уменьшаем ширину на мобильных устройствах */
       }
     }
 
 
     .achievements {
-      max-width: 400px; /* Ограничение ширины */
+      max-width: 500px; /* Ограничение ширины */
       margin: 20px auto; /* Центрирование блока */
       background: #ffffff; /* Цвет фона */
       padding: 15px;
@@ -233,7 +462,7 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Тень для объема */
       cursor: pointer;
       text-align: center; /* Центрирование текста */
-      margin-top: 50px;
+      margin-top: 80px;
     }
 
     .achievements h3 {
@@ -398,42 +627,90 @@
     <ul>
       <li><a href="/">Главная</a></li>
       <li><a href="/about">О нас</a></li>
-      <li><a href="#">Горящие туры</a></li>
+      <li><a href="tours">Горящие туры</a></li>
       <li><a href="/countries">Страны</a></li>
       <li><a href="/tickets">Авиабилеты</a></li>
       <li><a href="/contact">Контакты</a></li>
-      <li><a href="/profile">Личный кабинет</a></li>
+      <li th:if="${#authentication.name != 'anonymousUser'}">
+        <a href="/profile">Личный кабинет</a>
+      </li>
     </ul>
   </nav>
 </header>
 
+
 <div class="profile-box">
-  <h2>Личный кабинет</h2>
-  <p>Добро пожаловать, <span th:text="${user.getUsername()}">Имя пользователя</span>!</p>
-  <p>Ваш адрес электронной почты: <span th:text="${user.getEmail()}">Электронная почта</span></p>
+    <h2>Личный кабинет</h2>
+    <p>Добро пожаловать, <span th:text="${user.username}">Имя пользователя</span>!</p>
+    <p>Ваш адрес электронной почты: <span th:text="${user.email}">Электронная почта</span></p>
   <a href="/logout">Выйти</a>
+
 </div>
 
-<h3 class="table-title">Запланированные поездки</h3>
-<table class="trip-table">
-  <thead>
-  <tr>
-    <th>Дата вылета</th>
-    <th>Количество дней</th>
-    <th>Места</th>
-    <th>Дополнительные заметки</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="trip : ${tripPlans}">
-    <td th:text="${trip.startDate}"></td>
-    <td th:text="${trip.days}"></td>
-    <td th:text="${trip.placesSelected}"></td>
-    <td th:text="${trip.additionalNotes}"></td>
-  </tr>
-  </tbody>
-</table>
+<div class="profile-section-container">
+  <!-- Блок для обновления данных -->
+  <div class="update-section">
+    <form action="/update-profile" method="post">
+      <h3>Обновить данные</h3>
+      <div class="form-group">
+        <label for="username">Имя пользователя</label>
+        <input type="text" id="username" name="username" th:value="${user.username}" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Электронная почта</label>
+        <input type="email" id="email" name="email" th:value="${user.email}" required>
+      </div>
+      <button class="btn-save" type="submit">Сохранить изменения</button>
+    </form>
+  </div>
 
+  <!-- Блок для изменения пароля -->
+  <div class="password-section">
+    <form action="/change-password" method="post">
+      <h3>Изменить пароль</h3>
+      <div class="form-group">
+        <label for="currentPassword">Текущий пароль</label>
+        <input type="password" id="currentPassword" name="currentPassword" required>
+      </div>
+      <div class="form-group">
+        <label for="newPassword">Новый пароль</label>
+        <input type="password" id="newPassword" name="newPassword" required>
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Подтверждение пароля</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+      </div>
+      <button class="btn-change-password" type="submit">Сменить пароль</button>
+    </form>
+  </div>
+</div>
+
+<div th:if="${error}" class="alert alert-danger">
+  <p th:text="${error}"></p>
+</div>
+
+<div th:if="${success}" class="alert alert-success">
+  <p th:text="${success}"></p>
+</div>
+
+<div id="tour-cards">
+  <h2 class="booked-tours-title">Забронированные туры</h2> <!-- Добавленный заголовок -->
+
+  <div th:each="tour : ${tours}">
+    <div class="card">
+      <h3 th:text="${tour.touristPlace.country} + ' - ' + ${tour.touristPlace.placeName}"></h3>
+      <p><strong>✈️ Тип:</strong> <span th:text="${tour.type}"></span></p>
+      <p><strong>📅 Длительность:</strong> <span th:text="${tour.duration}"></span> days</p>
+      <p><strong>💵 Цена:</strong> $<span th:text="${tour.price}"></span></p>
+      <p><strong>📝 Описание:</strong> <span th:text="${tour.description}"></span></p>
+      <p th:if="${tour.isBooked}"><strong>Забронированный тур!</strong></p>
+    </div>
+  </div>
+
+  <div th:if="${tours.isEmpty()}">
+    <p>У вас нет забронированных туров.</p>
+  </div>
+</div>
 
 <div class="achievements">
   <h3>Ваши достижения</h3>
@@ -457,7 +734,7 @@
       <ul>
         <li><a href="/">Главная</a></li>
         <li><a href="/about">О нас</a></li>
-        <li><a href="#">Горящие туры</a></li>
+        <li><a href="tours">Горящие туры</a></li>
         <li><a href="/countries">Страны</a></li>
         <li><a href="/tickets">Авиабилеты</a></li>
         <li><a href="/contact">Контакты</a></li>
@@ -487,6 +764,30 @@
     <p>&copy; Все права защищены. Информация сайта защищена законом об авторских правах.</p>
   </div>
 </footer>
+
+<script>
+  // Пример проверки сложности пароля
+  document.getElementById('newPassword').addEventListener('input', function() {
+    const password = this.value;
+    const errorElement = document.getElementById('passwordError');
+    if (password.length < 8) {
+      errorElement.textContent = 'Пароль должен содержать не менее 8 символов';
+    } else {
+      errorElement.textContent = '';
+    }
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const alert = document.querySelector('.alert');
+    if (alert) {
+      setTimeout(function () {
+        alert.classList.add('hide');
+      }, 5000); // Сообщение исчезнет через 5 секунд
+    }
+  });
+</script>
 
 
 <script>

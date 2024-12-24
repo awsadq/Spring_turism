@@ -50,4 +50,9 @@ public class PersonDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public Person getPerson() {
+        return person;
+    }
+
 }

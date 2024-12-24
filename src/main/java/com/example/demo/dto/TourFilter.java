@@ -1,4 +1,5 @@
 package com.example.demo.dto;
+
 public class TourFilter {
     private String country;
     private String type;

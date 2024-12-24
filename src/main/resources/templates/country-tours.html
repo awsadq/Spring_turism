@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Туры по стране</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #bddaf3;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #0f1a23;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        header .logo h1 {
+            margin: 0;
+            font-size: 28px;
+            color: white;
+        }
+
+        header nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            margin: 0;
+        }
+
+        header nav ul li {
+            margin: 0 15px;
+        }
+
+        header nav ul li a {
+            text-decoration: none;
+            color: white;
+            transition: color 0.3s ease;
+        }
+
+        header nav ul li a:hover {
+            color: #bddaf3;
+            text-decoration: underline;
+        }
+
+        header nav ul li a.active {
+            color: #bddaf3;
+            font-weight: bold;
+        }
+
+        /* Контейнер для карточек */
+        #tour-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        /* Карточка тура */
+        .card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 2px solid #e0e0e0;
+            background-color: #ffffff;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            font-size: 1.8rem;
+            color: #1e88e5;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .card p {
+            margin: 10px 0;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .card strong {
+            color: #42a5f5;
+        }
+
+        .card p span {
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Эффект для верхней полосы в карточке */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #42a5f5, #66bb6a);
+            transition: height 0.3s ease;
+        }
+
+        .card:hover::before {
+            height: 100%;
+            opacity: 0.1;
+        }
+
+        /* Адаптивность для мобильных устройств */
+        @media (max-width: 768px) {
+            #tour-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card {
+                width: 90%;
+            }
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #090909; /* Цвет заголовка */
+        }
+
+        #map {
+            width: 80%;  /* Карта займет 80% ширины контейнера */
+            height: 400px; /* Высота карты 400px */
+            margin: 0 auto; /* Выравнивание по центру */
+        }
+
+        footer {
+            background: linear-gradient(135deg, #0f1a23, #1a3348);
+            color: #ddd;
+            padding: 4px 4px;
+            font-size: 16px;
+            position: relative;
+            text-align: center;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+            margin-top: 170px;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .footer-section {
+            flex: 1 1 250px;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px); /* Современный эффект размытия */
+            transition: transform 0.3s ease, background 0.3s ease;
+            text-align: left;
+        }
+
+        .footer-section:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-10px);
+        }
+
+        .footer-section h3, .footer-section h4 {
+            color: #5f97bd;
+            margin-bottom: 15px;
+            font-size: 22px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .footer-section p, .footer-section ul li a {
+            color: white;
+            line-height: 1.8;
+            margin: 5px 0;
+            transition: color 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+            color:white;
+        }
+
+        .footer-section ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer-section ul li a:hover {
+            color: #5f97bd;
+            text-decoration: underline;
+        }
+
+        .footer-section .social-icons {
+            display: flex;
+            justify-content: flex-start;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .footer-section .social-icons a {
+            font-size: 20px;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3c5468, #5bc4cc);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .footer-section .social-icons a:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+
+        .footer-line {
+            margin: 20px 0;
+            border: 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-rights {
+            text-align: center;
+            color: #ddd;
+            font-size: 10px;
+            margin-top: 10px;
+        }
+        .footer-rights p{
+            font-size: 15px;
+            color: white;
+        }
+
+
+        /* Адаптация для мобильных устройств */
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .footer-section {
+                text-align: center;
+            }
+
+            .footer-section .social-icons {
+                justify-content: center;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <h1>TravelGuide</h1>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="/">Главная</a></li>
+            <li><a href="/about">О нас</a></li>
+            <li><a href="tours">Горящие туры</a></li>
+            <li><a href="/countries">Страны</a></li>
+            <li><a href="/tickets">Авиабилеты</a></li>
+            <li><a href="/contact">Контакты</a></li>
+            <li th:if="${#authentication.name != 'anonymousUser'}">
+                <a href="/profile">Личный кабинет</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+<div class="container py-5">
+
+    <h1 style="text-align: center; color: #092137; margin-top: 100px;">Туры по стране: <span th:text="${countryName}"></span></h1>
+
+    <div th:if="${error != null}" style="color: red; font-weight: bold;">
+        <p th:text="${error}">Ошибка: нет туров по указанным критериям.</p>
+    </div>
+
+    <div id="tour-cards">
+        <div class="card" th:each="tour : ${tours}">
+            <h3 th:text="${tour.touristPlace.country} + ' - ' + ${tour.touristPlace.placeName}"></h3>
+            <p>
+                <strong>✈️ Тип:</strong>
+                <span th:text="${tour.type}"></span>
+            </p>
+            <p>
+                <strong>📅 Длительность:</strong>
+                <span th:text="${tour.duration}"></span> дней
+            </p>
+            <p>
+                <strong>💵 Цена:</strong>
+                $<span th:text="${tour.price}"></span>
+            </p>
+            <p>
+                <strong>📝 Описание:</strong>
+                <span th:text="${tour.description}"></span>
+            </p>
+        </div>
+    </div>
+</div>
+
+<h2>Мировая карта</h2>
+<div id="map"></div>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-section about">
+            <h3>TravelGuide</h3>
+            <p>TravelGuide помогает вам находить и бронировать лучшие предложения для путешествий. Откройте для себя мир вместе с нами!</p>
+            <p>&copy; 2024 TravelGuide | Все права защищены</p>
+        </div>
+
+        <div class="footer-section links">
+            <h4>Ссылки</h4>
+            <ul>
+                <li><a href="/">Главная</a></li>
+                <li><a href="/about">О нас</a></li>
+                <li><a href="tours">Горящие туры</a></li>
+                <li><a href="/countries">Страны</a></li>
+                <li><a href="/tickets">Авиабилеты</a></li>
+                <li><a href="/contact">Контакты</a></li>
+                <li><a href="/profile">Личный кабинет</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section contact">
+            <h4>Контакты</h4>
+            <p>Телефон: +996 504 09 99 00</p>
+            <p>Email: travelguide@gmail.com</p>
+            <p>Адрес: Бишкек, ул. Уметалиева, 120</p>
+        </div>
+
+        <div class="footer-section social">
+            <h4>Мы в соцсетях</h4>
+            <div class="social-icons">
+                <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="youtube"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+    <hr class="footer-line">
+    <div class="footer-rights">
+        <p>&copy; Все права защищены. Информация сайта защищена законом об авторских правах.</p>
+    </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+    // Инициализация карты с центром и уровнем зума
+    var map = L.map('map').setView([51.505, -0.09], 2);
+
+    // Добавление слоя OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+</script>
+
+</body>
+</html>

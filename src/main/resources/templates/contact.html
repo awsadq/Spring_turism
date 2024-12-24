@@ -28,34 +28,40 @@
             top: 0;
             width: 100%;
             z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         header .logo h1 {
             margin: 0;
-            font-size: 24px;
-            line-height: 1;
+            font-size: 28px;
             color: white;
         }
 
-        nav {
-            display: flex;
-        }
-
-        nav ul {
+        header nav ul {
             list-style: none;
-            margin: 0;
             padding: 0;
             display: flex;
+            margin: 0;
         }
 
-        nav ul li {
+        header nav ul li {
             margin: 0 15px;
         }
 
-        nav ul li a {
-            color: white;
+        header nav ul li a {
             text-decoration: none;
-            font-size: 16px;
+            color: white;
+            transition: color 0.3s ease;
+        }
+
+        header nav ul li a:hover {
+            color: #bddaf3;
+            text-decoration: underline;
+        }
+
+        header nav ul li a.active {
+            color: #bddaf3;
+            font-weight: bold;
         }
 
         .container {
@@ -255,11 +261,13 @@
         <ul>
             <li><a href="/">Главная</a></li>
             <li><a href="/about">О нас</a></li>
-            <li><a href="#">Горящие туры</a></li>
+            <li><a href="tours">Горящие туры</a></li>
             <li><a href="/countries">Страны</a></li>
             <li><a href="/tickets">Авиабилеты</a></li>
-            <li><a href="#">Контакты</a></li>
-            <li><a href="/profile">Личный кабинет</a></li>
+            <li><a href="/contact">Контакты</a></li>
+            <li th:if="${#authentication.name != 'anonymousUser'}">
+                <a href="/profile">Личный кабинет</a>
+            </li>
         </ul>
     </nav>
 </header>
@@ -298,7 +306,7 @@
             <ul>
                 <li><a href="/">Главная</a></li>
                 <li><a href="/about">О нас</a></li>
-                <li><a href="#">Горящие туры</a></li>
+                <li><a href="tours">Горящие туры</a></li>
                 <li><a href="/countries">Страны</a></li>
                 <li><a href="/tickets">Авиабилеты</a></li>
                 <li><a href="/contact">Контакты</a></li>

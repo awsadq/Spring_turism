@@ -1,120 +1,184 @@
-/* Общие стили */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    background-color: #f4f9f9;
+    font-family: Arial, sans-serif;
+    background-color: #bddaf3;
+}
+
+header {
+    background-color: #0f1a23;
+    color: #fff;
+    padding: 10px 20px; /* Увеличиваем отступы */
     display: flex;
-    min-height: 100vh;
+    justify-content: space-between; /* Размещаем логотип и меню по краям */
+    align-items: center; /* Центрируем по вертикали */
+    position: fixed; /* Фиксируем позицию заголовка */
+    top: 0; /* Устанавливаем заголовок в верхнюю часть страницы */
+    left: 0; /* Устанавливаем его в левом верхнем углу */
+    right: 0; /* Расширяем заголовок на всю ширину */
+    z-index: 1000; /* Делаем его выше остальных элементов */
 }
 
-.main-container {
+header .logo h1 {
+    margin: 0; /* Убираем все отступы для логотипа */
+    font-size: 24px; /* Размер шрифта логотипа */
+    line-height: 1; /* Устанавливаем высоту строки для лучшего выравнивания */
+    padding: 5px 0; /* Увеличиваем отступы по вертикали, чтобы надпись была лучше видна */
+}
+
+nav {
+    margin: 0; /* Убираем отступы у навигации */
+    padding: 0; /* Убираем внутренние отступы */
+    background-color: #0f1a23; /* Цвет фона меню */
+    display: flex; /* Делаем навигацию гибкой */
+    justify-content: center; /* Центрируем меню */
+    width: 100%; /* Ширина навигации */
+}
+
+nav ul {
+    list-style: none;
     display: flex;
-    width: 100%;
+    margin: 0; /* Убираем отступы */
+    padding: 0; /* Убираем внутренние отступы */
+    flex-wrap: nowrap; /* Запрещаем перенос строк */
 }
 
-/* Боковая панель */
-.sidebar {
-    width: 300px;
-    background-color: #b4dad8;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+nav ul li {
+    margin: 0 10px; /* Уменьшаем отступы между элементами */
 }
 
-.sidebar h2 {
-    margin-top: 0;
-    color: #034f84;
-    text-align: center;
+nav ul li a {
+    color: white; /* Цвет текста */
+    text-decoration: none; /* Убираем подчеркивание */
+    padding: 10px; /* Внутренний отступ для увеличения области нажатия */
+    display: block; /* Чтобы ссылки были как блоки */
+    font-size: 16px; /* Размер шрифта */
+    white-space: nowrap; /* Запрещаем перенос текста на новую строку */
 }
-
-.filter-form label {
-    display: block;
-    margin-bottom: 8px;
-    color: #034f84;
-    font-size: 14px;
-}
-
-.filter-form input,
-.filter-form select {
-    width: 100%;
-    margin-bottom: 15px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-/* Слайдер */
-.slider-container {
+footer {
+    background: linear-gradient(135deg, #0f1a23, #1a3348);
+    color: #ddd;
+    padding: 4px 4px;
+    font-size: 16px;
     position: relative;
-    margin-bottom: 20px;
+    text-align: center;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 40px;
 }
 
-.slider-values {
+.footer-container {
     display: flex;
     justify-content: space-between;
-    font-size: 14px;
-    color: #034f84;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    gap: 40px;
 }
 
-/* Кнопка */
-.btn {
-    background-color: #034f84;
+
+.footer-section {
+    flex: 1 1 250px;
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px); /* Современный эффект размытия */
+    transition: transform 0.3s ease, background 0.3s ease;
+    text-align: left;
+}
+
+.footer-section:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-10px);
+}
+
+.footer-section h3, .footer-section h4 {
+    color: #5f97bd;
+    margin-bottom: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.footer-section p, .footer-section ul li a {
     color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    text-align: center;
-    width: 100%;
-    transition: background-color 0.3s ease;
+    line-height: 1.8;
+    margin: 5px 0;
+    transition: color 0.3s ease;
 }
 
-.btn:hover {
-    background-color: #0288d1;
+.footer-section ul {
+    list-style: none;
+    padding: 0;
 }
 
-/* Тур-карточки */
-.tours {
-    flex-grow: 1;
-    padding: 20px;
+.footer-section ul li {
+    margin-bottom: 10px;
+    color:white;
 }
 
-.tours h1 {
-    text-align: center;
-    color: #034f84;
+.footer-section ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
 }
 
-.tour-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+.footer-section ul li a:hover {
+    color: #5f97bd;
+    text-decoration: underline;
+}
+
+.footer-section .social-icons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
     margin-top: 20px;
 }
 
-.tour-card {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+.footer-section .social-icons a {
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3c5468, #5bc4cc);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.tour-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+.footer-section .social-icons a:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
 }
 
-.tour-card-content {
-    padding: 20px;
+.footer-line {
+    margin: 20px 0;
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.footer-rights {
     text-align: center;
-}
-
-.tour-card-content h3 {
-    color: #034f84;
-}
-
-.tour-card-content p {
+    color: #ddd;
     font-size: 14px;
-    color: #666;
-    margin: 5px 0;
+    margin-top: 10px;
+}
+
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-section {
+        text-align: center;
+    }
+
+    .footer-section .social-icons {
+        justify-content: center;
+    }
 }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Франция — Уникальная Культура</title>
+  <title>Франция — Искусство и Романтика</title>
   <link rel="stylesheet" href="@{/styles.css}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -70,7 +70,7 @@
 
     /* Фоновое изображение */
     .hero {
-      background-image: url('/images/france_hero.jpg'); /* Укажите путь к вашему изображению */
+      background-image: url('/images/france__1.jpg'); /* Укажите путь к изображению Франции */
       background-size: cover;
       background-position: center;
       height: 90vh; /* Фон занимает всю высоту экрана */
@@ -204,10 +204,10 @@
     <ul>
       <li><a href="/">Главная</a></li>
       <li><a href="/about">О нас</a></li>
-      <li><a href="#">Горящие туры</a></li>
+      <li><a href="tours">Горящие туры</a></li>
       <li><a href="/countries">Страны</a></li>
       <li><a href="/tickets">Авиабилеты</a></li>
-      <li><a href="#">Контакты</a></li>
+      <li><a href="/contact">Контакты</a></li>
       <li><a href="/profile">Личный кабинет</a></li>
     </ul>
   </nav>
@@ -216,29 +216,29 @@
 <!-- Фоновое изображение с текстом и кнопкой -->
 <div class="hero">
   <div>
-    <h1>Добро пожаловать во Францию!</h1>
-    <p>Откройте для себя культуру, искусство и гастрономию этой удивительной страны.</p>
+    <h1>Добро пожаловать в Францию!</h1>
+    <p>Откройте для себя искусство, культуру и романтику Франции.</p>
     <a href="#gallery" class="btn">Посмотреть больше</a>
   </div>
 </div>
 
 <section>
-  <h2>О Франции</h2>
+  <h2>Об Франции</h2>
   <div class="info">
-    <p>Франция — одна из самых посещаемых стран мира, известная своей историей, культурой и изысканной кухней. Париж, Лувр, Версаль, Эйфелева башня — это лишь небольшая часть того, что стоит увидеть. Также Франция славится своими винодельнями, живописными деревнями и Альпами.</p>
-    <p>Не упустите шанс насладиться французской кухней, от багетов до круассанов и устриц!</p>
-    <i class="fas fa-baguette-bread icon"></i>
+    <p>Франция — это страна с богатым культурным наследием, известная своими винами, кухней и, конечно, Эйфелевой башней. Погрузитесь в атмосферу Парижа, наслаждайтесь французской архитектурой и изысканными пейзажами.</p>
+    <p>Франция идеально подходит для романтических путешествий и гастрономических туров.</p>
+    <i class="fas fa-heart icon"></i>
   </div>
 </section>
 
 <section id="gallery">
   <h2>Галерея</h2>
   <div class="gallery">
-    <img src="/images/paris.jpg" alt="Париж">
-    <img src="/images/eiffel_tower.jpg" alt="Эйфелева башня">
-    <img src="/images/versaille.jpg" alt="Дворец Версаля">
-    <img src="/images/louvre.jpg" alt="Лувр">
-    <img src="/images/provence.jpg" alt="Прованс">
+    <img src="/images/france2.jpg" alt="Эйфелева башня">
+    <img src="/images/france3.jpg" alt="Лувр в Париже">
+    <img src="/images/france4.jpg" alt="Виноградники Франции">
+    <img src="/images/france5.jpg" alt="Париж ночью">
+    <img src="/images/france6.jpg" alt="Французская кухня">
   </div>
 </section>
 
@@ -246,13 +246,13 @@
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
-  const map = L.map('travel-map').setView([46.6034, 1.8883], 5); // Устанавливаем вид на Францию
+  const map = L.map('travel-map').setView([48.8566, 2.3522], 5); // Устанавливаем вид на Францию (Париж)
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 
-  // Добавление маркера в Париж, Франция
+  // Добавление маркера в Париж
   L.marker([48.8566, 2.3522]).addTo(map).bindPopup('Париж, Франция').openPopup();
 </script>
 

@@ -3,47 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Sidebar</title>
+    <title>Страница с турами</title>
+    <link rel="stylesheet" href="/css/tour-list.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+
         body {
             font-family: Arial, sans-serif;
+            background-color: #bddaf3;
             margin: 0;
             padding: 0;
+            padding-top: 60px; /* Для компенсации фиксированного заголовка */
         }
 
         header {
-            background-color: #333;
+            background-color: #0f1a23;
             color: white;
             padding: 10px 20px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        header .nav-links {
-            display: flex;
-            gap: 15px;
-        }
-
-        header .nav-links a {
+        header .logo h1 {
+            margin: 0;
+            font-size: 28px;
             color: white;
-            text-decoration: none;
-            font-size: 1rem;
         }
 
-        .container {
+        header nav ul {
+            list-style: none;
+            padding: 0;
             display: flex;
-            height: calc(100vh - 60px);
+            margin: 0;
+        }
+
+        header nav ul li {
+            margin: 0 15px;
+        }
+
+        header nav ul li a {
+            text-decoration: none;
+            color: white;
+            transition: color 0.3s ease;
+        }
+
+        header nav ul li a:hover {
+            color: #bddaf3;
+            text-decoration: underline;
+        }
+
+        header nav ul li a.active {
+            color: #bddaf3;
+            font-weight: bold;
+        }
+
+
+        .menu-toggle {
+            font-size: 24px;
+            color: white;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: block; /* Бургер-меню всегда видно */
+            position: absolute;
+            top: 50%;
+            right: 20px; /* Расположим справа */
+            transform: translateY(-50%);
         }
 
         .sidebar {
             width: 250px;
-            height: 100%;
-            background-color: #333;
+            height: 620px;
+            background-color: #0e2a5e;
             color: white;
             padding: 20px;
-            transition: transform 0.3s ease-in-out, margin-left 0.3s ease-in-out;
-            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
         }
 
         .sidebar ul {
@@ -60,136 +102,323 @@
             color: white;
             text-decoration: none;
             font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .sidebar ul li a:hover {
+            color: #bddaf3;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            max-width: 300px; /* Ограничение ширины формы */
+            margin-left: auto;
+            margin-right: auto; /* Центрирование формы */
+        }
+
+        form label {
+            font-size: 14px;
+            color: #333;
+        }
+
+        form input, form select, form button {
+            width: 190px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        form button {
+            background-color: #0e2a5e;
+            color: white;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            background: linear-gradient(90deg, #28656a, #329498);
         }
 
         .main-content {
             flex: 1;
             padding: 20px;
-            transition: margin-left 0.3s ease-in-out;
+            background-color: transparent;
+            border-radius: 8px;
+            box-shadow: none;
         }
 
-        .menu-toggle {
-            display: none;
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background-color: #333;
+        /* Контейнер для карточек */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(3, 270px); /* 3 карточки в строке с фиксированной шириной */
+            gap: 20px 30px; /* Расстояние между карточками */
+            padding: 20px;
+            justify-items: start; /* Выравнивание карточек по левому краю */
+            width: 100%; /* Обеспечивает, что контейнер будет растягиваться на всю доступную ширину */
+            max-width: 100%; /* Убирает ограничения по ширине */
+        }
+
+        /* Карточка */
+        .card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 270px; /* Фиксированная ширина карточки */
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 4px solid #2654a8;
+            background-color: #ffffff;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Заголовок карточки */
+        .card h3 {
+            font-size: 1.8rem;
+            color: #1e88e5;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        /* Текст в карточке */
+        .card p {
+            margin: 10px 0;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* Сильный текст */
+        .card strong {
+            color: #214291;
+        }
+
+        /* Дополнительный стиль для текста */
+        .card p span {
+            color: #4a4a4a;
+            font-weight: 500;
+        }
+
+        /* Эффект верхней полосы */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #42a5f5, #66bb6a);
+            transition: height 0.3s ease;
+        }
+
+        .card:hover::before {
+            height: 100%;
+            opacity: 0.1;
+        }
+
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .book-button {
+            background-color: #153b8e; /* Основной цвет кнопки (синий) */
+            color: white; /* Белый цвет текста */
+            font-size: 16px; /* Размер шрифта */
+            font-weight: bold; /* Жирный текст */
+            padding: 10px 20px; /* Отступы внутри кнопки */
+            border: none; /* Убираем рамку */
+            border-radius: 8px; /* Скругленные углы */
+            cursor: pointer; /* Курсор в виде руки */
+            transition: all 0.3s ease; /* Плавный переход для анимации */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Лёгкая тень */
+            text-transform: uppercase; /* Заглавные буквы */
+            position: relative;
+            z-index: 10;
+        }
+
+        .book-button:hover {
+            background-color: #0056b3; /* Темно-синий при наведении */
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); /* Увеличенная тень */
+            transform: scale(1.05); /* Лёгкое увеличение кнопки */
+        }
+
+        .book-button:active {
+            background-color: #003d80; /* Ещё темнее при нажатии */
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Уменьшенная тень */
+            transform: scale(1); /* Убираем увеличение */
+        }
+
+        .book-button:focus {
+            outline: none; /* Убираем стандартный фокус */
+            box-shadow: 0px 0px 8px 2px rgba(0, 123, 255, 0.5); /* Светящаяся обводка */
+        }
+
+        .book-button:disabled {
+            background-color: #cccccc; /* Серый цвет для отключённой кнопки */
+            color: #666666; /* Тусклый текст */
+            cursor: not-allowed; /* Курсор для недоступной кнопки */
+            box-shadow: none; /* Убираем тень */
+        }
+
+        footer {
+            background-color: #0f1a23;
             color: white;
-            border: none;
-            padding: 10px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            z-index: 1100;
+            padding: 20px;
+            text-align: center;
+            margin-top: auto;
         }
 
-        @media (max-width: 1200px) {
-            .container {
-                flex-direction: column;
-            }
-
-            .sidebar {
-                position: fixed;
-                top: 0;
-                left: 0;
-                transform: translateX(-100%);
-            }
-
-            .sidebar.open {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-
-            .menu-toggle {
-                display: block;
-            }
+        footer .footer-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
         }
 
-        @media (min-width: 1200px) {
-            .sidebar {
-                position: relative;
-                transform: none;
-            }
-
-            .main-content {
-                margin-left: 250px;
-            }
+        footer .footer-section {
+            flex: 1;
+            margin-right: 20px;
         }
+
+        footer .footer-section h3, footer .footer-section h4 {
+            margin-bottom: 10px;
+        }
+
+        footer .social-icons {
+            display: flex;
+        }
+
+        footer .social-icons a {
+            color: white;
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        footer .footer-line {
+            margin-top: 20px;
+        }
+
+        footer .footer-rights {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+
     </style>
 </head>
 <body>
+
 <header>
     <div class="logo">
         <h1>TravelGuide</h1>
     </div>
-    <nav class="nav-links">
-
-        <a href="/">Главная</a>
-        <a href="/about">О нас</a>
-        <a href="tours">Горящие туры</a>
-        <a href="/countries">Страны</a>
-        <a href="/tickets">Авиабилеты</a>
-        <a href="/contact">Контакты</a>
-        <a th:if="${#authentication.name != 'anonymousUser'}" href="/profile">Личный кабинет</a>
-
-
+    <nav>
+        <ul>
+            <li><a href="/">Главная</a></li>
+            <li><a href="/about">О нас</a></li>
+            <li><a href="tours">Горящие туры</a></li>
+            <li><a href="/countries">Страны</a></li>
+            <li><a href="/tickets">Авиабилеты</a></li>
+            <li><a href="/contact">Контакты</a></li>
+            <li th:if="${#authentication.name != 'anonymousUser'}">
+                <a href="/profile">Личный кабинет</a>
+            </li>
+        </ul>
     </nav>
-
 </header>
-<div class="container">
+
+<div class="card-container">
     <button class="menu-toggle" onclick="toggleSidebar()">&#9776;</button>
 
     <div class="sidebar" id="sidebar">
         <form method="GET" action="http://localhost:8080/tours">
-            <label for="country">Country</label>
+            <!-- Форма фильтрации -->
+            <label for="country">Страна</label>
             <input type="text" id="country" name="country" placeholder="Enter country">
 
-            <label for="place">Place</label>
+            <label for="place">Место</label>
             <input type="text" id="place" name="place" placeholder="Enter place">
 
-            <label for="minPrice">Min Price</label>
+            <label for="minPrice">Мин. цена</label>
             <input type="number" id="minPrice" name="minPrice" placeholder="Min price">
 
-            <label for="maxPrice">Max Price</label>
+            <label for="maxPrice">Макс. цена</label>
             <input type="number" id="maxPrice" name="maxPrice" placeholder="Max price">
 
-            <label for="minDuration">Min Duration</label>
+            <label for="minDuration">Мин. длительность</label>
             <input type="number" id="minDuration" name="minDuration" placeholder="Min duration">
 
-            <label for="maxDuration">Max Duration</label>
+            <label for="maxDuration">Макс. длительность</label>
             <input type="number" id="maxDuration" name="maxDuration" placeholder="Max duration">
 
-            <label for="type">Type</label>
+            <label for="type">Тип тура</label>
             <select id="type" name="type">
-                <option value="">Any</option>
+                <option value="">Любой</option>
                 <option value="ОТДЫХ">Отдых</option>
                 <option value="ЭКСКУРСИЯ">Экскурсия</option>
                 <option value="ШОПИНГ">Шопинг</option>
                 <option value="ГАСТРОНОМИЧЕСКИЙ_ТУР">Гастрономический тур</option>
             </select>
 
-            <button type="submit">Filter</button>
+            <button type="submit">Найти тур</button>
         </form>
-
     </div>
 
     <div class="main-content" id="main-content">
-        <h1>Available Tours</h1>
+        <h1>Горячие туры</h1>
+
+        <div th:if="${error != null}" style="color: red; font-weight: bold;">
+            <p th:text="${error}">Ошибка: нет туров по указанным критериям.</p>
+        </div>
+
         <div id="tour-cards">
-            <!-- Example of a tour card -->
             <div class="card" th:each="tour : ${tours}">
                 <h3 th:text="${tour.touristPlace.country} + ' - ' + ${tour.touristPlace.placeName}"></h3>
-                <p><strong>Type:</strong> <span th:text="${tour.type}"></span></p>
-                <p><strong>Duration:</strong> <span th:text="${tour.duration}"></span> days</p>
-                <p><strong>Price:</strong> $<span th:text="${tour.price}"></span></p>
-                <p><strong>Description:</strong> <span th:text="${tour.description}"></span></p>
+                <p>
+                    <strong>✈️ Тип:</strong>
+                    <span th:text="${tour.type}"></span>
+                </p>
+                <p>
+                    <strong>📅 Длительность:</strong>
+                    <span th:text="${tour.duration}"></span> days
+                </p>
+                <p>
+                    <strong>💵 Цена:</strong>
+                    $<span th:text="${tour.price}"></span>
+                </p>
+                <p>
+                    <strong>📝 Описание:</strong>
+                    <span th:text="${tour.description}"></span>
+                </p>
+
+                <button class="book-button" th:onclick="|bookTour(${tour.id})|"
+                        th:if="${!tour.isBooked}">Забронировать</button>
+
+                <p th:if="${tour.isBooked}"><strong>Тур забронирован!</strong></p>
             </div>
         </div>
     </div>
 </div>
-
 
 
 <footer>
@@ -238,18 +467,42 @@
         <p>&copy; Все права защищены. Информация сайта защищена законом об авторских правах.</p>
     </div>
 </footer>
+
 <script>
-    const sidebar = document.getElementById('sidebar');
-
     function toggleSidebar() {
-        sidebar.classList.toggle('open');
+        const sidebar = document.getElementById("sidebar");
+        sidebar.style.display = sidebar.style.display === "none" ? "block" : "none";
     }
-
-    window.addEventListener('resize', () => {
-        if (window.innerWidth >= 1200) {
-            sidebar.classList.remove('open');
-        }
-    });
 </script>
+
+<script th:inline="javascript">
+    function bookTour(tourId) {
+        console.log('Клик на тур с ID:', tourId); // Лог для проверки
+        fetch('/tours/book/' + tourId, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ tourId: tourId })
+        })
+            .then(response => {
+                if (!response.ok) { // Проверяем HTTP-статус
+                    return response.text().then(message => {
+                        throw new Error(message); // Генерируем ошибку с текстом ответа
+                    });
+                }
+                return response.json(); // Если ответ успешный, парсим JSON
+            })
+            .then(data => {
+                alert(data.message); // Выводим сообщение об успехе
+                location.reload(); // Перезагружаем страницу для обновления
+            })
+            .catch(error => {
+                alert(error.message || 'Ошибка бронирования'); // Выводим сообщение об ошибке
+            });
+    }
+</script>
+
+
 </body>
 </html>

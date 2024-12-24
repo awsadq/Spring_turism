@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Person;
 import com.example.demo.model.Tour;
 import com.example.demo.model.TouristPlace;
 import com.example.demo.repository.TourRepository;
@@ -17,7 +18,7 @@ public class TourService {
     private TourRepository tourRepository;
 
     @Autowired
-    private TourService(TourRepository tourRepository) {
+    public TourService(TourRepository tourRepository) {
         this.tourRepository = tourRepository;
     }
 
@@ -31,20 +32,21 @@ public class TourService {
         return tours;
     }
 
-
     public List<String> getAllTourTypes() {
         return List.of("Отдых", "Экскурсия", "Шопинг", "Круиз", "Пляжный", "Романтический"); // Пример типов туров
     }
 
     public Tour saveTour(Tour tour) {
+
         return tourRepository.save(tour);
     }
 
-    public Tour getTourById(Long id) {
-        return tourRepository.findById(id).orElse(null);
+    public Tour getTourById(Integer id) {
+        return tourRepository.findByIdWithImages(id)
+                .orElseGet(() -> tourRepository.findById(id).orElse(null));
     }
 
-    public Tour updateTour(Long id, Tour tourDetails) {
+    public Tour updateTour(Integer id, Tour tourDetails) {
         return tourRepository.findById(id).map(existingTour -> {
             existingTour.setTouristPlace(tourDetails.getTouristPlace());
             existingTour.setType(tourDetails.getType());
@@ -56,12 +58,13 @@ public class TourService {
         }).orElse(null);
     }
 
-    public boolean deleteTour(Long id) {
+    public boolean deleteTour(Integer id) {
         return tourRepository.findById(id).map(tour -> {
             tourRepository.delete(tour);
             return true;
         }).orElse(false);
     }
+
     private final LevenshteinDistance levenshtein = new LevenshteinDistance();
 
     public List<Tour> searchByCountryWithTolerance(String country) {
@@ -71,7 +74,6 @@ public class TourService {
 
         List<Tour> allTours = tourRepository.findAll();
 
-        // Фильтрация по расстоянию Левенштейна (порог - 2 символа)
         return allTours.stream()
                 .filter(tour -> levenshtein.apply(tour.getTouristPlace().getCountry().toLowerCase(), country.toLowerCase()) <= 2)
                 .collect(Collectors.toList());
@@ -90,6 +92,25 @@ public class TourService {
         return tourRepository.findFilteredTours(country, place, minPrice, maxPrice, minDuration, maxDuration, type == null ? null : Tour.TourType.valueOf(type.toUpperCase()));
     }
 
+
+    public List<Tour> getToursByUser(Person user) {
+        return tourRepository.findByUser(user);  // Найти все туры, которые связаны с конкретным пользователем
+    }
+
+    public void bookTour(Integer tourId, Person user) {
+        Tour tour = tourRepository.findById(tourId)
+                .orElseThrow(() -> new IllegalArgumentException("Тур не найден!"));
+        if (tour.getIsBooked()) {
+            throw new IllegalStateException("Этот тур уже забронирован!");
+        }
+        tour.bookTour(user);
+        tourRepository.save(tour);
+    }
+
+
+    public List<Tour> getBookedTours() {
+        return tourRepository.findByIsBooked(true);
+    }
 }
 
 

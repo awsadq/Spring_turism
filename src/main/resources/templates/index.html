@@ -27,7 +27,6 @@
             </li>
         </ul>
     </nav>
-
 </header>
 
 <main>
@@ -75,7 +74,6 @@
     </section>
 </main>
 
-
 <section class="card-container">
     <h2>Путешествие по странам</h2>
     <div class="swiper-container">
@@ -87,7 +85,7 @@
                 <div class="card-content">
                     <h2>Китай</h2>
                     <p>Уникальная культура и история, удивительная природа.</p>
-                    <a href="http://localhost:8080/countries?country=Китай" class="btn">Узнать больше</a>
+                    <a href="/china" class="btn">Узнать больше</a>
                 </div>
             </div>
             <div class="swiper-slide card">
@@ -97,7 +95,7 @@
                 <div class="card-content">
                     <h2>Дубай</h2>
                     <p>Современная архитектура и роскошные курорты.</p>
-                    <a href="http://localhost:8080/countries?country=Дубай" class="btn">Узнать больше</a>
+                    <a href="/dubai" class="btn">Узнать больше</a>
                 </div>
             </div>
             <div class="swiper-slide card">
@@ -107,7 +105,7 @@
                 <div class="card-content">
                     <h2>Египет</h2>
                     <p>Cтрана в Северной Африке, известная пирамидами, древними храмами.</p>
-                    <a href="http://localhost:8080/countries?country=Египет" class="btn">Узнать больше</a>
+                    <a href="/egypt" class="btn">Узнать больше</a>
                 </div>
             </div>
             <div class="swiper-slide card">
@@ -117,7 +115,7 @@
                 <div class="card-content">
                     <h2>Италия</h2>
                     <p>Cтрана знаменитая искусством, архитектурой и кухней.</p>
-                    <a href="http://localhost:8080/countries?country=Италия" class="btn">Узнать больше</a>
+                    <a href="/italy" class="btn">Узнать больше</a>
                 </div>
             </div>
             <div class="swiper-slide card">
@@ -127,7 +125,7 @@
                 <div class="card-content">
                     <h2>Корея</h2>
                     <p>Страна с богатой историей, современными городами и пейзажами.</p>
-                    <a href="http://localhost:8080/countries?country=Корея" class="btn">Узнать больше</a>
+                    <a href="/korea" class="btn">Узнать больше</a>
                 </div>
             </div>
             <div class="swiper-slide card">
@@ -137,7 +135,7 @@
                 <div class="card-content">
                     <h2>Испания</h2>
                     <p>Очарование средиземноморского побережья и богатая культура.</p>
-                    <a href="http://localhost:8080/countries?country=Испания" class="btn">Узнать больше</a>
+                    <a href="/spain" class="btn">Узнать больше</a>
                 </div>
             </div>
             <div class="swiper-slide card">
@@ -147,7 +145,7 @@
                 <div class="card-content">
                     <h2>Франция</h2>
                     <p>Романтика Парижа и изысканная кухня ждут вас.</p>
-                    <a href="http://localhost:8080/countries?country=Франция" class="btn">Узнать больше</a>
+                    <a href="/france" class="btn">Узнать больше</a>
                 </div>
             </div>
             <div class="swiper-slide card">
@@ -157,7 +155,7 @@
                 <div class="card-content">
                     <h2>Вьетнам</h2>
                     <p>Cтрана с живописными ландшафтами и древними храмами.</p>
-                    <a href="http://localhost:8080/countries?country=Вьетнам" class="btn">Узнать больше</a>
+                    <a href="/vietnam" class="btn">Узнать больше</a>
                 </div>
             </div>
             <div class="swiper-slide card">
@@ -167,7 +165,7 @@
                 <div class="card-content">
                     <h2>Турция</h2>
                     <p>Страна известная культурным наследием, мечетями и пляжами.</p>
-                    <a href="http://localhost:8080/countries?country=Турция" class="btn">Узнать больше</a>
+                    <a href="/turkey" class="btn">Узнать больше</a>
                 </div>
             </div>
             <div class="swiper-slide card">
@@ -177,7 +175,7 @@
                 <div class="card-content">
                     <h2>Тайланд</h2>
                     <p>Cтрана известная своими пляжами, храмами и богатой культурой.</p>
-                    <a href="http://localhost:8080/countries?country=Тайланд" class="btn">Узнать больше</a>
+                    <a href="/thailand" class="btn">Узнать больше</a>
                 </div>
             </div>
         </div>
@@ -191,22 +189,19 @@
     </div>
 </section>
 
-
 <section id="filtered-tours" class="filtered-section"
          th:if="${#authentication.name != 'anonymousUser'} and ${tours != null}">
     <h2>Найденные туры</h2>
     <div class="card-wrapper" th:if="${not #lists.isEmpty(tours)}" th:each="tour : ${tours}">
         <div class="card">
             <h2 th:text="${tour.touristPlace.country}">Страна</h2>
-            <p th:text="${tour.type}">Тип тура</p>
-            <p>Цена: <span th:text="${tour.price}"></span> $</p>
-            <p>Длительность: <span th:text="${tour.duration}"></span> дней</p>
-            <a th:href="@{/tours/{id}(id=${tour.id})}" class="btn">Узнать больше</a>
+            <p><span class="icon">✈️</span> <span th:text="${tour.type}">Тип тура</span></p>
+            <p><span class="icon">💵</span> Цена: <span th:text="${tour.price}"></span> $</p>
+            <p><span class="icon">📅</span> Длительность: <span th:text="${tour.duration}"></span> дней</p>
         </div>
     </div>
     <p th:if="${#lists.isEmpty(tours)}">Туры не найдены.</p>
 </section>
-
 
 <section class="slider">
     <h2>Наши предложения</h2>
@@ -297,7 +292,7 @@
             <ul>
                 <li><a href="/">Главная</a></li>
                 <li><a href="/about">О нас</a></li>
-                <li><a href="#">Горящие туры</a></li>
+                <li><a href="tours">Горящие туры</a></li>
                 <li><a href="/countries">Страны</a></li>
                 <li><a href="/tickets">Авиабилеты</a></li>
                 <li><a href="/contact">Контакты</a></li>
@@ -420,6 +415,7 @@
         },
     });
 </script>
+
 
 </body>
 </html>

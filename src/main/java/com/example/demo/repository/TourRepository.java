@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import com.example.demo.model.Person;
 import com.example.demo.model.Tour;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -12,9 +13,18 @@ import java.util.Optional;
 
 @Repository
 public interface TourRepository extends JpaRepository<Tour, Long>, JpaSpecificationExecutor<Tour> {
-    List<Tour> findAll();
-    Optional<Tour> findById(Long id);
 
+    // findAll() уже присутствует в JpaRepository, так что можно удалить эту строку
+    // List<Tour> findAll();
+
+    Optional<Tour> findById(Integer id);
+
+    // Запрос для получения тура с изображениями, если они есть
+    @Query("SELECT t FROM Tour t LEFT JOIN FETCH t.imageUrls WHERE t.id = :id")
+    Optional<Tour> findByIdWithImages(@Param("id") Integer id);
+
+
+    // Запрос для фильтрации туров
     @Query("SELECT t FROM Tour t " +
             "WHERE (:country IS NULL OR t.touristPlace.country = :country) " +
             "AND (:place IS NULL OR t.touristPlace.placeName = :place) " +
@@ -23,6 +33,7 @@ public interface TourRepository extends JpaRepository<Tour, Long>, JpaSpecificat
             "AND (:minDuration IS NULL OR t.duration >= :minDuration) " +
             "AND (:maxDuration IS NULL OR t.duration <= :maxDuration) " +
             "AND (:type IS NULL OR t.type = :type)")
+
     List<Tour> findFilteredTours(
             @Param("country") String country,
             @Param("place") String place,
@@ -32,4 +43,8 @@ public interface TourRepository extends JpaRepository<Tour, Long>, JpaSpecificat
             @Param("maxDuration") Integer maxDuration,
             @Param("type") Tour.TourType type
     );
+
+    List<Tour> findByUser(Person person);
+
+    List<Tour> findByIsBooked(boolean isBooked);
 }

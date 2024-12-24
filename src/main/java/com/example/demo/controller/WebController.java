@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.TouristPlace;
 import com.example.demo.repository.TouristPlaceRepository;
-import org.springframework.beans.factory.annotation.Autowired; // Импортируем аннотацию для внедрения зависимостей
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +19,6 @@ public class WebController {
     public String about() {
         return "company";
     }
-
-
 
     @GetMapping("/tickets")
     public String tickets() {

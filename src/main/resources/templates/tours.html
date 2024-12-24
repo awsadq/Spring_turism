@@ -1,10 +1,132 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Tour Details</title>-->
+<!--    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">-->
 
-</body>
-</html>
+<!--    <style>-->
+<!--        body {-->
+<!--            font-family: Arial, sans-serif;-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--            background-color: #f4f4f4;-->
+<!--        }-->
+
+<!--        .container {-->
+<!--            max-width: 1200px;-->
+<!--            margin: 2rem auto;-->
+<!--            background: white;-->
+<!--            box-shadow: 0 4px 10px rgba(0,0,0,0.1);-->
+<!--            border-radius: 10px;-->
+<!--            overflow: hidden;-->
+<!--        }-->
+
+<!--        .header {-->
+<!--            background-color: #007bff;-->
+<!--            color: white;-->
+<!--            padding: 1.5rem;-->
+<!--            text-align: center;-->
+<!--        }-->
+
+<!--        .header h1 {-->
+<!--            margin: 0;-->
+<!--        }-->
+
+<!--        .content {-->
+<!--            display: flex;-->
+<!--            flex-wrap: wrap;-->
+<!--            padding: 1.5rem;-->
+<!--        }-->
+
+<!--        .carousel {-->
+<!--            flex: 1 1 50%;-->
+<!--            margin-right: 1rem;-->
+<!--        }-->
+
+<!--        .carousel img {-->
+<!--            width: 100%;-->
+<!--            height: auto;-->
+<!--            border-radius: 10px;-->
+<!--        }-->
+
+<!--        .details {-->
+<!--            flex: 1 1 45%;-->
+<!--        }-->
+
+<!--        .details h2 {-->
+<!--            margin-top: 0;-->
+<!--            color: #333;-->
+<!--        }-->
+
+<!--        .details p {-->
+<!--            line-height: 1.6;-->
+<!--            margin: 0.5rem 0;-->
+<!--        }-->
+
+<!--        .highlight {-->
+<!--            color: #007bff;-->
+<!--            font-weight: bold;-->
+<!--        }-->
+
+<!--        .footer {-->
+<!--            text-align: center;-->
+<!--            padding: 1rem;-->
+<!--            background-color: #f4f4f4;-->
+<!--        }-->
+
+<!--        .book-button {-->
+<!--            display: inline-block;-->
+<!--            padding: 10px 20px;-->
+<!--            background-color: #007bff;-->
+<!--            color: white;-->
+<!--            text-decoration: none;-->
+<!--            border-radius: 5px;-->
+<!--            font-weight: bold;-->
+<!--            margin-top: 20px;-->
+<!--            text-align: center;-->
+<!--        }-->
+
+<!--        .book-button:hover {-->
+<!--            background-color: #0056b3;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<div class="container">-->
+<!--    <div class="header">-->
+<!--        <h1 th:text="${tour.touristPlace.country}">Country Name</h1>-->
+<!--    </div>-->
+
+<!--    <div class="content">-->
+<!--        <div class="carousel">-->
+<!--            <div th:if="${tour.imageUrls != null and tour.imageUrls.size() > 0}">-->
+<!--                <img th:src="${tour.imageUrls.get(0).url}" alt="Tour Image">-->
+<!--            </div>-->
+<!--            <div th:if="${tour.imageUrls == null or tour.imageUrls.size() == 0}">-->
+<!--                <p>No images available</p>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="details">-->
+<!--            <h2 th:text="${tour.touristPlace.placeName}">Place Name</h2>-->
+<!--            <p><strong>Тип:</strong> <span class="highlight" th:text="${tour.type}">Tour Type</span></p>-->
+<!--            <p><strong>Длительность:</strong> <span class="highlight" th:text="${tour.duration}">0</span> days</p>-->
+<!--            <p><strong>Цена:</strong> $<span class="highlight" th:text="${tour.price}">0.00</span></p>-->
+<!--            <p><strong>Описание:</strong></p>-->
+<!--            <p th:text="${tour.description}">Tour description goes here.</p>-->
+<!--            <p th:if="${tour.isHot}"><strong class="highlight">Горячий тур!</strong></p>-->
+
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--    <div class="footer">-->
+<!--        <a href="/tours" style="color: #007bff; text-decoration: none;">&larr; Назад в туры </a>-->
+<!--    </div>-->
+
+
+<!--</body>-->
+<!--</html>-->
