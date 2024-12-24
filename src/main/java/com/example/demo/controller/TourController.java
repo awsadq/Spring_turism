@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/tours")
@@ -41,18 +42,61 @@ public class TourController {
 
     // READ ALL
     @GetMapping("")
-    public String showTours(@RequestParam String country,
-            @RequestParam String place,
-            @RequestParam
-            Model model) {
-        List<Tour> tours = tourService.getAllTours();
-        if (tours == null) {
-            tours = new ArrayList<>();
+    public String getTours(
+            @RequestParam(required = false) String country,
+            @RequestParam(required = false) String place,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(required = false) Integer minDuration,
+            @RequestParam(required = false) Integer maxDuration,
+            @RequestParam(required = false) String type,
+            Model model
+    ) {
+        if (!(country == null)) {
+            if (country.equals("")) {
+                country = null;
+            }
         }
+        if (!(place == null)) {
+            if (place.equals("")) {
+                place = null;
+            }
+        }
+        if (!(minPrice == null)) {
+            if (minPrice.equals(0.0)) {
+                minPrice = null;
+            }
+        }
+        if (!(maxPrice == null)) {
+            if (maxPrice.equals(0.0)) {
+                maxPrice = null;
+            }
+        }
+        if (!(minDuration == null)) {
+            if (minDuration.equals(0)) {
+                minDuration = null;
+            }
+        }
+        if (!(maxDuration == null)) {
+            if (maxDuration.equals(0)) {
+                maxDuration = null;
+            }
+        }
+        if (!(type == null)) {
+            if (type.equals("")) {
+                type = null;
+            }
+        }
+
+        // Получить все туры из сервиса
+        List<Tour> tours = tourService.getFilteredTours(country, place, minPrice, maxPrice, minDuration, maxDuration, type);
+
+        // Добавить в модель отфильтрованные туры
         model.addAttribute("tours", tours);
+
+        // Возврат представления
         return "tour-list";
     }
-
 
     // READ BY ID
     @GetMapping("/{id}")

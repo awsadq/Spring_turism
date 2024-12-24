@@ -45,6 +45,7 @@ public class TouristPlaceController {
         return "countries";
     }
 
+
     @GetMapping("/{country}")
     public String countryPage(@PathVariable String country, Model model) {
         List<TouristPlace> allPlaces = touristPlaceService.getAllTouristPlaces();

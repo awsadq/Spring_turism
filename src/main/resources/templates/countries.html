@@ -56,7 +56,7 @@
         <div th:each="countryEntry : ${countries}"
              th:with="countryName=${countryEntry.key}, countryImages=${countryEntry.value}"
              class="country-card">
-            <a th:href="@{'/countries/' + ${transliteratedCountries.get(countryName)}}">
+            <a th:href="@{'/countries?country=' + ${countryName}}">
                 <h2 th:text="${countryName}">Country</h2>
                 <div th:if="${countryImages.size() > 0}"
                      class="carousel slide carousel-fade"

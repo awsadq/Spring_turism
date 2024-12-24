@@ -31,44 +31,6 @@ public class TourService {
         return tours;
     }
 
-    public List<Tour> searchTours(String country, String type, Integer durationMin, Integer durationMax,
-                                  Double priceMin, Double priceMax, Boolean is_hot) {
-        // If no parameters are provided, return all tours
-        if (!StringUtils.hasText(country) && !StringUtils.hasText(type) && durationMin == null && durationMax == null
-                && priceMin == null && priceMax == null && is_hot == null) {
-            return tourRepository.findAll();
-        }
-
-        // Use custom query logic for filtering
-        return tourRepository.findAll((root, query, criteriaBuilder) -> {
-            var predicates = criteriaBuilder.conjunction();
-
-            if (StringUtils.hasText(country)) {
-                predicates = criteriaBuilder.and(predicates, criteriaBuilder.equal(root.get("country"), country));
-            }
-            if (StringUtils.hasText(type)) {
-                predicates = criteriaBuilder.and(predicates, criteriaBuilder.equal(root.get("type"), type));
-            }
-            if (durationMin != null) {
-                predicates = criteriaBuilder.and(predicates, criteriaBuilder.greaterThanOrEqualTo(root.get("duration"), durationMin));
-            }
-            if (durationMax != null) {
-                predicates = criteriaBuilder.and(predicates, criteriaBuilder.lessThanOrEqualTo(root.get("duration"), durationMax));
-            }
-            if (priceMin != null) {
-                predicates = criteriaBuilder.and(predicates, criteriaBuilder.greaterThanOrEqualTo(root.get("price"), priceMin));
-            }
-            if (priceMax != null) {
-                predicates = criteriaBuilder.and(predicates, criteriaBuilder.lessThanOrEqualTo(root.get("price"), priceMax));
-            }
-            if (is_hot != null) {
-                predicates = criteriaBuilder.and(predicates, criteriaBuilder.equal(root.get("is_hot"), is_hot));
-            }
-
-            return predicates;
-        });
-    }
-
 
     public List<String> getAllTourTypes() {
         return List.of("Отдых", "Экскурсия", "Шопинг", "Круиз", "Пляжный", "Романтический"); // Пример типов туров
@@ -114,6 +76,20 @@ public class TourService {
                 .filter(tour -> levenshtein.apply(tour.getTouristPlace().getCountry().toLowerCase(), country.toLowerCase()) <= 2)
                 .collect(Collectors.toList());
     }
+
+    public List<Tour> getFilteredTours(String country, String place, Double minPrice, Double maxPrice, Integer minDuration, Integer maxDuration, String type) {
+        System.out.println("country = " + country);
+        System.out.println("place = " + place);
+        System.out.println("minPrice = " + minPrice);
+        System.out.println("maxPrice = " + maxPrice);
+        System.out.println("minDuration = " + minDuration);
+        System.out.println("maxDuration = " + maxDuration);
+        System.out.println("type = " + type);
+
+
+        return tourRepository.findFilteredTours(country, place, minPrice, maxPrice, minDuration, maxDuration, type == null ? null : Tour.TourType.valueOf(type.toUpperCase()));
+    }
+
 }
 
 
